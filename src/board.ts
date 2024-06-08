@@ -2,17 +2,15 @@ import { Cell } from "./cell"
 
 export class Board {
   private cells: Cell[][] = [
-    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ],
-    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ],
-    [ "empty", "empty", "factory", "empty", "empty", "factory", "empty", "empty", "factory", "empty", "empty" ],
-    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ],
-    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ],
-    [ "empty", "empty", "factory", "empty", "empty", "factory", "empty", "empty", "factory", "empty", "empty" ],
-    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ],
-    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ],
-    [ "empty", "empty", "factory", "empty", "empty", "factory", "empty", "empty", "factory", "empty", "empty" ],
-    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ],
-    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ]
+    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ],
+    [ "empty", "factory", "empty", "empty", "factory", "empty", "empty", "factory", "empty" ],
+    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ],
+    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ],
+    [ "empty", "factory", "empty", "empty", "factory", "empty", "empty", "factory", "empty" ],
+    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ],
+    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ],
+    [ "empty", "factory", "empty", "empty", "factory", "empty", "empty", "factory", "empty" ],
+    [ "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty" ],
   ]
 
     setup(table: HTMLTableElement) {
