@@ -3,10 +3,12 @@
 }
 
 :root {
-  --light-square: #f0ead2;
-  --dark-square: #dde5b6;
-  --border: #6c584c;
-  --todo1: #a98467;
+  --square-light: #f0ead2;
+  --square-dark: #dde5b6;
+  --border: #a98467;
+  --player-white: white;
+  --player-black: black;
+  --todo1: #6c584c;
   --todo2: #adc178;
 }
 
@@ -17,14 +19,22 @@
 td {
   width: 3rem;
   height: 3rem;
-  background-color: var(--light-square);
+  background-color: var(--square-light);
 }
 
 tr:nth-child(odd) td:nth-child(even),
 tr:nth-child(even) td:nth-child(odd) {
-  background-color: var(--dark-square);
+  background-color: var(--square-dark);
 }
 
 .cell-factory {
   border: .3rem dashed var(--border);
+}
+
+.cell-factory.cell-white {
+  outline: .3rem solid var(--player-white);
+}
+
+.cell-factory.cell-black {
+  outline: .3rem solid var(--player-black);
 }
