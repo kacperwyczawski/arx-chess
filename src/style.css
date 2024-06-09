@@ -1,3 +1,5 @@
+@import '@fontsource/ibm-plex-mono';
+
 * {
   box-sizing: border-box;
 }
@@ -12,8 +14,34 @@
   --todo2: #adc178;
 }
 
+body {
+  font-family: 'IBM Plex Mono', monospace;
+  background-color: var(--square-dark);
+  color: var(--border);
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  margin: auto;
+  max-width: fit-content;
+}
+
+#white,
+#black {
+  margin-top: 1rem;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+:is(#white, #black).active {
+  text-decoration: underline;
+}
+
 #board {
+  margin-top: 1rem;
   border-spacing: 0;
+  border: .6rem solid var(--square-light);
 }
 
 td {
