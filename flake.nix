@@ -7,7 +7,7 @@
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt;
       devShells.${system}.default = let pkgs = nixpkgs.legacyPackages.${system};
       in pkgs.mkShell {
-        packages = with pkgs; [ bun nushell ];
+        packages = with pkgs; [ bun nushell biome ];
         shellHook = ''
           exec nu
         '';
