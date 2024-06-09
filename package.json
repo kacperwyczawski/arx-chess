@@ -1,18 +1,19 @@
 {
-  "name": "industrial-chess",
-  "version": "0.0.0",
-  "devDependencies": {
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0"
-  },
-  "private": true,
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "type": "module",
-  "dependencies": {
-    "lodash-es": "^4.17.21"
-  }
+	"name": "industrial-chess",
+	"version": "0.0.0",
+	"devDependencies": {
+		"@types/lodash-es": "^4.17.5",
+		"typescript": "^5.2.2",
+		"vite": "^5.2.0"
+	},
+	"private": true,
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview"
+	},
+	"type": "module",
+	"dependencies": {
+		"lodash-es": "^4.17.21"
+	}
 }
