@@ -1,5 +1,6 @@
 import _ from "lodash-es";
 import { Cell } from "./cell";
+import { King } from "./pieces/king";
 
 export class Board {
 	private cells: Cell[][] = [];
@@ -37,6 +38,7 @@ export class Board {
         });
         this.cells[1][1].type = "factory";
         this.cells[1][1].player = "white";
+        this.cells[1][1].piece = new King("white");
         this.cells[1][4].type = "factory";
         this.cells[1][7].type = "factory";
         this.cells[4][1].type = "factory";
@@ -46,6 +48,7 @@ export class Board {
         this.cells[7][4].type = "factory";
         this.cells[7][7].type = "factory";
         this.cells[7][7].player = "black";
+        this.cells[7][7].piece = new King("black");
         this.applyClassNames(table);
 	}
 }

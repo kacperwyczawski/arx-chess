@@ -20,6 +20,9 @@ td {
   width: 3rem;
   height: 3rem;
   background-color: var(--square-light);
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 tr:nth-child(odd) td:nth-child(even),
@@ -37,4 +40,12 @@ tr:nth-child(even) td:nth-child(odd) {
 
 .cell-factory.cell-black {
   outline: .3rem solid var(--player-black);
+}
+
+.cell-white-king {
+  background-image: url('../public/king-white.png');
+}
+
+.cell-black-king {
+  background-image: url('../public/king-black.png');
 }
