@@ -71,9 +71,9 @@ tr:nth-child(even) td:nth-child(odd) {
 }
 
 .cell-white-king {
-  background-image: url('../public/king-white.png');
+  background-image: url('/king-white.png');
 }
 
 .cell-black-king {
-  background-image: url('../public/king-black.png');
+  background-image: url('/king-black.png');
 }
