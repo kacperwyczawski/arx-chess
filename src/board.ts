@@ -42,19 +42,18 @@ export class Board {
                 this.cells[y].push(cell);
             });
         });
-        this.cells[1][1].type = "factory";
-        this.cells[1][1].player = "white";
-        this.cells[1][1].piece = new King("white");
-        this.cells[1][4].type = "factory";
-        this.cells[1][7].type = "factory";
-        this.cells[4][1].type = "factory";
-        this.cells[4][4].type = "factory";
-        this.cells[4][7].type = "factory";
-        this.cells[7][1].type = "factory";
-        this.cells[7][4].type = "factory";
-        this.cells[7][7].type = "factory";
-        this.cells[7][7].player = "black";
-        this.cells[7][7].piece = new King("black");
+        this.getCell(1, 1).player = "white";
+        this.getCell(1, 1).piece = new King("white");
+        this.getCell(7, 7).player = "black";
+        this.getCell(7, 7).piece = new King("black");
+        const factoryCells = [
+            [1, 1], [1, 4], [1, 7],
+            [4, 1], [4, 4], [4, 7],
+            [7, 1], [7, 4], [7, 7]
+        ];
+        factoryCells.forEach(([x, y]) => {
+            this.getCell(x, y).type = "factory";
+        });
         this.applyClassNames(table);
 	}
 
