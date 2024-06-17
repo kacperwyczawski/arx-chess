@@ -4,18 +4,17 @@ import { King } from "./pieces/king";
 
 export class Board {
 	private cells: Cell[][] = [];
-
     private selectedCell: Cell | null = null;
+    private currentPlayer: "white" | "black" = "white";
+    private HTMLPlayerElements: [HTMLElement, HTMLElement];
 
-    private get size() {
-        return 9;
-    }
+	constructor(
+        table: HTMLTableElement,
+        white: HTMLElement,
+        black: HTMLElement
+    ) {
+        this.HTMLPlayerElements = [white, black];
 
-    private getCell(x: number, y: number) {
-        return this.cells[y][x];
-    }
-
-	setup(table: HTMLTableElement) {
 		const body = table.createTBody();
 		const size = 9;
 		_.times(size, y => {
@@ -25,7 +24,10 @@ export class Board {
                 const cell = new Cell(row.insertCell());
                 cell.onClick = () => {
                     // TODO: highlight selected cell/piece
+
+                    // place piece
                     if (this.selectedCell) {
+                        this.nextPlayer();
                         cell.piece = this.selectedCell.piece;
                         cell.player = this.selectedCell.player;
                         this.selectedCell.piece = null;
@@ -35,7 +37,8 @@ export class Board {
                         return;
                     }
                     
-                    if (cell.piece) {
+                    // grab piece
+                    if (cell.piece && cell.player === this.currentPlayer) {
                         this.selectedCell = cell;
                     }
                 }
@@ -56,6 +59,21 @@ export class Board {
         });
         this.applyClassNames(table);
 	}
+
+    private nextPlayer() {
+        this.currentPlayer = this.currentPlayer === "white" ? "black" : "white";
+        this.HTMLPlayerElements.forEach(player => {
+            player.classList.toggle("active");
+        });
+    }
+
+    private get size() {
+        return 9;
+    }
+
+    private getCell(x: number, y: number) {
+        return this.cells[y][x];
+    }
 
     private applyClassNames(table: HTMLTableElement) {
         _.times(this.size, y => {

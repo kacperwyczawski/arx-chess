@@ -36,6 +36,10 @@ main {
 
 :is(#white, #black).active {
   text-decoration: underline;
+  
+  &::after {
+    content: '<';
+  }
 }
 
 #board {
@@ -60,14 +64,14 @@ tr:nth-child(even) td:nth-child(odd) {
 
 .cell-factory {
   border: .3rem dashed var(--border);
-}
 
-.cell-factory.cell-white {
-  outline: .3rem solid var(--player-white);
-}
+  &.cell-white {
+    outline: .3rem solid var(--player-white);
+  }
 
-.cell-factory.cell-black {
-  outline: .3rem solid var(--player-black);
+  &.cell-black {
+    outline: .3rem solid var(--player-black);
+  }
 }
 
 .cell-white-king {
