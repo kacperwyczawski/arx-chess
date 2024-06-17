@@ -1,1 +1,1 @@
-type Player = "white" | "black" | "neutral";
+type Player = "white" | "black";

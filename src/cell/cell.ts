@@ -2,7 +2,7 @@ import { Piece } from "../pieces/piece";
 
 export class Cell {
 	type: CellType = "empty";
-	player: Player = "neutral";
+	player: Player | null = null;
 	piece: Piece | null = null;
 	onClick: () => void = () => {};
 	private HTMLCell: HTMLTableCellElement;
@@ -20,7 +20,7 @@ export class Cell {
 	get classNames() {
 		let result = [
 			`cell-${this.type}`,
-			`cell-${this.player}`
+			`cell-${this.player ?? 'neutral'}`
 		];
 		if (this.piece) {
 			result.push(

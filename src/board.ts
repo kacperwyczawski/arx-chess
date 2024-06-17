@@ -29,7 +29,7 @@ export class Board {
                         cell.piece = this.selectedCell.piece;
                         cell.player = this.selectedCell.player;
                         this.selectedCell.piece = null;
-                        this.selectedCell.player = "neutral";
+                        this.selectedCell.player = null;
                         this.selectedCell = null;
                         this.applyClassNames(table);
                         return;
