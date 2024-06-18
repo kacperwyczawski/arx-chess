@@ -1,8 +1,16 @@
 import "./style.css";
 import { Board } from "./board.ts";
 
+function $(selector: string): HTMLElement {
+    return document.querySelector(selector)!;
+}
+
 new Board(
-    document.querySelector<HTMLTableElement>("#board")!,
-    document.querySelector<HTMLElement>("#white")!,
-    document.querySelector<HTMLElement>("#black")!
+    $("#board") as HTMLTableElement,
+    $("#white"),
+    $("#black"),
+    $("#white-pieces"),
+    $("#black-pieces"),
+    $("#white-max-pieces"),
+    $("#black-max-pieces")
 );

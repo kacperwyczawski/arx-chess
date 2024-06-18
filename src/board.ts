@@ -9,13 +9,17 @@ export class Board {
     private HTMLPlayerElements: [HTMLElement, HTMLElement];
 
 	constructor(
-        table: HTMLTableElement,
-        white: HTMLElement,
-        black: HTMLElement
+        HTMLTable: HTMLTableElement,
+        HTMLWhite: HTMLElement,
+        HTMLBlack: HTMLElement,
+        private HTMLWhitePieces: HTMLElement,
+        private HTMLBlackPieces: HTMLElement,
+        private HTMLWhiteMaxPieces: HTMLElement,
+        private HTMLBlackMaxPieces: HTMLElement
     ) {
-        this.HTMLPlayerElements = [white, black];
+        this.HTMLPlayerElements = [HTMLWhite, HTMLBlack];
 
-		const body = table.createTBody();
+		const body = HTMLTable.createTBody();
 		const size = 9;
 		_.times(size, y => {
             const row = body.insertRow();
@@ -27,13 +31,17 @@ export class Board {
 
                     // place piece
                     if (this.selectedCell) {
-                        this.nextPlayer();
+                        if (cell.piece) {
+                            const HTMLOpponentPieces = cell.player === "white" ? this.HTMLBlackPieces : this.HTMLWhitePieces;
+                            HTMLOpponentPieces.textContent = (parseInt(HTMLOpponentPieces.textContent!) - 1).toString();
+                        }
                         cell.piece = this.selectedCell.piece;
                         cell.player = this.selectedCell.player;
                         this.selectedCell.piece = null;
                         this.selectedCell.player = null;
                         this.selectedCell = null;
-                        this.applyClassNames(table);
+                        this.applyClassNames(HTMLTable);
+                        this.nextPlayer();
                         return;
                     }
                     
@@ -57,7 +65,10 @@ export class Board {
         factoryCells.forEach(([x, y]) => {
             this.getCell(x, y).type = "factory";
         });
-        this.applyClassNames(table);
+        this.applyClassNames(HTMLTable);
+
+        HTMLWhitePieces.textContent = "1";
+        HTMLBlackPieces.textContent = "1";
 	}
 
     private nextPlayer() {
