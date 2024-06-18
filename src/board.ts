@@ -1,24 +1,18 @@
 import _ from "lodash-es";
 import { Cell } from "./cell/cell";
 import { King } from "./pieces/king";
+import { PlayerDisplay } from "./displays/playerDisplay";
+import { PieceCountDisplay } from "./displays/pieceCountDisplay";
 
 export class Board {
 	private cells: Cell[][] = [];
     private selectedCell: Cell | null = null;
-    private currentPlayer: "white" | "black" = "white";
-    private HTMLPlayerElements: [HTMLElement, HTMLElement];
+    private playerDisplay = new PlayerDisplay();
+    private pieceCountDisplay = new PieceCountDisplay();
 
 	constructor(
-        HTMLTable: HTMLTableElement,
-        HTMLWhite: HTMLElement,
-        HTMLBlack: HTMLElement,
-        private HTMLWhitePieces: HTMLElement,
-        private HTMLBlackPieces: HTMLElement,
-        private HTMLWhiteMaxPieces: HTMLElement,
-        private HTMLBlackMaxPieces: HTMLElement
+        HTMLTable: HTMLTableElement
     ) {
-        this.HTMLPlayerElements = [HTMLWhite, HTMLBlack];
-
 		const body = HTMLTable.createTBody();
 		const size = 9;
 		_.times(size, y => {
@@ -32,8 +26,7 @@ export class Board {
                     // place piece
                     if (this.selectedCell) {
                         if (cell.piece) {
-                            const HTMLOpponentPieces = cell.player === "white" ? this.HTMLBlackPieces : this.HTMLWhitePieces;
-                            HTMLOpponentPieces.textContent = (parseInt(HTMLOpponentPieces.textContent!) - 1).toString();
+                            this.pieceCountDisplay.reduce(cell.player!);
                         }
                         cell.piece = this.selectedCell.piece;
                         cell.player = this.selectedCell.player;
@@ -41,12 +34,12 @@ export class Board {
                         this.selectedCell.player = null;
                         this.selectedCell = null;
                         this.applyClassNames(HTMLTable);
-                        this.nextPlayer();
+                        this.playerDisplay.NextPlayer();
                         return;
                     }
                     
                     // grab piece
-                    if (cell.piece && cell.player === this.currentPlayer) {
+                    if (cell.piece && cell.player === this.playerDisplay.currentPlayer) {
                         this.selectedCell = cell;
                     }
                 }
@@ -66,17 +59,7 @@ export class Board {
             this.getCell(x, y).type = "factory";
         });
         this.applyClassNames(HTMLTable);
-
-        HTMLWhitePieces.textContent = "1";
-        HTMLBlackPieces.textContent = "1";
 	}
-
-    private nextPlayer() {
-        this.currentPlayer = this.currentPlayer === "white" ? "black" : "white";
-        this.HTMLPlayerElements.forEach(player => {
-            player.classList.toggle("active");
-        });
-    }
 
     private get size() {
         return 9;
