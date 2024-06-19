@@ -1,21 +1,21 @@
 export class Player {
     private mainElement;
     private pieceCountElement;
-    private pieceCount;
-
-    color: PlayerColor;
+    private pieceCount = 1;
+    private maxPiecesElement;
+    private maxPieces = 2;
 
     constructor(
-        color: PlayerColor
+        public color: PlayerColor
     ) {
         function $(selector: string) {
             return document.querySelector(selector);
         }
         this.mainElement = $(`#${color}`)!;
         this.pieceCountElement = $(`#${color}-pieces`)!;
-        this.pieceCount = 1;
+        this.maxPiecesElement = $(`#${color}-max-pieces`)!;
         this.pieceCountElement.textContent = "1";
-        this.color = color;
+        this.maxPiecesElement.textContent = "2";
     }
 
     public removePiece() {
@@ -26,6 +26,18 @@ export class Player {
     public addPiece() {
         this.pieceCount++;
         this.pieceCountElement.textContent = this.pieceCount.toString();
+    }
+
+    public increaseMaxPieces() {
+        this.maxPieces++;
+    }
+
+    public decreaseMaxPieces() {
+        this.maxPieces--;
+    }
+
+    public canPlacePiece() {
+        return this.pieceCount < this.maxPieces;
     }
 
     public toggleActive() {
