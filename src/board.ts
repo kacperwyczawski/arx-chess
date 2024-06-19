@@ -11,6 +11,9 @@ export class Board {
         new Player("black")
     ];
     private currentPlayerIndex = 0;
+    private get nextPlayerIndex() {
+        return (this.currentPlayerIndex + 1) % 2;
+    }
 
 	constructor(
         HTMLTable: HTMLTableElement
@@ -30,10 +33,15 @@ export class Board {
                         if (cell.piece) {
                             this.players[this.currentPlayerIndex].removePiece();
                         }
+                        if (cell.type === "factory") {
+                            this.players[this.currentPlayerIndex].increaseGoldPerTurn();
+                            if (cell.playerColor === this.players[this.nextPlayerIndex].color) {
+                                this.players[this.nextPlayerIndex].decreaseGoldPerTurn();
+                            }
+                        }
                         cell.piece = this.selectedCell.piece;
                         cell.playerColor = this.selectedCell.playerColor;
                         this.selectedCell.piece = null;
-                        this.selectedCell.playerColor = null;
                         this.selectedCell = null;
                         this.applyClassNames(HTMLTable);
                         this.nextPlayer();
@@ -84,7 +92,7 @@ export class Board {
 
     private nextPlayer() {
         this.players[this.currentPlayerIndex].endTurn();
-        this.currentPlayerIndex = (this.currentPlayerIndex + 1) % 2;
+        this.currentPlayerIndex = this.nextPlayerIndex;
         this.players[this.currentPlayerIndex].startTurn();
     }
 }

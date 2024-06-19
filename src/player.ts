@@ -57,4 +57,14 @@ export class Player {
         this.gold += this.goldPerTurn;
         this.goldElement.textContent = this.gold.toString();
     }
+
+    public increaseGoldPerTurn() {
+        this.goldPerTurn++;
+        this.goldPerTurnElement.textContent = this.goldPerTurn.toString();
+    }
+
+    public decreaseGoldPerTurn() {
+        this.goldPerTurn--;
+        this.goldPerTurnElement.textContent = this.goldPerTurn.toString();
+    }
 }
