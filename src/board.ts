@@ -11,9 +11,6 @@ export class Board {
         new Player("black")
     ];
     private currentPlayerIndex = 0;
-    private get nextPlayerIndex() {
-        return (this.currentPlayerIndex + 1) % 2;
-    }
 
 	constructor(
         HTMLTable: HTMLTableElement
@@ -26,17 +23,15 @@ export class Board {
             _.times(size, () => {
                 const cell = new Cell(row.insertCell());
                 cell.onClick = () => {
-                    // TODO: highlight selected cell/piece
-
                     // place piece
                     if (this.selectedCell) {
                         if (cell.piece) {
-                            this.players[this.currentPlayerIndex].removePiece();
+                            this.currentPlayer.removePiece();
                         }
                         if (cell.type === "factory") {
-                            this.players[this.currentPlayerIndex].increaseGoldPerTurn();
-                            if (cell.playerColor === this.players[this.nextPlayerIndex].color) {
-                                this.players[this.nextPlayerIndex].decreaseGoldPerTurn();
+                            this.currentPlayer.increaseGoldPerTurn();
+                            if (cell.playerColor === this.nextPlayer.color) {
+                                this.nextPlayer.decreaseGoldPerTurn();
                             }
                         }
                         cell.piece = this.selectedCell.piece;
@@ -44,13 +39,16 @@ export class Board {
                         this.selectedCell.piece = null;
                         this.selectedCell = null;
                         this.applyClassNames(HTMLTable);
-                        this.nextPlayer();
+                        this.endTurn();
                         return;
                     }
                     
                     // grab piece
-                    if (cell.piece && cell.playerColor === this.players[this.currentPlayerIndex].color) {
+                    if (
+                        (cell.piece && cell.playerColor === this.currentPlayer.color)
+                        || (cell.type === "factory" && cell.playerColor === this.currentPlayer.color)) {
                         this.selectedCell = cell;
+                        cell.toggleSelected();
                     }
                 }
                 this.cells[y].push(cell);
@@ -90,9 +88,17 @@ export class Board {
         });
     }
 
-    private nextPlayer() {
-        this.players[this.currentPlayerIndex].endTurn();
-        this.currentPlayerIndex = this.nextPlayerIndex;
-        this.players[this.currentPlayerIndex].startTurn();
+    private endTurn() {
+        this.currentPlayer.endTurn();
+        this.currentPlayerIndex = (this.currentPlayerIndex + 1) % 2;
+        this.currentPlayer.startTurn();
+    }
+
+    private get currentPlayer() {
+        return this.players[this.currentPlayerIndex];
+    }
+
+    private get nextPlayer() {
+        return this.players[(this.currentPlayerIndex + 1) % 2];
     }
 }

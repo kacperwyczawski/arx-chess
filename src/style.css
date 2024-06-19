@@ -55,6 +55,10 @@ td {
   background-size: 90%;
   background-position: center;
   background-repeat: no-repeat;
+
+  &.selected {
+    filter: brightness(1.2);
+  }
 }
 
 tr:nth-child(odd) td:nth-child(even),

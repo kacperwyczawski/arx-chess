@@ -17,6 +17,8 @@ export class Cell {
 		});
 	}
 
+	// maybe don't pass classes to board, but instead have a method that applies classes to the cell
+	// after refactor, check if .selected is working properly (it should be removed after placing a piece)
 	get classNames() {
 		let result = [
 			`cell-${this.type}`,
@@ -28,5 +30,9 @@ export class Cell {
 			);
 		}
 		return result;
+	}
+
+	public toggleSelected() {
+		this.HTMLCell.classList.toggle("selected");
 	}
 }
