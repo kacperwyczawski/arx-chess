@@ -83,9 +83,8 @@ export class Board {
     }
 
     private nextPlayer() {
+        this.players[this.currentPlayerIndex].endTurn();
         this.currentPlayerIndex = (this.currentPlayerIndex + 1) % 2;
-        this.players.forEach((player) => {
-            player.toggleActive();
-        });
+        this.players[this.currentPlayerIndex].startTurn();
     }
 }
