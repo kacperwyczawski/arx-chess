@@ -1,14 +1,16 @@
 import _ from "lodash-es";
 import { Cell } from "./cell/cell";
 import { King } from "./pieces/king";
-import { PlayerDisplay } from "./displays/playerDisplay";
-import { PieceCountDisplay } from "./displays/pieceCountDisplay";
+import { Player } from "./player";
 
 export class Board {
 	private cells: Cell[][] = [];
     private selectedCell: Cell | null = null;
-    private playerDisplay = new PlayerDisplay();
-    private pieceCountDisplay = new PieceCountDisplay();
+    private players = [
+        new Player("white"),
+        new Player("black")
+    ];
+    private currentPlayerIndex = 0;
 
 	constructor(
         HTMLTable: HTMLTableElement
@@ -26,29 +28,29 @@ export class Board {
                     // place piece
                     if (this.selectedCell) {
                         if (cell.piece) {
-                            this.pieceCountDisplay.reduce(cell.player!);
+                            this.players[this.currentPlayerIndex].removePiece();
                         }
                         cell.piece = this.selectedCell.piece;
-                        cell.player = this.selectedCell.player;
+                        cell.playerColor = this.selectedCell.playerColor;
                         this.selectedCell.piece = null;
-                        this.selectedCell.player = null;
+                        this.selectedCell.playerColor = null;
                         this.selectedCell = null;
                         this.applyClassNames(HTMLTable);
-                        this.playerDisplay.NextPlayer();
+                        this.nextPlayer();
                         return;
                     }
                     
                     // grab piece
-                    if (cell.piece && cell.player === this.playerDisplay.currentPlayer) {
+                    if (cell.piece && cell.playerColor === this.players[this.currentPlayerIndex].color) {
                         this.selectedCell = cell;
                     }
                 }
                 this.cells[y].push(cell);
             });
         });
-        this.getCell(1, 1).player = "white";
+        this.getCell(1, 1).playerColor = "white";
         this.getCell(1, 1).piece = new King("white");
-        this.getCell(7, 7).player = "black";
+        this.getCell(7, 7).playerColor = "black";
         this.getCell(7, 7).piece = new King("black");
         const factoryCells = [
             [1, 1], [1, 4], [1, 7],
@@ -77,6 +79,13 @@ export class Board {
                 HTMLCell.className = "";
                 HTMLCell.classList.add(...cell.classNames);
             });
+        });
+    }
+
+    private nextPlayer() {
+        this.currentPlayerIndex = (this.currentPlayerIndex + 1) % 2;
+        this.players.forEach((player) => {
+            player.toggleActive();
         });
     }
 }
