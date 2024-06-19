@@ -1,1 +1,0 @@
-type CellType = "empty" | "factory";

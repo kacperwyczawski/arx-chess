@@ -1,3 +1,5 @@
+/* TODO: change cursors */
+
 @import '@fontsource/ibm-plex-mono';
 
 * {
@@ -59,29 +61,31 @@ td {
   &.selected {
     filter: brightness(1.2);
   }
+
+  &.factory {
+    border: .3rem dashed var(--border);
+  }
+
+  &[data-color='white'] {
+    &.king {
+      background-image: url('/king-white.png');
+    }
+    &.factory {
+      outline: .3rem solid var(--player-white);
+    }
+  }
+
+  &[data-color='black'] {
+    &.king {
+      background-image: url('/king-black.png');
+    }
+    &.factory {
+      outline: .3rem solid var(--player-black);
+    }
+  }
 }
 
 tr:nth-child(odd) td:nth-child(even),
 tr:nth-child(even) td:nth-child(odd) {
   background-color: var(--square-dark);
-}
-
-.cell-factory {
-  border: .3rem dashed var(--border);
-
-  &.cell-white {
-    outline: .3rem solid var(--player-white);
-  }
-
-  &.cell-black {
-    outline: .3rem solid var(--player-black);
-  }
-}
-
-.cell-white-king {
-  background-image: url('/king-white.png');
-}
-
-.cell-black-king {
-  background-image: url('/king-black.png');
 }

@@ -1,7 +1,9 @@
 import _ from "lodash-es";
-import { Cell } from "./cell/cell";
+import { Cell } from "./cell";
 import { King } from "./pieces/king";
 import { Player } from "./player";
+
+// TODO: abstract HTML table as board and current board as game
 
 export class Board {
 	private cells: Cell[][] = [];
@@ -21,71 +23,52 @@ export class Board {
             const row = body.insertRow();
             this.cells[y] = [];
             _.times(size, () => {
-                const cell = new Cell(row.insertCell());
-                cell.onClick = () => {
+                const targetCell = new Cell(row.insertCell());
+                targetCell.onClick = () => {
                     // place piece
-                    if (this.selectedCell) {
-                        if (cell.piece) {
-                            this.currentPlayer.removePiece();
+                    if (this.selectedCell && this.selectedCell.piece) {
+                        if (targetCell.piece) {
+                            this.nextPlayer.removePiece();
                         }
-                        if (cell.type === "factory") {
+                        if (targetCell.type === "factory") {
                             this.currentPlayer.increaseGoldPerTurn();
-                            if (cell.playerColor === this.nextPlayer.color) {
+                            if (targetCell.playerColor === this.nextPlayer.color) {
                                 this.nextPlayer.decreaseGoldPerTurn();
                             }
                         }
-                        cell.piece = this.selectedCell.piece;
-                        cell.playerColor = this.selectedCell.playerColor;
-                        this.selectedCell.piece = null;
+                        targetCell.placePiece(this.selectedCell.piece);
+                        this.selectedCell.removePiece();
+                        this.selectedCell.toggleSelected();
                         this.selectedCell = null;
-                        this.applyClassNames(HTMLTable);
                         this.endTurn();
                         return;
                     }
                     
                     // grab piece
                     if (
-                        (cell.piece && cell.playerColor === this.currentPlayer.color)
-                        || (cell.type === "factory" && cell.playerColor === this.currentPlayer.color)) {
-                        this.selectedCell = cell;
-                        cell.toggleSelected();
+                        (targetCell.piece && targetCell.playerColor === this.currentPlayer.color)
+                        || (targetCell.type === "factory" && targetCell.playerColor === this.currentPlayer.color)) {
+                        this.selectedCell = targetCell;
+                        targetCell.toggleSelected();
                     }
                 }
-                this.cells[y].push(cell);
+                this.cells[y].push(targetCell);
             });
         });
-        this.getCell(1, 1).playerColor = "white";
-        this.getCell(1, 1).piece = new King("white");
-        this.getCell(7, 7).playerColor = "black";
-        this.getCell(7, 7).piece = new King("black");
+        this.getCell(1, 1).placePiece(new King("white"));
+        this.getCell(7, 7).placePiece(new King("black"));
         const factoryCells = [
             [1, 1], [1, 4], [1, 7],
             [4, 1], [4, 4], [4, 7],
             [7, 1], [7, 4], [7, 7]
         ];
         factoryCells.forEach(([x, y]) => {
-            this.getCell(x, y).type = "factory";
+            this.getCell(x, y).placeFactory();
         });
-        this.applyClassNames(HTMLTable);
 	}
-
-    private get size() {
-        return 9;
-    }
 
     private getCell(x: number, y: number) {
         return this.cells[y][x];
-    }
-
-    private applyClassNames(table: HTMLTableElement) {
-        _.times(this.size, y => {
-            _.times(this.size, x => {
-                const cell = this.getCell(x, y);
-                const HTMLCell = table.rows[y].cells[x];
-                HTMLCell.className = "";
-                HTMLCell.classList.add(...cell.classNames);
-            });
-        });
     }
 
     private endTurn() {
