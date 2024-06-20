@@ -72,3 +72,34 @@ tr:nth-child(odd) td:nth-child(even),
 tr:nth-child(even) td:nth-child(odd) {
   background-color: var(--square-dark);
 }
+
+dialog {
+  max-width: 30rem;
+  padding: .6rem;
+  border: none;
+  background: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, .3);
+  }
+
+  & ol {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: .6rem;
+
+    & li {
+      width: 3rem;
+      height: 3rem;
+      background-color: var(--square-dark);
+      outline: .6rem solid var(--square-light);
+    }
+  }
+}

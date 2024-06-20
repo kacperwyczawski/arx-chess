@@ -31,7 +31,6 @@ export class Cell {
 	}
 
 	placePiece(piece: Piece) {
-		console.log("placePiece", piece);
 		this.#piece = piece;
 		this.#playerColor = piece.color;
 		this.#HTMLCell.style.backgroundImage = `url('${piece.toString()}-${piece.color}.png')`;
