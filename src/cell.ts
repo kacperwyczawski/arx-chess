@@ -34,14 +34,12 @@ export class Cell {
 		console.log("placePiece", piece);
 		this.#piece = piece;
 		this.#playerColor = piece.color;
-		this.#HTMLCell.classList.add(
-			piece.toString(),
-		);
-		this.#HTMLCell.dataset.color = piece.color;
+		this.#HTMLCell.style.backgroundImage = `url('${piece.toString()}-${piece.color}.png')`;
+		this.#HTMLCell.style.setProperty("--outline", `var(--player-${piece.color})`);
 	}
 
 	removePiece() {
-		this.#HTMLCell.classList.remove(this.#piece?.toString() ?? "");
+		this.#HTMLCell.style.backgroundImage = "";
 		this.#piece = null;
 	}
 

@@ -54,7 +54,7 @@ td {
   width: 3rem;
   height: 3rem;
   background-color: var(--square-light);
-  background-size: 90%;
+  background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
 
@@ -64,24 +64,7 @@ td {
 
   &.factory {
     border: .3rem dashed var(--border);
-  }
-
-  &[data-color='white'] {
-    &.king {
-      background-image: url('/king-white.png');
-    }
-    &.factory {
-      outline: .3rem solid var(--player-white);
-    }
-  }
-
-  &[data-color='black'] {
-    &.king {
-      background-image: url('/king-black.png');
-    }
-    &.factory {
-      outline: .3rem solid var(--player-black);
-    }
+    outline: .3rem solid var(--outline); /* --outline is injected using JavaScript */
   }
 }
 
