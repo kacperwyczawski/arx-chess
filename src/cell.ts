@@ -35,11 +35,13 @@ export class Cell {
 		this.#playerColor = piece.color;
 		this.#HTMLCell.style.backgroundImage = `url('${piece.toString()}-${piece.color}.png')`;
 		this.#HTMLCell.style.setProperty("--outline", `var(--player-${piece.color})`);
+		this.#HTMLCell.classList.add("piece-to-move")
 	}
 
 	removePiece() {
 		this.#HTMLCell.style.backgroundImage = "";
 		this.#piece = null;
+		this.#HTMLCell.classList.remove("piece-to-move");
 	}
 
 	toggleSelected() {

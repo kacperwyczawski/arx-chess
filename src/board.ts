@@ -29,6 +29,7 @@ export class Board {
                 targetCell.onClick = () => {
                     // place piece
                     if (this.#selectedCell && this.#selectedCell.piece) {
+                        HTMLTable.classList.remove("piece-in-hand");
                         if (targetCell.piece) {
                             this.nextPlayer.removePiece();
                         }
@@ -48,6 +49,7 @@ export class Board {
                     
                     // grab piece
                     if (targetCell.piece && targetCell.playerColor === this.currentPlayer.color) {
+                        HTMLTable.classList.add("piece-in-hand");
                         this.#selectedCell = targetCell;
                         targetCell.toggleSelected();
                         return;
