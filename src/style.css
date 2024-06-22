@@ -50,10 +50,10 @@ main {
   border: .6rem solid var(--square-light);
 }
 
-td {
+.cell {
   width: 3rem;
   height: 3rem;
-  background-color: var(--square-light);
+  background-color: var(--square-dark);
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -70,7 +70,7 @@ td {
 
 tr:nth-child(odd) td:nth-child(even),
 tr:nth-child(even) td:nth-child(odd) {
-  background-color: var(--square-dark);
+  background-color: var(--square-light);
 }
 
 dialog {
@@ -96,10 +96,25 @@ dialog {
     gap: .6rem;
 
     & li {
-      width: 3rem;
-      height: 3rem;
-      background-color: var(--square-dark);
+      cursor: pointer;
       outline: .6rem solid var(--square-light);
+      display: flex;
+      align-items: start;
+
+      & span {
+        background-color: var(--square-light);
+        padding: .1rem;
+        font-size: 80%;
+        border-bottom-right-radius: .2rem;
+      }
+    }
+
+    & li.not-affordable {
+      cursor: not-allowed;
+
+      & span {
+        background-color: lightcoral;
+      }
     }
   }
 }

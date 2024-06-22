@@ -55,7 +55,20 @@ export class Board {
 
                     // open factory menu
                     if (targetCell.type === "factory" && targetCell.playerColor === this.currentPlayer.color) {
-                        this.#factoryMenu.open();
+                        if (!this.currentPlayer.canPlacePiece()) {
+                            alert("You can't place any more pieces. Capture more factories or upgrade them to barracks.");
+                            return;
+                        }
+                        // TODO: cancel
+                        this.#factoryMenu.open(piece => {
+                            if (this.currentPlayer.gold < piece.cost) {
+                                return;
+                            }
+                            this.currentPlayer.decreaseGold(piece.cost);
+                            this.currentPlayer.addPiece();
+                            targetCell.placePiece(piece);
+                            this.endTurn();
+                        }, this.currentPlayer.color, this.currentPlayer.gold);
                         return;
                     }
                 }

@@ -24,7 +24,7 @@ export class Cell {
 		HTMLCell: HTMLTableCellElement
 	) {
 		this.#HTMLCell = HTMLCell;
-
+		this.#HTMLCell.classList.add("cell");
 		this.#HTMLCell.addEventListener("click", () => {
 			this.onClick();
 		});

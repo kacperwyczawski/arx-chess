@@ -1,3 +1,10 @@
+import { Bishop } from "./pieces/Bishop";
+import { Knight } from "./pieces/Knight";
+import { Queen } from "./pieces/Queen";
+import { Rook } from "./pieces/Rook";
+import { Pawn } from "./pieces/pawn";
+import { Piece } from "./pieces/piece";
+
 export class factoryMenu {
     #HTMLDialog: HTMLDialogElement;
     #HTMLList;
@@ -7,7 +14,42 @@ export class factoryMenu {
         this.#HTMLList = this.#HTMLDialog.children[0];
     }
 
-    open() {
+    open(
+        onBuy: (piece: Piece) => void,
+        color: PlayerColor,
+        gold: number
+    ) {
         this.#HTMLDialog.showModal();
+        this.#HTMLList.innerHTML = '';
+
+        // TODO: outsource this to tech tree
+        const pieces: Piece[] = [
+            new Pawn(color),
+            new Rook(color),
+            new Knight(color),
+            new Bishop(color),
+            new Queen(color),
+        ];
+
+        // TODO: gray out pieces that player can't afford
+        for (const piece of pieces) {
+            const li = document.createElement('li');
+            li.classList.add('cell');
+		    li.style.backgroundImage = `url('${piece.toString()}-${piece.color}.png')`;
+            if (piece.cost > gold) {
+                li.classList.add('not-affordable');
+            } else {
+                li.onclick = () => {
+                    onBuy(piece);
+                    this.#HTMLDialog.close();
+                }
+            }
+
+            const span = document.createElement('span');
+            span.textContent = piece.cost.toString();
+
+            li.appendChild(span);
+            this.#HTMLList.appendChild(li);
+        }
     }
 }
