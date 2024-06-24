@@ -1,7 +1,7 @@
-import { Bishop } from "./pieces/Bishop";
-import { Knight } from "./pieces/Knight";
-import { Queen } from "./pieces/Queen";
-import { Rook } from "./pieces/Rook";
+import { Bishop } from "./pieces/bishop";
+import { Knight } from "./pieces/knight";
+import { Queen } from "./pieces/queen";
+import { Rook } from "./pieces/rook";
 import { Pawn } from "./pieces/pawn";
 import { Piece } from "./pieces/piece";
 
