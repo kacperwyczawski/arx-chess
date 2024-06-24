@@ -71,6 +71,7 @@ export class Player {
     handleTurnEnd() {
         this.#gold += this.#goldPerTurn;
         this.#goldElement.textContent = this.#gold.toString();
+        this.#mainElement.classList.remove("active");
     }
 
     handleTurnStart() {
