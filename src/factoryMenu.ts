@@ -15,7 +15,7 @@ export class factoryMenu {
     }
 
     open(
-        onBuy: (piece: Piece) => void,
+        onBuy: (piece: Piece | Building) => void,
         color: PlayerColor,
         gold: number
     ) {
@@ -31,22 +31,46 @@ export class factoryMenu {
             new Queen(color),
         ];
 
-        // TODO: gray out pieces that player can't afford
+        const items: {
+            cost: number,
+            background: string,
+            item: Piece | Building
+        }[] = [];
+
         for (const piece of pieces) {
+            items.push({
+                cost: piece.cost,
+                background: `url('${piece.toString()}-${piece.color}.png')`,
+                item: piece
+            });
+        }
+
+        items.push({
+                cost: 3,
+                background: 'url("upgrade-mine.png")',
+                item: 'mine'
+            }, {
+                cost: 3,
+                background: 'url("upgrade-barracks.png")',
+                item: 'barracks'
+            }
+        )
+
+        for (const item of items) {
             const li = document.createElement('li');
             li.classList.add('cell');
-		    li.style.backgroundImage = `url('${piece.toString()}-${piece.color}.png')`;
-            if (piece.cost > gold) {
+            li.style.backgroundImage = item.background;
+            if (item.cost > gold) {
                 li.classList.add('not-affordable');
             } else {
                 li.onclick = () => {
-                    onBuy(piece);
+                    onBuy(item.item);
                     this.#HTMLDialog.close();
                 }
             }
 
             const span = document.createElement('span');
-            span.textContent = piece.cost.toString();
+            span.textContent = item.cost.toString();
 
             li.appendChild(span);
             this.#HTMLList.appendChild(li);

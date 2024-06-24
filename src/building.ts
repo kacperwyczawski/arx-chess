@@ -1,1 +1,4 @@
-type Building = "factory";
+type Building = 
+    "factory"
+    | "barracks"
+    | "mine"

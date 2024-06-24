@@ -1,5 +1,5 @@
 export class Piece {
-    #color;
+    #color: PlayerColor;
 
     get color() {
         return this.#color;
@@ -9,7 +9,7 @@ export class Piece {
         return Infinity;
     }
 
-    constructor(color: "white" | "black") {
+    constructor(color: PlayerColor) {
         this.#color = color;
     }
 

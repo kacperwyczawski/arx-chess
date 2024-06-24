@@ -62,12 +62,13 @@ export class Board {
                             return;
                         }
                         // TODO: cancel
-                        this.#factoryMenu.open(piece => {
-                            if (this.currentPlayer.gold < piece.cost) {
+                        this.#factoryMenu.open(item => {
+                            if (typeof item === "string") {
+                                // TODO: upgrade factory
                                 return;
                             }
-                            this.currentPlayer.handlePieceBuy(piece);
-                            targetCell.placePiece(piece);
+                            this.currentPlayer.handlePieceBuy(item);
+                            targetCell.placePiece(item);
                             this.endTurn();
                         }, this.currentPlayer.color, this.currentPlayer.gold);
                         return;
