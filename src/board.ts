@@ -31,12 +31,12 @@ export class Board {
                     if (this.#selectedCell && this.#selectedCell.piece) {
                         HTMLTable.classList.remove("piece-in-hand");
                         if (targetCell.piece) {
-                            this.nextPlayer.removePiece();
+                            this.nextPlayer.handlePieceLoss();
                         }
                         if (targetCell.type === "factory") {
-                            this.currentPlayer.increaseGoldPerTurn();
+                            this.currentPlayer.handleFactoryCapture();
                             if (targetCell.playerColor === this.nextPlayer.color) {
-                                this.nextPlayer.decreaseGoldPerTurn();
+                                this.nextPlayer.handleFactoryLoss();
                             }
                         }
                         targetCell.placePiece(this.#selectedCell.piece);
@@ -66,8 +66,7 @@ export class Board {
                             if (this.currentPlayer.gold < piece.cost) {
                                 return;
                             }
-                            this.currentPlayer.decreaseGold(piece.cost);
-                            this.currentPlayer.addPiece();
+                            this.currentPlayer.handlePieceBuy(piece);
                             targetCell.placePiece(piece);
                             this.endTurn();
                         }, this.currentPlayer.color, this.currentPlayer.gold);
@@ -94,9 +93,9 @@ export class Board {
     }
 
     private endTurn() {
-        this.currentPlayer.endTurn();
+        this.currentPlayer.handleTurnEnd();
         this.#currentPlayerIndex = (this.#currentPlayerIndex + 1) % 2;
-        this.currentPlayer.startTurn();
+        this.currentPlayer.handleTurnStart();
     }
 
     private get currentPlayer() {

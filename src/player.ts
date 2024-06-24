@@ -1,3 +1,5 @@
+import { Piece } from "./pieces/piece";
+
 export class Player {
     #mainElement;
     #pieceCountElement;
@@ -36,50 +38,42 @@ export class Player {
         this.#goldPerTurnElement.textContent = "1";
     }
 
-    removePiece() {
-        this.#pieceCount--;
-        this.#pieceCountElement.textContent = this.#pieceCount.toString();
-    }
-
-    addPiece() {
-        this.#pieceCount++;
-        this.#pieceCountElement.textContent = this.#pieceCount.toString();
-    }
-
-    increaseMaxPieces() {
-        this.#maxPieces++;
-    }
-
-    decreaseMaxPieces() {
-        this.#maxPieces--;
-    }
-
     canPlacePiece() {
         return this.#pieceCount < this.#maxPieces;
     }
 
-    startTurn() {
-        this.#mainElement.classList.add("active");
-    }
-
-    endTurn() {
-        this.#mainElement.classList.remove("active");
-        this.#gold += this.#goldPerTurn;
-        this.#goldElement.textContent = this.#gold.toString();
-    }
-
-    increaseGoldPerTurn() {
+    handleFactoryCapture() {
+        this.#maxPieces++;
+        this.#maxPiecesElement.textContent = this.#maxPieces.toString();
         this.#goldPerTurn++;
         this.#goldPerTurnElement.textContent = this.#goldPerTurn.toString();
     }
 
-    decreaseGoldPerTurn() {
+    handleFactoryLoss() {
+        this.#maxPieces--;
+        this.#maxPiecesElement.textContent = this.#maxPieces.toString();
         this.#goldPerTurn--;
         this.#goldPerTurnElement.textContent = this.#goldPerTurn.toString();
     }
 
-    decreaseGold(amount = 1) {
-        this.#gold -= amount;
+    handlePieceLoss() {
+        this.#pieceCount--;
+        this.#pieceCountElement.textContent = this.#pieceCount.toString();
+    }
+
+    handlePieceBuy(piece: Piece) {
+        this.#gold -= piece.cost;
         this.#goldElement.textContent = this.#gold.toString();
+        this.#pieceCount++;
+        this.#pieceCountElement.textContent = this.#pieceCount.toString();
+    }
+
+    handleTurnEnd() {
+        this.#gold += this.#goldPerTurn;
+        this.#goldElement.textContent = this.#gold.toString();
+    }
+
+    handleTurnStart() {
+        this.#mainElement.classList.add("active");
     }
 }
