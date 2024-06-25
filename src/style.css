@@ -7,17 +7,17 @@
 :root {
   --square-light: #f0ead2;
   --square-dark: #dde5b6;
-  --border: #a98467;
+  --border-factory: #a98467;
   --player-white: white;
   --player-black: black;
-  --todo1: #6c584c;
-  --todo2: #adc178;
+  --border-mine: #6c584c;
+  --border-barracks: #adc178;
 }
 
 body {
   font-family: 'IBM Plex Mono', monospace;
   background-color: var(--square-dark);
-  color: var(--border);
+  color: var(--border-factory);
   margin: 0;
   padding: 0;
 }
@@ -60,9 +60,22 @@ main {
     filter: brightness(1.2);
   }
 
-  &.factory {
-    border: .3rem dashed var(--border);
+  &.factory,
+  &.barracks,
+  &.mine {
     outline: .3rem solid var(--outline); /* --outline is injected using JavaScript */
+  }
+
+  &.factory {
+    border: .3rem dashed var(--border-factory);
+  }
+
+  &.barracks {
+    border: .3rem dashed var(--border-barracks);
+  }
+
+  &.mine {
+    border: .3rem dashed var(--border-mine);
   }
 
   &.piece-to-move {

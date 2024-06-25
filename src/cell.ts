@@ -48,8 +48,8 @@ export class Cell {
 		this.#HTMLCell.classList.toggle("selected");
 	}
 
-	placeFactory() {
-		this.#type = "factory";
-		this.#HTMLCell.classList.add("factory");
+	setBuilding(type: Building) {
+		this.#type = type;
+		this.#HTMLCell.classList.add(type);
 	}
 }

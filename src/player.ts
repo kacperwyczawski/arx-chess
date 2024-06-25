@@ -42,18 +42,33 @@ export class Player {
         return this.#pieceCount < this.#maxPieces;
     }
 
-    handleFactoryCapture() {
-        this.#maxPieces++;
+    handleBuildingCapture(type: Building) {
+        this.#maxPieces += type === "barracks" ? 3 : 1;
         this.#maxPiecesElement.textContent = this.#maxPieces.toString();
-        this.#goldPerTurn++;
+        this.#goldPerTurn += type === "mine" ? 3 : 1;
         this.#goldPerTurnElement.textContent = this.#goldPerTurn.toString();
     }
 
-    handleFactoryLoss() {
-        this.#maxPieces--;
+    handleBuildingLoss(type: Building) {
+        this.#maxPieces -= type === "barracks" ? 3 : 1;
         this.#maxPiecesElement.textContent = this.#maxPieces.toString();
-        this.#goldPerTurn--;
+        this.#goldPerTurn -= type === "mine" ? 3 : 1;
         this.#goldPerTurnElement.textContent = this.#goldPerTurn.toString();
+    }
+
+    handleBuildingUpgrade(type: Building) {
+        if (type === "factory") {
+            throw new Error("Cannot upgrade to factory");
+        }
+        
+        this.#gold -= 3;
+        if (type === "barracks") {
+            this.#maxPieces += 2;
+            this.#maxPiecesElement.textContent = this.#maxPieces.toString();
+        } else if (type === "mine") {
+            this.#goldPerTurn += 2;
+            this.#goldPerTurnElement.textContent = this.#goldPerTurn.toString();
+        }
     }
 
     handlePieceLoss() {

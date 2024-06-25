@@ -33,10 +33,10 @@ export class Board {
                         if (targetCell.piece) {
                             this.nextPlayer.handlePieceLoss();
                         }
-                        if (targetCell.type === "factory") {
-                            this.currentPlayer.handleFactoryCapture();
+                        if (targetCell.type) {
+                            this.currentPlayer.handleBuildingCapture(targetCell.type);
                             if (targetCell.playerColor === this.nextPlayer.color) {
-                                this.nextPlayer.handleFactoryLoss();
+                                this.nextPlayer.handleBuildingLoss(targetCell.type);
                             }
                         }
                         targetCell.placePiece(this.#selectedCell.piece);
@@ -64,7 +64,8 @@ export class Board {
                         // TODO: cancel
                         this.#factoryMenu.open(item => {
                             if (typeof item === "string") {
-                                // TODO: upgrade factory
+                                targetCell.setBuilding(item);
+                                this.currentPlayer.handleBuildingUpgrade(item);
                                 return;
                             }
                             this.currentPlayer.handlePieceBuy(item);
@@ -85,7 +86,7 @@ export class Board {
             [7, 1], [7, 4], [7, 7]
         ];
         factoryCells.forEach(([x, y]) => {
-            this.getCell(x, y).placeFactory();
+            this.getCell(x, y).setBuilding("factory");
         });
 	}
 
