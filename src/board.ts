@@ -2,7 +2,7 @@ import _ from "lodash-es";
 import { Cell } from "./cell";
 import { King } from "./pieces/king";
 import { Player } from "./player";
-import { factoryMenu } from "./factoryMenu";
+import { castleMenu } from "./castleMenu";
 
 // TODO: abstract HTML table as board and current board as game
 
@@ -14,7 +14,7 @@ export class Board {
         new Player("black")
     ];
     #currentPlayerIndex = 0;
-    #factoryMenu = new factoryMenu();
+    #castleMenu = new castleMenu();
 
 	constructor(
         HTMLTable: HTMLTableElement
@@ -55,14 +55,14 @@ export class Board {
                         return;
                     }
 
-                    // open factory menu
-                    if (targetCell.type === "factory" && targetCell.playerColor === this.currentPlayer.color) {
+                    // open castle menu
+                    if (targetCell.type === "castle" && targetCell.playerColor === this.currentPlayer.color) {
                         if (!this.currentPlayer.canPlacePiece()) {
-                            alert("You can't place any more pieces. Capture more factories or upgrade them to barracks.");
+                            alert("You can't place any more pieces. Capture more castles or upgrade them to barracks.");
                             return;
                         }
                         // TODO: cancel
-                        this.#factoryMenu.open(item => {
+                        this.#castleMenu.open(item => {
                             if (typeof item === "string") {
                                 targetCell.setBuilding(item);
                                 this.currentPlayer.handleBuildingUpgrade(item);
@@ -80,13 +80,13 @@ export class Board {
         });
         this.getCell(1, 1).placePiece(new King("white"));
         this.getCell(7, 7).placePiece(new King("black"));
-        const factoryCells = [
+        const castleCells = [
             [1, 1], [1, 4], [1, 7],
             [4, 1], [4, 4], [4, 7],
             [7, 1], [7, 4], [7, 7]
         ];
-        factoryCells.forEach(([x, y]) => {
-            this.getCell(x, y).setBuilding("factory");
+        castleCells.forEach(([x, y]) => {
+            this.getCell(x, y).setBuilding("castle");
         });
 	}
 

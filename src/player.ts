@@ -57,8 +57,8 @@ export class Player {
     }
 
     handleBuildingUpgrade(type: Building) {
-        if (type === "factory") {
-            throw new Error("Cannot upgrade to factory");
+        if (type === "castle") {
+            throw new Error("Cannot upgrade to castle");
         }
         
         this.#gold -= 3;

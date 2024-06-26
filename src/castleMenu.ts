@@ -5,12 +5,12 @@ import { Rook } from "./pieces/rook";
 import { Pawn } from "./pieces/pawn";
 import { Piece } from "./pieces/piece";
 
-export class factoryMenu {
+export class castleMenu {
     #HTMLDialog: HTMLDialogElement;
     #HTMLList;
 
     constructor() {
-        this.#HTMLDialog = document.getElementById('factory-menu') as HTMLDialogElement;
+        this.#HTMLDialog = document.getElementById('castle-menu') as HTMLDialogElement;
         this.#HTMLList = this.#HTMLDialog.children[0];
     }
 
