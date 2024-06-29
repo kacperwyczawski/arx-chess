@@ -50,6 +50,13 @@ export class Cell {
 
 	setBuilding(type: Building) {
 		this.#type = type;
-		this.#HTMLCell.classList.add(type);
+		this.#HTMLCell.classList.add("building");
+
+		this.#HTMLCell.querySelector(".cell-annotation")?.remove();
+		const div = document.createElement("div");
+		div.setAttribute("title", type);
+		div.classList.add("cell-annotation");
+		div.textContent = type[0].toUpperCase();
+		this.#HTMLCell.appendChild(div);
 	}
 }

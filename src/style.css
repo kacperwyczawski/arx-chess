@@ -7,17 +7,18 @@
 :root {
   --square-light: #f0ead2;
   --square-dark: #dde5b6;
-  --border-castle: #a98467;
+  --building: #a98467;
   --player-white: white;
   --player-black: black;
-  --border-mine: #6c584c;
-  --border-barracks: #adc178;
+  --todo1: #6c584c;
+  --todo2: #adc178;
+  --grayed: #dfd3bf;
 }
 
 body {
   font-family: 'IBM Plex Mono', monospace;
   background-color: var(--square-dark);
-  color: var(--border-castle);
+  color: var(--building);
   margin: 0;
   padding: 0;
 }
@@ -60,27 +61,32 @@ main {
     filter: brightness(1.2);
   }
 
-  &.castle,
-  &.barracks,
-  &.mine {
+  &.building {
+    border: .3rem dashed var(--building);
     outline: .3rem solid var(--outline); /* --outline is injected using JavaScript */
-  }
 
-  &.castle {
-    border: .3rem dashed var(--border-castle);
-  }
-
-  &.barracks {
-    border: .3rem dashed var(--border-barracks);
-  }
-
-  &.mine {
-    border: .3rem dashed var(--border-mine);
+    & .cell-annotation {
+      background-color: var(--building);
+      color: var(--square-light);
+    }
   }
 
   &.piece-to-move {
     cursor: grab;
   }
+  
+  & .cell-annotation {
+    background-color: var(--square-light);
+    padding: .1rem;
+    font-size: 80%;
+    width: .8rem;
+    text-align: center;
+    display: block;
+  }
+}
+
+td.cell .cell-annotation {
+  margin-left: -.3rem;
 }
 
 tr:nth-child(odd) td:nth-child(even),
@@ -114,22 +120,12 @@ dialog {
       cursor: pointer;
       outline: .6rem solid var(--square-light);
       display: flex;
-      align-items: start;
-
-      & span {
-        background-color: var(--square-light);
-        padding: .1rem;
-        font-size: 80%;
-        border-bottom-right-radius: .2rem;
-      }
+      align-items: center;
     }
 
     & li.not-affordable {
       cursor: not-allowed;
-
-      & span {
-        background-color: lightcoral;
-      }
+      background-color: var(--grayed);
     }
   }
 }

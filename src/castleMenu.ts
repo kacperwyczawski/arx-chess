@@ -69,10 +69,10 @@ export class castleMenu {
                 }
             }
 
-            const span = document.createElement('span');
-            span.textContent = item.cost.toString();
-
-            li.appendChild(span);
+            const div = document.createElement('div');
+            div.classList.add('cell-annotation');
+            div.textContent = item.cost.toString();
+            li.appendChild(div);
             this.#HTMLList.appendChild(li);
         }
     }
