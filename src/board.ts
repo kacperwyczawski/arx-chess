@@ -31,24 +31,24 @@ export class Board {
                     if (this.#selectedCell && this.#selectedCell.piece) {
                         HTMLTable.classList.remove("piece-in-hand");
                         if (targetCell.piece) {
-                            this.nextPlayer.handlePieceLoss();
+                            this.#nextPlayer.handlePieceLoss();
                         }
-                        if (targetCell.type) {
-                            this.currentPlayer.handleBuildingCapture(targetCell.type);
-                            if (targetCell.playerColor === this.nextPlayer.color) {
-                                this.nextPlayer.handleBuildingLoss(targetCell.type);
+                        if (targetCell.building) {
+                            this.#currentPlayer.handleBuildingCapture(targetCell.building);
+                            if (targetCell.owner === this.#nextPlayer.color) {
+                                this.#nextPlayer.handleBuildingLoss(targetCell.building);
                             }
                         }
                         targetCell.placePiece(this.#selectedCell.piece);
                         this.#selectedCell.removePiece();
                         this.#selectedCell.toggleSelected();
                         this.#selectedCell = null;
-                        this.endTurn();
+                        this.#endTurn();
                         return;
                     }
                     
                     // grab piece
-                    if (targetCell.piece && targetCell.playerColor === this.currentPlayer.color) {
+                    if (targetCell.piece && targetCell.piece.color === this.#currentPlayer.color) {
                         HTMLTable.classList.add("piece-in-hand");
                         this.#selectedCell = targetCell;
                         targetCell.toggleSelected();
@@ -56,8 +56,8 @@ export class Board {
                     }
 
                     // open castle menu
-                    if (targetCell.type === "castle" && targetCell.playerColor === this.currentPlayer.color) {
-                        if (!this.currentPlayer.canPlacePiece()) {
+                    if (targetCell.building === "castle" && targetCell.owner === this.#currentPlayer.color) {
+                        if (!this.#currentPlayer.canPlacePiece()) {
                             alert("You can't place any more pieces. Capture more castles or upgrade them to barracks.");
                             return;
                         }
@@ -65,46 +65,54 @@ export class Board {
                         this.#castleMenu.open(item => {
                             if (typeof item === "string") {
                                 targetCell.setBuilding(item);
-                                this.currentPlayer.handleBuildingUpgrade(item);
+                                this.#currentPlayer.handleBuildingUpgrade(item);
                                 return;
                             }
-                            this.currentPlayer.handlePieceBuy(item);
+                            this.#currentPlayer.handlePieceBuy(item);
                             targetCell.placePiece(item);
-                            this.endTurn();
-                        }, this.currentPlayer.color, this.currentPlayer.gold);
+                            this.#endTurn();
+                        }, this.#currentPlayer.color, this.#currentPlayer.gold);
                         return;
                     }
                 }
                 this.#cells[y].push(targetCell);
             });
         });
-        this.getCell(1, 1).placePiece(new King("white"));
-        this.getCell(7, 7).placePiece(new King("black"));
+        this.#getCell(1, 1).placePiece(new King("white"));
+        this.#getCell(7, 7).placePiece(new King("black"));
+        this.#getCell(1, 1).handleCapture();
+        this.#getCell(7, 7).handleCapture();
         const castleCells = [
             [1, 1], [1, 4], [1, 7],
             [4, 1], [4, 4], [4, 7],
             [7, 1], [7, 4], [7, 7]
         ];
         castleCells.forEach(([x, y]) => {
-            this.getCell(x, y).setBuilding("castle");
+            this.#getCell(x, y).setBuilding("castle");
         });
 	}
 
-    private getCell(x: number, y: number) {
+    #getCell(x: number, y: number) {
         return this.#cells[y][x];
     }
 
-    private endTurn() {
-        this.currentPlayer.handleTurnEnd();
+    #endTurn() {
+        this.#currentPlayer.handleTurnEnd();
         this.#currentPlayerIndex = (this.#currentPlayerIndex + 1) % 2;
-        this.currentPlayer.handleTurnStart();
+        this.#currentPlayer.handleTurnStart();
+
+        // capture buildings
+        this.#cells
+            .flat()
+            .filter(cell => cell.building && cell.piece?.color === this.#currentPlayer.color)
+            .forEach(cell => cell.handleCapture());
     }
 
-    private get currentPlayer() {
+    get #currentPlayer() {
         return this.#players[this.#currentPlayerIndex];
     }
 
-    private get nextPlayer() {
+    get #nextPlayer() {
         return this.#players[(this.#currentPlayerIndex + 1) % 2];
     }
 }

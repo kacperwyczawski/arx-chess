@@ -1,8 +1,8 @@
 import { Piece } from "./pieces/piece";
 
 export class Cell {
-	#type: Building | null = null;
-	#playerColor: PlayerColor | null = null;
+	#building: Building | null = null;
+	#owner: PlayerColor | null = null;
 	#piece: Piece | null = null;
 	#HTMLCell: HTMLTableCellElement;
 
@@ -12,12 +12,12 @@ export class Cell {
 		return this.#piece;
 	}
 
-	get playerColor() {
-		return this.#playerColor;
+	get building() {
+		return this.#building;
 	}
 
-	get type() {
-		return this.#type;
+	get owner() {
+		return this.#owner;
 	}
 
 	constructor(
@@ -32,10 +32,17 @@ export class Cell {
 
 	placePiece(piece: Piece) {
 		this.#piece = piece;
-		this.#playerColor = piece.color;
 		this.#HTMLCell.style.backgroundImage = `url('${piece.toString()}-${piece.color}.png')`;
-		this.#HTMLCell.style.setProperty("--outline", `var(--player-${piece.color})`);
 		this.#HTMLCell.classList.add("piece-to-move")
+	}
+
+	handleCapture() {
+		if (!this.#piece) {
+			throw new Error("Cannot capture empty cell");
+		}
+		this.#HTMLCell.style.setProperty("--outline", `var(--player-${this.#piece.color})`);
+		this.#owner = this.#piece.color;
+		console.log("captured");
 	}
 
 	removePiece() {
@@ -48,15 +55,15 @@ export class Cell {
 		this.#HTMLCell.classList.toggle("selected");
 	}
 
-	setBuilding(type: Building) {
-		this.#type = type;
+	setBuilding(building: Building) {
+		this.#building = building;
 		this.#HTMLCell.classList.add("building");
 
 		this.#HTMLCell.querySelector(".cell-annotation")?.remove();
 		const div = document.createElement("div");
-		div.setAttribute("title", type);
+		div.setAttribute("title", building);
 		div.classList.add("cell-annotation");
-		div.textContent = type[0].toUpperCase();
+		div.textContent = building[0].toUpperCase();
 		this.#HTMLCell.appendChild(div);
 	}
 }
