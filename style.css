@@ -31,15 +31,34 @@ main {
 #white,
 #black {
   margin-top: 1rem;
-  font-size: xx-large;
-  font-weight: bold;
-}
 
-:is(#white, #black).active {
-  text-decoration: underline;
+  & .name {
+    font-size: xx-large;
+    font-weight: bold;
+  }
+
+  & .turn-button {
+    font-size: xx-large;
+    display: none;
+    cursor: pointer;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
   
-  &::after {
-    content: '<';
+  &.active {
+    & .name {
+      text-decoration: underline;
+    }
+
+    & .turn-button {
+      display: inline;
+    }
+  }
+
+  & :is(.move-piece, .buy-piece).done {
+    text-decoration: line-through;
   }
 }
 

@@ -42,7 +42,6 @@ export class Cell {
 		}
 		this.#HTMLCell.style.setProperty("--outline", `var(--player-${this.#piece.color})`);
 		this.#owner = this.#piece.color;
-		console.log("captured");
 	}
 
 	removePiece() {

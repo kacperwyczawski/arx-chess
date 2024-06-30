@@ -1,16 +1,14 @@
 import { Piece } from "./pieces/piece";
 
 export class Player {
-    #mainElement;
-    #pieceCountElement;
+    #element;
     #pieceCount = 1;
-    #maxPiecesElement;
     #maxPieces = 2;
-    #goldElement;
     #gold = 0;
-    #goldPerTurnElement;
     #goldPerTurn = 1;
     #color;
+    #hasBoughtPiece = false;
+    #hasMovedPiece = false;
 
     get gold() {
         return this.#gold;
@@ -21,39 +19,48 @@ export class Player {
     }
 
     constructor(
-        color: PlayerColor
+        color: PlayerColor,
+        onEndTurn: () => void,
     ) {
         this.#color = color;
-        function $(selector: string) {
-            return document.querySelector(selector);
-        }
-        this.#mainElement = $(`#${color}`)!;
-        this.#pieceCountElement = $(`#${color}-pieces`)!;
-        this.#maxPiecesElement = $(`#${color}-max-pieces`)!;
-        this.#goldElement = $(`#${color}-gold`)!;
-        this.#goldPerTurnElement = $(`#${color}-gold-per-turn`)!;
-        this.#pieceCountElement.textContent = "1";
-        this.#maxPiecesElement.textContent = "2";
-        this.#goldElement.textContent = "0";
-        this.#goldPerTurnElement.textContent = "1";
+        this.#element = document.querySelector(`#${color}`)!;
+        this.#q(".pieces")!.textContent = "1";
+        this.#q(".max-pieces")!.textContent = "2";
+        this.#q(".gold")!.textContent = "0";
+        this.#q(".gold-per-turn")!.textContent = "1";
+
+        this.#q(".turn-button")!.addEventListener("click", () => {
+            onEndTurn();
+            this.#gold += this.#goldPerTurn;
+            this.#q(".gold").textContent = this.#gold.toString();
+            this.#element.classList.remove("active");
+            this.#hasBoughtPiece = false;
+            this.#hasMovedPiece = false;
+            this.#q(".buy-piece").classList.remove("done");
+            this.#q(".move-piece").classList.remove("done");
+        });
     }
 
-    canPlacePiece() {
-        return this.#pieceCount < this.#maxPieces;
+    canBuyPiece() {
+        return this.#pieceCount < this.#maxPieces && !this.#hasBoughtPiece;
+    }
+
+    canMovePiece() {
+        return !this.#hasMovedPiece;
     }
 
     handleBuildingCapture(type: Building) {
         this.#maxPieces += type === "barracks" ? 3 : 1;
-        this.#maxPiecesElement.textContent = this.#maxPieces.toString();
+        this.#q(".max-pieces").textContent = this.#maxPieces.toString();
         this.#goldPerTurn += type === "mine" ? 3 : 1;
-        this.#goldPerTurnElement.textContent = this.#goldPerTurn.toString();
+        this.#q(".gold-per-turn").textContent = this.#goldPerTurn.toString();
     }
 
     handleBuildingLoss(type: Building) {
         this.#maxPieces -= type === "barracks" ? 3 : 1;
-        this.#maxPiecesElement.textContent = this.#maxPieces.toString();
+        this.#q(".max-pieces").textContent = this.#maxPieces.toString();
         this.#goldPerTurn -= type === "mine" ? 3 : 1;
-        this.#goldPerTurnElement.textContent = this.#goldPerTurn.toString();
+        this.#q(".gold-per-turn").textContent = this.#goldPerTurn.toString();
     }
 
     handleBuildingUpgrade(type: Building) {
@@ -64,32 +71,37 @@ export class Player {
         this.#gold -= 3;
         if (type === "barracks") {
             this.#maxPieces += 2;
-            this.#maxPiecesElement.textContent = this.#maxPieces.toString();
+            this.#q(".max-pieces").textContent = this.#maxPieces.toString();
         } else if (type === "mine") {
             this.#goldPerTurn += 2;
-            this.#goldPerTurnElement.textContent = this.#goldPerTurn.toString();
+            this.#q(".gold-per-turn").textContent = this.#goldPerTurn.toString();
         }
     }
 
     handlePieceLoss() {
         this.#pieceCount--;
-        this.#pieceCountElement.textContent = this.#pieceCount.toString();
+        this.#q(".pieces").textContent = this.#pieceCount.toString();
     }
 
     handlePieceBuy(piece: Piece) {
         this.#gold -= piece.cost;
-        this.#goldElement.textContent = this.#gold.toString();
+        this.#q(".gold").textContent = this.#gold.toString();
         this.#pieceCount++;
-        this.#pieceCountElement.textContent = this.#pieceCount.toString();
+        this.#q(".pieces").textContent = this.#pieceCount.toString();
+        this.#hasBoughtPiece = true;
+        this.#q(".buy-piece").classList.add("done");
     }
 
-    handleTurnEnd() {
-        this.#gold += this.#goldPerTurn;
-        this.#goldElement.textContent = this.#gold.toString();
-        this.#mainElement.classList.remove("active");
+    handlePieceMove() {
+        this.#hasMovedPiece = true;
+        this.#q(".move-piece").classList.add("done");
     }
 
-    handleTurnStart() {
-        this.#mainElement.classList.add("active");
+    activate() {
+        this.#element.classList.add("active");
+    }
+
+    #q(selector: string) {
+        return this.#element.querySelector(selector)!;
     }
 }

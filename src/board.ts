@@ -10,8 +10,8 @@ export class Board {
 	#cells: Cell[][] = [];
     #selectedCell: Cell | null = null;
     #players = [
-        new Player("white"),
-        new Player("black")
+        new Player("white", () => this.#endTurn()),
+        new Player("black", () => this.#endTurn()),
     ];
     #currentPlayerIndex = 0;
     #castleMenu = new castleMenu();
@@ -43,15 +43,19 @@ export class Board {
                             }
                         }
                         targetCell.placePiece(this.#selectedCell.piece);
+                        this.#currentPlayer.handlePieceMove();
                         this.#selectedCell.removePiece();
                         this.#selectedCell.toggleSelected();
                         this.#selectedCell = null;
-                        this.#endTurn();
                         return;
                     }
                     
                     // grab piece
                     if (targetCell.piece && targetCell.piece.color === this.#currentPlayer.color) {
+                        if (!this.#currentPlayer.canMovePiece()) {
+                            alert("You can't move any more pieces.");
+                            return;
+                        }
                         HTMLTable.classList.add("piece-in-hand");
                         this.#selectedCell = targetCell;
                         targetCell.toggleSelected();
@@ -60,11 +64,11 @@ export class Board {
 
                     // open castle menu
                     if (targetCell.building === "castle" && targetCell.owner === this.#currentPlayer.color) {
-                        if (!this.#currentPlayer.canPlacePiece()) {
-                            alert("You can't place any more pieces. Capture more castles or upgrade them to barracks.");
+                        if (!this.#currentPlayer.canBuyPiece()) {
+                            alert("You can't buy any more pieces.");
                             return;
                         }
-                        // TODO: cancel
+                        // TODO: cancel button
                         this.#castleMenu.open(item => {
                             if (typeof item === "string") {
                                 targetCell.setBuilding(item);
@@ -73,7 +77,6 @@ export class Board {
                             }
                             this.#currentPlayer.handlePieceBuy(item);
                             targetCell.placePiece(item);
-                            this.#endTurn();
                         }, this.#currentPlayer.color, this.#currentPlayer.gold);
                         return;
                     }
@@ -100,9 +103,8 @@ export class Board {
     }
 
     #endTurn() {
-        this.#currentPlayer.handleTurnEnd();
         this.#currentPlayerIndex = (this.#currentPlayerIndex + 1) % 2;
-        this.#currentPlayer.handleTurnStart();
+        this.#currentPlayer.activate();
 
         // capture buildings
         this.#cells
