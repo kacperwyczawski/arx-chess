@@ -29,6 +29,9 @@ export class Board {
                 targetCell.onClick = () => {
                     // place piece
                     if (this.#selectedCell && this.#selectedCell.piece) {
+                        if (targetCell.piece?.color === this.#currentPlayer.color) {
+                            return;
+                        }
                         HTMLTable.classList.remove("piece-in-hand");
                         if (targetCell.piece) {
                             this.#nextPlayer.handlePieceLoss();
