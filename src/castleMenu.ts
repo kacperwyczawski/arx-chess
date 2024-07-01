@@ -41,7 +41,7 @@ export class castleMenu {
     for (const piece of pieces) {
       items.push({
         cost: piece.cost,
-        background: `url('${piece.toString()}-${piece.color}.png')`,
+        background: `url('${piece.name}-${piece.color}.png')`,
         item: piece
       });
     }

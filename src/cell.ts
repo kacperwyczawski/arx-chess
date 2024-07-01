@@ -32,8 +32,7 @@ export class Cell {
 
 	placePiece(piece: Piece) {
 		this.#piece = piece;
-		this.#HTMLCell.style.backgroundImage = `url('${piece.toString()}-${piece.color}.png')`;
-		console.debug(`url('${piece.toString()}-${piece.color}.png')`);
+		this.#HTMLCell.style.backgroundImage = `url('${piece.name}-${piece.color}.png')`;
 		this.#HTMLCell.classList.add("piece-to-move")
 	}
 

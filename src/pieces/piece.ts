@@ -9,11 +9,11 @@ export class Piece {
         return Infinity;
     }
 
-    constructor(color: PlayerColor) {
-        this.#color = color;
+    get name() {
+        return this.constructor.name.toLowerCase();
     }
 
-    toString() {
-        return this.constructor.name.toLowerCase();
+    constructor(color: PlayerColor) {
+        this.#color = color;
     }
 }
