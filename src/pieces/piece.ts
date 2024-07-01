@@ -1,19 +1,6 @@
-export class Piece {
-    #color: PlayerColor;
+export interface Piece {
 
-    get color() {
-        return this.#color;
-    }
-
-    get cost() {
-        return Infinity;
-    }
-
-    get name() {
-        return this.constructor.name.toLowerCase();
-    }
-
-    constructor(color: PlayerColor) {
-        this.#color = color;
-    }
+    get color(): PlayerColor
+    get cost(): number
+    get name(): string
 }
