@@ -64,15 +64,15 @@ export class Board {
 
           // open castle menu
           if (targetCell.owner === this.#currentPlayer.color) {
-            if (!this.#currentPlayer.canBuyPiece()) {
-              alert("You can't buy any more pieces.");
-              return;
-            }
             // TODO: cancel button
             this.#castleMenu.open(item => {
               if (typeof item === "string") {
                 targetCell.setBuilding(item);
                 this.#currentPlayer.handleBuildingUpgrade(item);
+                return;
+              }
+              if (!this.#currentPlayer.canBuyPiece()) {
+                alert("You can't buy any more pieces.");
                 return;
               }
               this.#currentPlayer.handlePieceBuy(item);
