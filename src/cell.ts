@@ -56,6 +56,12 @@ export class Cell {
 
 	setBuilding(building: Building) {
 		this.#building = building;
+
+		if (building === "wall") {
+			this.#HTMLCell.classList.add("wall");
+			return;
+		}
+		
 		this.#HTMLCell.classList.add("building");
 
 		this.#HTMLCell.querySelector(".cell-annotation")?.remove();

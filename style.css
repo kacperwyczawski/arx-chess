@@ -41,12 +41,12 @@ main {
     font-size: xx-large;
     display: none;
     cursor: pointer;
-    
+
     &:hover {
       text-decoration: underline;
     }
   }
-  
+
   &.active {
     & .name {
       text-decoration: underline;
@@ -82,7 +82,9 @@ main {
 
   &.building {
     border: .3rem dashed var(--building);
-    outline: .3rem solid var(--outline); /* --outline is injected using JavaScript */
+
+    /* --outline is injected using JavaScript */
+    outline: .3rem solid var(--outline);
 
     & .cell-annotation {
       background-color: var(--building);
@@ -90,10 +92,19 @@ main {
     }
   }
 
+  &.wall::after {
+    content: "";
+    background: var(--building);
+    width: 2.4rem;
+    height: 2.4rem;
+    margin: auto;
+    display: block;
+  }
+
   &.piece-to-move {
     cursor: grab;
   }
-  
+
   & .cell-annotation {
     background-color: var(--square-light);
     padding: .1rem;

@@ -96,6 +96,17 @@ export class Board {
     castleCells.forEach(([x, y]) => {
       this.#getCell(x, y).setBuilding("castle");
     });
+    const wallCells = [
+      [4, 2],
+      [6, 4],
+      [3, 3],
+      [2, 4],
+      [4, 6],
+      [5, 5]
+    ]
+    wallCells.forEach(([x, y]) => {
+      this.#getCell(x, y).setBuilding("wall");
+    });
   }
 
   #getCell(x: number, y: number) {
