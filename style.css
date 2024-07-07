@@ -128,7 +128,24 @@ dialog {
   max-width: 30rem;
   padding: .6rem;
   border: none;
-  background: none;
+  background-color: var(--square-light);
+
+  & button {
+    margin-bottom: .6rem;
+    background: var(--square-dark);
+    border-radius: none;
+    border: none;
+    width: 3rem;
+    padding: .2rem 0;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
 
   &:focus {
     outline: none;
@@ -148,7 +165,6 @@ dialog {
 
     & li {
       cursor: pointer;
-      outline: .6rem solid var(--square-light);
       display: flex;
       align-items: center;
     }

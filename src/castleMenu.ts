@@ -11,7 +11,11 @@ export class castleMenu {
 
   constructor() {
     this.#HTMLDialog = document.getElementById('castle-menu') as HTMLDialogElement;
-    this.#HTMLList = this.#HTMLDialog.children[0];
+    this.#HTMLList = this.#HTMLDialog.children[1];
+
+    this.#HTMLDialog.children[0].addEventListener("click", () => {
+      this.#HTMLDialog.close();
+    })
   }
 
   open(

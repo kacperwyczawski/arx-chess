@@ -66,7 +66,6 @@ export class Board {
           if (targetCell.owner !== this.#currentPlayer.color) {
             return;
           }
-          // TODO: cancel button
           this.#castleMenu.open(item => {
             if (typeof item === "string") {
               targetCell.setBuilding(item);
