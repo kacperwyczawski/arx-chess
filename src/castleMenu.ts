@@ -61,7 +61,7 @@ export class castleMenu {
       li.style.backgroundImage = item.background;
 
       const canAfford = this.#discount(item.cost, isFactory) <= gold;
-      const isBuilding = typeof item.item !== "object";
+      const isBuilding = typeof item.item === "string";
 
       if (canAfford && (isBuilding || !isOccupied)) {
         li.onclick = () => {
