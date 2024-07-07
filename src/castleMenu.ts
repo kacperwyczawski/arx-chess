@@ -18,7 +18,8 @@ export class castleMenu {
     onBuy: (piece: Piece | Building) => void,
     color: PlayerColor,
     gold: number,
-    factory: boolean
+    isFactory: boolean,
+    isOccupied: boolean
   ) {
     this.#HTMLDialog.showModal();
     this.#HTMLList.innerHTML = '';
@@ -58,18 +59,22 @@ export class castleMenu {
       const li = document.createElement('li');
       li.classList.add('cell');
       li.style.backgroundImage = item.background;
-      if (this.#discount(item.cost, factory) > gold) {
-        li.classList.add('not-affordable');
-      } else {
+
+      const canAfford = this.#discount(item.cost, isFactory) <= gold;
+      const isBuilding = typeof item.item !== "object";
+
+      if (canAfford && (isBuilding || !isOccupied)) {
         li.onclick = () => {
           onBuy(item.item);
           this.#HTMLDialog.close();
         }
+      } else {
+        li.classList.add('not-available');
       }
 
       const div = document.createElement('div');
       div.classList.add('cell-annotation');
-      div.textContent = this.#discount(item.cost, factory).toString();
+      div.textContent = this.#discount(item.cost, isFactory).toString();
       li.appendChild(div);
       this.#HTMLList.appendChild(li);
     }

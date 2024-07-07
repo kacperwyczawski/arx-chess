@@ -8,7 +8,7 @@ import { castleMenu } from "./castleMenu";
 
 export class Board {
   #cells: Cell[][] = [];
-  #selectedCell: Cell | null = null;
+  #selectedCell: Cell | null = null; //TODO: deselect on end turn
   #players = [
     new Player("white", () => this.#endTurn()),
     new Player("black", () => this.#endTurn()),
@@ -61,25 +61,29 @@ export class Board {
             targetCell.toggleSelected();
             return;
           }
-
-          // open castle menu
-          if (targetCell.owner === this.#currentPlayer.color) {
-            // TODO: cancel button
-            this.#castleMenu.open(item => {
-              if (typeof item === "string") {
-                targetCell.setBuilding(item);
-                this.#currentPlayer.handleBuildingUpgrade(item);
-                return;
-              }
-              if (!this.#currentPlayer.canBuyPiece()) {
-                alert("You can't buy any more pieces.");
-                return;
-              }
-              this.#currentPlayer.handlePieceBuy(item);
-              targetCell.placePiece(item);
-            }, this.#currentPlayer.color, this.#currentPlayer.gold, targetCell.building === "factory");
+        }
+        targetCell.onMenu = () => {
+          if (targetCell.owner !== this.#currentPlayer.color) {
             return;
           }
+          // TODO: cancel button
+          this.#castleMenu.open(item => {
+            if (typeof item === "string") {
+              targetCell.setBuilding(item);
+              this.#currentPlayer.handleBuildingUpgrade(item);
+              return;
+            }
+            if (!this.#currentPlayer.canBuyPiece()) {
+              alert("You can't buy any more pieces.");
+              return;
+            }
+            this.#currentPlayer.handlePieceBuy(item);
+            targetCell.placePiece(item);
+          },
+          this.#currentPlayer.color,
+          this.#currentPlayer.gold,
+          targetCell.building === "factory",
+          targetCell.piece !== null);
         }
         this.#cells[y].push(targetCell);
       });

@@ -8,6 +8,8 @@ export class Cell {
 
 	onClick: () => void = () => {};
 
+	onMenu: () => void = () => {};
+
 	get piece() {
 		return this.#piece;
 	}
@@ -27,6 +29,10 @@ export class Cell {
 		this.#HTMLCell.classList.add("cell");
 		this.#HTMLCell.addEventListener("click", () => {
 			this.onClick();
+		});
+		this.#HTMLCell.addEventListener("contextmenu", (event) => {
+			event.preventDefault();
+			this.onMenu();
 		});
 	}
 

@@ -153,7 +153,7 @@ dialog {
       align-items: center;
     }
 
-    & li.not-affordable {
+    & li.not-available {
       cursor: not-allowed;
       background-color: var(--grayed);
     }
