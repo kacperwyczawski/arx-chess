@@ -2,7 +2,6 @@
   "name": "industrial-chess",
   "version": "0.0.0",
   "devDependencies": {
-    "@types/lodash-es": "^4.17.5",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
   },
@@ -14,7 +13,6 @@
   },
   "type": "module",
   "dependencies": {
-    "@fontsource/ibm-plex-mono": "^5.0.13",
-    "lodash-es": "^4.17.21"
+    "@fontsource/ibm-plex-mono": "^5.0.13"
   }
 }

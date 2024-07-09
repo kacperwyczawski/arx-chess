@@ -1,6 +1,6 @@
 import "./../style.css";
-import { Board } from "./board.ts";
+import { Game } from "./game.ts";
 
-new Board(
+new Game(
     document.querySelector("#board")!,
 );

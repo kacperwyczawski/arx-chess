@@ -107,7 +107,7 @@ main {
 
   &.not-available {
     cursor: not-allowed;
-    background-color: var(--grayed);
+    filter: grayscale(1);
   }
 
   & .cell-annotation {
