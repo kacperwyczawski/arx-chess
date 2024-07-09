@@ -5,10 +5,11 @@ export class Cell {
 	#owner: PlayerColor | null = null;
 	#piece: Piece | null = null;
 	#HTMLCell: HTMLTableCellElement;
+	#available = true;
 
-	onClick: () => void = () => {};
+	onClick: () => void = () => { };
 
-	onMenu: () => void = () => {};
+	onMenu: () => void = () => { };
 
 	get piece() {
 		return this.#piece;
@@ -28,6 +29,9 @@ export class Cell {
 		this.#HTMLCell = HTMLCell;
 		this.#HTMLCell.classList.add("cell");
 		this.#HTMLCell.addEventListener("click", () => {
+			if (!this.#available) {
+				return;
+			}
 			this.onClick();
 		});
 		this.#HTMLCell.addEventListener("contextmenu", (event) => {
@@ -36,10 +40,19 @@ export class Cell {
 		});
 	}
 
-	placePiece(piece: Piece) {
+	placePiece(piece: Piece, startingPiece = false) {
 		this.#piece = piece;
 		this.#HTMLCell.style.backgroundImage = `url('${piece.name}-${piece.color}.png')`;
-		this.#HTMLCell.classList.add("piece-to-move")
+		this.#HTMLCell.classList.add("piece-to-move");
+
+		if (startingPiece) {
+			this.handleCapture();
+		}
+	}
+
+	makeNotAvailable() {
+		this.#HTMLCell.classList.add("not-available");
+		this.#available = false;
 	}
 
 	handleCapture() {
@@ -48,6 +61,11 @@ export class Cell {
 		}
 		this.#HTMLCell.style.setProperty("--outline", `var(--player-${this.#piece.color})`);
 		this.#owner = this.#piece.color;
+	}
+
+	makeAvailable() {
+		this.#HTMLCell.classList.remove("not-available");
+		this.#available = true;
 	}
 
 	removePiece() {
@@ -67,7 +85,7 @@ export class Cell {
 			this.#HTMLCell.classList.add("wall");
 			return;
 		}
-		
+
 		this.#HTMLCell.classList.add("building");
 
 		this.#HTMLCell.querySelector(".cell-annotation")?.remove();

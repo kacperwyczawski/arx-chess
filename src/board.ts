@@ -78,6 +78,7 @@ export class Board {
             }
             this.#currentPlayer.handlePieceBuy(item);
             targetCell.placePiece(item);
+            targetCell.makeNotAvailable();
           },
           this.#currentPlayer.color,
           this.#currentPlayer.gold,
@@ -87,10 +88,8 @@ export class Board {
         this.#cells[y].push(targetCell);
       });
     });
-    this.#getCell(1, 1).placePiece(new King("white"));
-    this.#getCell(7, 7).placePiece(new King("black"));
-    this.#getCell(1, 1).handleCapture();
-    this.#getCell(7, 7).handleCapture();
+    this.#getCell(1, 1).placePiece(new King("white"), true);
+    this.#getCell(7, 7).placePiece(new King("black"), true);
     const castleCells = [
       [1, 1], [1, 4], [1, 7],
       [4, 1], [4, 4], [4, 7],
@@ -125,6 +124,10 @@ export class Board {
       .flat()
       .filter(cell => cell.building && cell.piece?.color === this.#currentPlayer.color)
       .forEach(cell => cell.handleCapture());
+
+    this.#cells
+      .flat()
+      .forEach(cell => cell.makeAvailable());
   }
 
   get #currentPlayer() {

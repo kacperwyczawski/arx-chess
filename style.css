@@ -105,6 +105,11 @@ main {
     cursor: grab;
   }
 
+  &.not-available {
+    cursor: not-allowed;
+    background-color: var(--grayed);
+  }
+
   & .cell-annotation {
     background-color: var(--square-light);
     padding: .1rem;
@@ -167,11 +172,6 @@ dialog {
       cursor: pointer;
       display: flex;
       align-items: center;
-    }
-
-    & li.not-available {
-      cursor: not-allowed;
-      background-color: var(--grayed);
     }
   }
 }
