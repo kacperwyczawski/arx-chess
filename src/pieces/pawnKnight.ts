@@ -1,11 +1,10 @@
 import { Piece } from "./piece";
 
-
-export class Queen implements Piece {
+export class PawnKnight implements Piece {
     #color;
 
     get cost() {
-        return 9;
+        return 1 + 3;
     }
 
     get color() {
@@ -13,7 +12,7 @@ export class Queen implements Piece {
     }
 
     get name() {
-        return "queen";
+        return "pawnknight";
     }
 
     constructor(color: PlayerColor) {

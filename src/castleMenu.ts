@@ -1,9 +1,14 @@
 import { Bishop } from "./pieces/bishop";
 import { Knight } from "./pieces/knight";
-import { Queen } from "./pieces/queen";
 import { Rook } from "./pieces/rook";
 import { Pawn } from "./pieces/pawn";
 import { Piece } from "./pieces/piece";
+import { PawnRook } from "./pieces/pawnRook";
+import { PawnKnight } from "./pieces/pawnKnight";
+import { PawnBishop } from "./pieces/pawnBishop";
+import { KnightRook } from "./pieces/knightRook";
+import { BishopKnight } from "./pieces/bishopKnight";
+import { BishopRook } from "./pieces/bishopRook";
 
 export class castleMenu {
   #HTMLDialog: HTMLDialogElement;
@@ -31,10 +36,15 @@ export class castleMenu {
     // TODO: outsource this to tech tree
     const pieces: Piece[] = [
       new Pawn(color),
+      new PawnBishop(color),
+      new PawnKnight(color),
+      new PawnRook(color),
       new Rook(color),
       new Knight(color),
+      new KnightRook(color),
       new Bishop(color),
-      new Queen(color),
+      new BishopKnight(color),
+      new BishopRook(color),
     ];
 
     const items: {

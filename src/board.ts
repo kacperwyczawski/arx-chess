@@ -1,5 +1,5 @@
 import { Cell } from "./cell";
-import { King } from "./pieces/king";
+import { Pawn } from "./pieces/pawn";
 
 // TODO: abstract HTML table as board and current board as game
 
@@ -35,10 +35,10 @@ export class Board {
 
           if (symbol === "-") {
           } else if (symbol === "1") {
-            cell.placePiece(new King("white"), true);
+            cell.placePiece(new Pawn("white"), true);
             cell.setBuilding("castle");
           } else if (symbol === "2") {
-            cell.placePiece(new King("black"), true);
+            cell.placePiece(new Pawn("black"), true);
             cell.setBuilding("castle");
           } else if (symbol === "w") {
             cell.setBuilding("wall");

@@ -72,9 +72,7 @@ main {
   width: 3rem;
   height: 3rem;
   background-color: var(--square-dark);
-  background-size: 100%;
   background-position: center;
-  background-repeat: no-repeat;
 
   &.selected {
     filter: brightness(1.2);
