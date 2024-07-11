@@ -13,19 +13,23 @@ import { Amazon } from "./pieces/amazon";
 
 export class castleMenu {
   #HTMLDialog: HTMLDialogElement;
-  #HTMLList;
+  #HTMLTopList: HTMLOListElement;
+  #HTMLList: HTMLOListElement;
 
   constructor() {
     this.#HTMLDialog = document.getElementById('castle-menu') as HTMLDialogElement;
-    this.#HTMLList = this.#HTMLDialog.children[1];
-
-    this.#HTMLDialog.children[0].addEventListener("click", () => {
-      this.#HTMLDialog.close();
-    })
+    this.#HTMLTopList = document.getElementById("castle-menu-top-list") as HTMLOListElement;
+    this.#HTMLList = document.getElementById("castle-menu-list") as HTMLOListElement;
+    document
+      .getElementById("castle-menu-button")!
+      .addEventListener("click", () => {
+        this.#HTMLDialog.close();
+      })
   }
 
   open(
-    onBuy: (piece: Piece | Building) => void,
+    onBuyPiece: (piece: Piece) => void,
+    onBuyBuilding: (building: Building) => void,
     color: PlayerColor,
     gold: number,
     isFactory: boolean,
@@ -33,6 +37,9 @@ export class castleMenu {
   ) {
     this.#HTMLDialog.showModal();
     this.#HTMLList.innerHTML = '';
+    this.#HTMLTopList
+      .querySelectorAll("li")
+      .forEach(li => li.remove())
 
     // TODO: outsource this to tech tree
     const pieces: Piece[] = [
@@ -49,50 +56,39 @@ export class castleMenu {
       new Amazon(color),
     ];
 
-    const items: {
-      cost: number,
-      background: string,
-      item: Piece | Building
-    }[] = [];
-
     for (const piece of pieces) {
-      items.push({
-        cost: piece.cost,
-        background: `url('${piece.name}-${piece.color}.png')`,
-        item: piece
-      });
-    }
-
-    for (const building of ["mine", "barracks", "factory"] as Building[]) {
-      items.push({
-        cost: 3,
-        background: `url("upgrade-${building}.png")`,
-        item: building
-      })
-    }
-
-    for (const item of items) {
       const li = document.createElement('li');
       li.classList.add('cell');
-      li.style.backgroundImage = item.background;
-
-      const canAfford = this.#discount(item.cost, isFactory) <= gold;
-      const isBuilding = typeof item.item === "string";
-
-      if (canAfford && (isBuilding || !isOccupied)) {
+      li.style.backgroundImage = `url('${piece.name}-${piece.color}.png')`;
+      const canAfford = this.#discount(piece.cost, isFactory) <= gold;
+      if (canAfford && !isOccupied) {
         li.onclick = () => {
-          onBuy(item.item);
+          onBuyPiece(piece);
           this.#HTMLDialog.close();
         }
       } else {
         li.classList.add('not-available');
       }
-
       const div = document.createElement('div');
       div.classList.add('cell-annotation');
-      div.textContent = this.#discount(item.cost, isFactory).toString();
+      div.textContent = this.#discount(piece.cost, isFactory).toString();
       li.appendChild(div);
       this.#HTMLList.appendChild(li);
+    }
+
+    for (const building of ["mine", "factory", "barracks"] as Building[]) {
+      const li = document.createElement('li');
+      li.textContent = `${building.substring(0, 4)}.`
+      const canAfford = this.#discount(3, isFactory) <= gold;
+      if (canAfford) {
+        li.onclick = () => {
+          onBuyBuilding(building);
+          this.#HTMLDialog.close();
+        }
+      } else {
+        li.classList.add('not-available');
+      }
+      this.#HTMLTopList.appendChild(li);
     }
   }
 

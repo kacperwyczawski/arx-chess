@@ -12,7 +12,7 @@
   --player-black: black;
   --todo1: #6c584c;
   --todo2: #adc178;
-  --grayed: #dfd3bf;
+  --todo-gray: #dfd3bf;
 }
 
 body {
@@ -127,28 +127,11 @@ tr:nth-child(even) td:nth-child(odd) {
   background-color: var(--square-light);
 }
 
-dialog {
+#castle-menu {
   max-width: 30rem;
   padding: .6rem;
   border: none;
   background-color: var(--square-light);
-
-  & button {
-    margin-bottom: .6rem;
-    background: var(--square-dark);
-    border-radius: none;
-    border: none;
-    width: 3rem;
-    padding: .2rem 0;
-
-    &:hover {
-      text-decoration: underline;
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
 
   &:focus {
     outline: none;
@@ -159,6 +142,46 @@ dialog {
   }
 
   & ol {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  & #castle-menu-top-list {
+    display: flex;
+    padding-bottom: .6rem;
+    gap: .6rem;
+
+    & * {
+      width: 3rem;
+      padding: .2rem 0;
+      background: var(--square-dark);
+      font-size: .8rem;
+      font-family: 'IBM Plex Mono', monospace;
+      text-align: center;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &.not-available {
+        filter: grayscale(1);
+      }
+    }
+
+    & button {
+      border-radius: 0;
+      border: none;
+      font-weight: bold;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+
+  & #castle-menu-list {
     list-style-type: none;
     padding: 0;
     margin: 0;

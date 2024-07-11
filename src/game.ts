@@ -71,20 +71,20 @@ export class Game {
         if (clickedCell.owner !== this.#currentPlayer.color) {
           return;
         }
-        this.#castleMenu.open(item => {
-          if (typeof item === "string") {
-            clickedCell.setBuilding(item);
-            this.#currentPlayer.handleBuildingUpgrade(item);
-            return;
-          }
+        this.#castleMenu.open(piece => {
           if (!this.#currentPlayer.canBuyPiece()) {
             alert("You can't buy any more pieces.");
             return;
           }
-          this.#currentPlayer.handlePieceBuy(item);
-          clickedCell.placePiece(item);
+          this.#currentPlayer.handlePieceBuy(piece);
+          clickedCell.placePiece(piece);
           clickedCell.makeNotAvailable();
         },
+          (building) => {
+
+            clickedCell.setBuilding(building);
+            this.#currentPlayer.handleBuildingUpgrade(building);
+          },
           this.#currentPlayer.color,
           this.#currentPlayer.gold,
           clickedCell.building === "factory",
