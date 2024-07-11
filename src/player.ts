@@ -4,8 +4,8 @@ export class Player {
   #element;
   #pieceCount = 1;
   #maxPieces = 2;
-  #gold = 0;
-  #goldPerTurn = 1;
+  #gold = 0.5;
+  #goldPerTurn = 0.5;
   #color;
   #hasBoughtPiece = false;
   #hasMovedPiece = false;
@@ -24,10 +24,10 @@ export class Player {
   ) {
     this.#color = color;
     this.#element = document.querySelector(`#${color}`)!;
-    this.#q(".pieces")!.textContent = "1";
-    this.#q(".max-pieces")!.textContent = "2";
-    this.#q(".gold")!.textContent = "0";
-    this.#q(".gold-per-turn")!.textContent = "1";
+    this.#q(".pieces")!.textContent = this.#pieceCount.toString()
+    this.#q(".max-pieces")!.textContent = this.#maxPieces.toString()
+    this.#q(".gold")!.textContent = this.#gold.toString();
+    this.#q(".gold-per-turn")!.textContent = this.#goldPerTurn.toString();
 
     this.#q(".turn-button")!.addEventListener("click", () => {
       onEndTurn();
@@ -52,14 +52,14 @@ export class Player {
   handleBuildingCapture(type: Building) {
     this.#maxPieces += type === "barracks" ? 3 : 1;
     this.#q(".max-pieces").textContent = this.#maxPieces.toString();
-    this.#goldPerTurn += type === "mine" ? 3 : 1;
+    this.#goldPerTurn += type === "mine" ? 1.5 : 0.5;
     this.#q(".gold-per-turn").textContent = this.#goldPerTurn.toString();
   }
 
   handleBuildingLoss(type: Building) {
     this.#maxPieces -= type === "barracks" ? 3 : 1;
     this.#q(".max-pieces").textContent = this.#maxPieces.toString();
-    this.#goldPerTurn -= type === "mine" ? 3 : 1;
+    this.#goldPerTurn -= type === "mine" ? 1.5 : 0.5;
     this.#q(".gold-per-turn").textContent = this.#goldPerTurn.toString();
   }
 
@@ -70,7 +70,7 @@ export class Player {
       this.#maxPieces += 2;
       this.#q(".max-pieces").textContent = this.#maxPieces.toString();
     } else if (type === "mine") {
-      this.#goldPerTurn += 2;
+      this.#goldPerTurn += 0.5;
       this.#q(".gold-per-turn").textContent = this.#goldPerTurn.toString();
     } else if (type === "factory") {
     } else if (type === "castle") {
