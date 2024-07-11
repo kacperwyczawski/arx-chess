@@ -9,6 +9,7 @@ import { PawnBishop } from "./pieces/pawnBishop";
 import { KnightRook } from "./pieces/knightRook";
 import { BishopKnight } from "./pieces/bishopKnight";
 import { BishopRook } from "./pieces/bishopRook";
+import { Amazon } from "./pieces/amazon";
 
 export class castleMenu {
   #HTMLDialog: HTMLDialogElement;
@@ -45,6 +46,7 @@ export class castleMenu {
       new Bishop(color),
       new BishopKnight(color),
       new BishopRook(color),
+      new Amazon(color),
     ];
 
     const items: {
