@@ -3,10 +3,8 @@ import { Player } from "./player";
 import { castleMenu } from "./castleMenu";
 import { Board } from "./board";
 
-// TODO: abstract HTML table as board and current board as game
-
 export class Game {
-  #selectedCell: Cell | null = null; //TODO: deselect on end turn
+  #selectedCell: Cell | null = null;
   #players = [
     new Player("white", () => this.#endTurn()),
     new Player("black", () => this.#endTurn()),
@@ -37,7 +35,6 @@ export class Game {
           if (clickedCell.piece?.color === this.#currentPlayer.color) {
             return;
           }
-          HTMLTable.classList.remove("piece-in-hand");
           if (clickedCell.piece) {
             this.#nextPlayer.handlePieceLoss();
           }
@@ -61,7 +58,6 @@ export class Game {
             alert("You can't move any more pieces.");
             return;
           }
-          HTMLTable.classList.add("piece-in-hand");
           this.#selectedCell = clickedCell;
           clickedCell.toggleSelected();
           return;
@@ -96,6 +92,9 @@ export class Game {
   #endTurn() {
     this.#currentPlayerIndex = (this.#currentPlayerIndex + 1) % 2;
     this.#currentPlayer.activate();
+
+    this.#selectedCell?.toggleSelected();
+    this.#selectedCell = null;
 
     this.#board.cells
       .filter(cell => cell.building && cell.piece?.color === this.#currentPlayer.color)
