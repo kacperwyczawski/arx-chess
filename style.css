@@ -7,7 +7,7 @@
 :root {
   --square-light: #f0ead2;
   --square-dark: #dde5b6;
-  --building: #a98467;
+  --dark: #a98467;
   --player-white: white;
   --player-black: black;
   --todo1: #6c584c;
@@ -18,7 +18,7 @@
 body {
   font-family: 'IBM Plex Mono', monospace;
   background-color: var(--square-dark);
-  color: var(--building);
+  color: var(--dark);
   margin: 0;
   padding: 0;
 }
@@ -53,7 +53,7 @@ menu {
 
   & a {
     background-color: var(--square-light);
-    color: var(--building);
+    color: var(--dark);
     padding: 1rem 2rem;
     max-width: 16rem;
     width: 100%;
@@ -123,20 +123,20 @@ main {
   }
 
   &.building {
-    border: .3rem dashed var(--building);
+    border: .3rem dashed var(--dark);
 
     /* --outline is injected using JavaScript */
     outline: .3rem solid var(--outline);
 
     & .cell-annotation {
-      background-color: var(--building);
+      background-color: var(--dark);
       color: var(--square-light);
     }
   }
 
   &.wall::after {
     content: "";
-    background: var(--building);
+    background: var(--dark);
     width: 2.4rem;
     height: 2.4rem;
     margin: auto;
