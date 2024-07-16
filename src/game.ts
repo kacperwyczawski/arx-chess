@@ -6,8 +6,8 @@ import { Board } from "./board";
 export class Game {
   #selectedCell: Cell | null = null;
   #players = [
-    new Player("white", () => this.#endTurn()),
-    new Player("black", () => this.#endTurn()),
+    new Player("white"),
+    new Player("black"),
   ];
   #currentPlayerIndex = 0;
   #castleMenu = new castleMenu();
@@ -45,19 +45,15 @@ export class Game {
             }
           }
           clickedCell.placePiece(this.#selectedCell.piece);
-          this.#currentPlayer.handlePieceMove();
           this.#selectedCell.removePiece();
           this.#selectedCell.toggleSelected();
           this.#selectedCell = null;
+          this.#endTurn();
           return;
         }
 
         // grab piece
         if (clickedCell.piece && clickedCell.piece.color === this.#currentPlayer.color) {
-          if (!this.#currentPlayer.canMovePiece()) {
-            alert("You can't move any more pieces.");
-            return;
-          }
           this.#selectedCell = clickedCell;
           clickedCell.toggleSelected();
           return;
@@ -75,11 +71,13 @@ export class Game {
           this.#currentPlayer.handlePieceBuy(piece);
           clickedCell.placePiece(piece);
           clickedCell.makeNotAvailable();
+          this.#endTurn()
         },
           (building) => {
 
             clickedCell.setBuilding(building);
             this.#currentPlayer.handleBuildingUpgrade(building);
+            this.#endTurn()
           },
           this.#currentPlayer,
           this.#currentPlayer.gold,
@@ -90,6 +88,8 @@ export class Game {
   }
 
   #endTurn() {
+    this.#currentPlayer.handleEndTurn();
+    
     this.#currentPlayerIndex = (this.#currentPlayerIndex + 1) % 2;
     this.#currentPlayer.activate();
 

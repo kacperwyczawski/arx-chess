@@ -15,12 +15,17 @@
   --todo-gray: #dfd3bf;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   font-family: 'IBM Plex Mono', monospace;
   background-color: var(--square-dark);
   color: var(--dark);
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 menu {
@@ -67,49 +72,39 @@ menu {
   }
 }
 
-main {
-  margin: auto;
-  max-width: fit-content;
-}
-
 #white,
 #black {
-  margin-top: 1rem;
+  position: absolute;
+  background: var(--square-light);
+  z-index: 1;
+  left: 0;
+  right: 0;
+  padding: .6rem;
 
   & .name {
-    font-size: xx-large;
     font-weight: bold;
   }
 
-  & .turn-button {
-    font-size: xx-large;
-    display: none;
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  &.active {
-    & .name {
-      text-decoration: underline;
-    }
-
-    & .turn-button {
-      display: inline;
-    }
-  }
-
-  & :is(.move-piece, .buy-piece).done {
-    text-decoration: line-through;
+  &.active .name {
+    text-decoration: underline;
   }
 }
 
+#white {
+  top: 0;
+  border-bottom: .3rem solid var(--dark);
+}
+
+#black {
+  bottom: 0;
+  border-top: .3rem solid var(--dark);
+}
+
 #board {
-  margin-top: 1rem;
   border-spacing: 0;
   border: .6rem solid var(--square-light);
+  table-layout: fixed;
+  width: calc(3rem * var(--cells-horizontaly));
 }
 
 .cell {

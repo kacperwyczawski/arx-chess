@@ -7,8 +7,6 @@ export class Player {
   #gold = 0.5;
   #goldPerTurn = 0.5;
   #color;
-  #hasBoughtPiece = false;
-  #hasMovedPiece = false;
   #boughtPieces = new Set<string>();
 
   get gold() {
@@ -21,7 +19,6 @@ export class Player {
 
   constructor(
     color: PlayerColor,
-    onEndTurn: () => void,
   ) {
     this.#color = color;
     this.#element = document.querySelector(`#${color}`)!;
@@ -29,25 +26,10 @@ export class Player {
     this.#q(".max-pieces")!.textContent = this.#maxPieces.toString()
     this.#q(".gold")!.textContent = this.#gold.toString();
     this.#q(".gold-per-turn")!.textContent = this.#goldPerTurn.toString();
-
-    this.#q(".turn-button")!.addEventListener("click", () => {
-      onEndTurn();
-      this.#gold += this.#goldPerTurn;
-      this.#q(".gold").textContent = this.#gold.toString();
-      this.#element.classList.remove("active");
-      this.#hasBoughtPiece = false;
-      this.#hasMovedPiece = false;
-      this.#q(".buy-piece").classList.remove("done");
-      this.#q(".move-piece").classList.remove("done");
-    });
   }
 
   canBuyPiece() {
-    return this.#pieceCount < this.#maxPieces && !this.#hasBoughtPiece;
-  }
-
-  canMovePiece() {
-    return !this.#hasMovedPiece;
+    return this.#pieceCount < this.#maxPieces;
   }
 
   hasUnlocked(piece: Piece) {
@@ -57,6 +39,12 @@ export class Player {
       }
     }
     return true;
+  }
+
+  handleEndTurn() {
+      this.#gold += this.#goldPerTurn;
+      this.#q(".gold").textContent = this.#gold.toString();
+      this.#element.classList.remove("active");
   }
 
   handleBuildingCapture(type: Building) {
@@ -98,14 +86,7 @@ export class Player {
     this.#q(".gold").textContent = this.#gold.toString();
     this.#pieceCount++;
     this.#q(".pieces").textContent = this.#pieceCount.toString();
-    this.#hasBoughtPiece = true;
-    this.#q(".buy-piece").classList.add("done");
     this.#boughtPieces.add(piece.name);
-  }
-
-  handlePieceMove() {
-    this.#hasMovedPiece = true;
-    this.#q(".move-piece").classList.add("done");
   }
 
   activate() {

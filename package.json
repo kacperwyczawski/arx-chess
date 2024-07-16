@@ -13,6 +13,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@fontsource/ibm-plex-mono": "^5.0.13"
+    "@fontsource/ibm-plex-mono": "^5.0.13",
+    "@panzoom/panzoom": "^4.5.1"
   }
 }
