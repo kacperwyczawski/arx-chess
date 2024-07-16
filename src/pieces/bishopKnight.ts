@@ -1,3 +1,5 @@
+import { Bishop } from "./bishop";
+import { Knight } from "./knight";
 import { Piece } from "./piece";
 
 
@@ -14,6 +16,13 @@ export class BishopKnight implements Piece {
 
     get name() {
         return "bishopknight";
+    }
+
+    get requirements() {
+        return new Set<Piece>([
+            new Bishop(this.#color),
+            new Knight(this.#color),
+        ]);
     }
 
     constructor(color: PlayerColor) {

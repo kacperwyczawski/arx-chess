@@ -81,7 +81,7 @@ export class Game {
             clickedCell.setBuilding(building);
             this.#currentPlayer.handleBuildingUpgrade(building);
           },
-          this.#currentPlayer.color,
+          this.#currentPlayer,
           this.#currentPlayer.gold,
           clickedCell.building === "factory",
           clickedCell.piece !== null);

@@ -1,3 +1,6 @@
+import { BishopKnight } from "./bishopKnight";
+import { BishopRook } from "./bishopRook";
+import { KnightRook } from "./knightRook";
 import { Piece } from "./piece";
 
 export class Amazon implements Piece {
@@ -13,6 +16,14 @@ export class Amazon implements Piece {
 
     get name() {
         return "amazon";
+    }
+
+    get requirements() {
+        return new Set<Piece>([
+            new KnightRook(this.#color),
+            new BishopKnight(this.#color),
+            new BishopRook(this.#color),
+        ])
     }
 
     constructor(color: PlayerColor) {

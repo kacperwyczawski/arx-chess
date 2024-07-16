@@ -10,6 +10,7 @@ import { KnightRook } from "./pieces/knightRook";
 import { BishopKnight } from "./pieces/bishopKnight";
 import { BishopRook } from "./pieces/bishopRook";
 import { Amazon } from "./pieces/amazon";
+import { Player } from "./player";
 
 export class castleMenu {
   #HTMLDialog: HTMLDialogElement;
@@ -30,7 +31,7 @@ export class castleMenu {
   open(
     onBuyPiece: (piece: Piece) => void,
     onBuyBuilding: (building: Building) => void,
-    color: PlayerColor,
+    player: Player,
     gold: number,
     isFactory: boolean,
     isOccupied: boolean
@@ -41,7 +42,8 @@ export class castleMenu {
       .querySelectorAll("li")
       .forEach(li => li.remove())
 
-    // TODO: outsource this to tech tree
+    const color = player.color;
+
     const pieces: Piece[] = [
       new Pawn(color),
       new PawnBishop(color),
@@ -54,7 +56,7 @@ export class castleMenu {
       new BishopKnight(color),
       new BishopRook(color),
       new Amazon(color),
-    ];
+    ].filter(p => player.hasUnlocked(p));
 
     for (const piece of pieces) {
       const li = document.createElement('li');

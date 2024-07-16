@@ -15,6 +15,10 @@ export class Pawn implements Piece {
         return "pawn";
     }
 
+    get requirements() {
+        return new Set<Piece>();
+    }
+
     constructor(color: PlayerColor) {
         this.#color = color;
     }

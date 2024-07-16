@@ -1,4 +1,6 @@
+import { Knight } from "./knight";
 import { Piece } from "./piece";
+import { Rook } from "./rook";
 
 export class KnightRook implements Piece {
     #color;
@@ -13,6 +15,13 @@ export class KnightRook implements Piece {
 
     get name() {
         return "knightrook";
+    }
+
+    get requirements() {
+        return new Set<Piece>([
+            new Knight(this.#color),
+            new Rook(this.#color)
+        ])
     }
 
     constructor(color: PlayerColor) {

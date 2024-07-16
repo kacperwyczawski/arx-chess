@@ -9,6 +9,7 @@ export class Player {
   #color;
   #hasBoughtPiece = false;
   #hasMovedPiece = false;
+  #boughtPieces = new Set<string>();
 
   get gold() {
     return this.#gold;
@@ -47,6 +48,15 @@ export class Player {
 
   canMovePiece() {
     return !this.#hasMovedPiece;
+  }
+
+  hasUnlocked(piece: Piece) {
+    for (const requirement of piece.requirements) {
+      if (!this.#boughtPieces.has(requirement.name)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   handleBuildingCapture(type: Building) {
@@ -90,6 +100,7 @@ export class Player {
     this.#q(".pieces").textContent = this.#pieceCount.toString();
     this.#hasBoughtPiece = true;
     this.#q(".buy-piece").classList.add("done");
+    this.#boughtPieces.add(piece.name);
   }
 
   handlePieceMove() {
