@@ -11,6 +11,7 @@ import { PawnRook } from "./pieces/pawnRook";
 import type { Piece } from "./pieces/piece";
 import { Rook } from "./pieces/rook";
 import type { Player } from "./player";
+import { q } from "./utils";
 
 export class castleMenu {
 	#HTMLDialog: HTMLDialogElement;
@@ -18,20 +19,12 @@ export class castleMenu {
 	#HTMLList: HTMLOListElement;
 
 	constructor() {
-		this.#HTMLDialog = document.getElementById(
-			"castle-menu",
-		) as HTMLDialogElement;
-		this.#HTMLTopList = document.getElementById(
-			"castle-menu-top-list",
-		) as HTMLOListElement;
-		this.#HTMLList = document.getElementById(
-			"castle-menu-list",
-		) as HTMLOListElement;
-		document
-			.getElementById("castle-menu-button")
-			?.addEventListener("click", () => {
-				this.#HTMLDialog.close();
-			});
+		this.#HTMLDialog = q("#castle-menu") as HTMLDialogElement;
+		this.#HTMLTopList = q("#castle-menu-top-list") as HTMLOListElement;
+		this.#HTMLList = q("#castle-menu-list") as HTMLOListElement;
+		q("#castle-menu-button")?.addEventListener("click", () => {
+			this.#HTMLDialog.close();
+		});
 	}
 
 	open(

@@ -1,4 +1,5 @@
 import type { Piece } from "./pieces/piece";
+import { q } from "./utils";
 
 export class Player {
 	#element;
@@ -19,11 +20,11 @@ export class Player {
 
 	constructor(color: PlayerColor) {
 		this.#color = color;
-		this.#element = document.querySelector(`#${color}`)!;
-		this.#q(".pieces")!.textContent = this.#pieceCount.toString();
-		this.#q(".max-pieces")!.textContent = this.#maxPieces.toString();
-		this.#q(".gold")!.textContent = this.#gold.toString();
-		this.#q(".gold-per-turn")!.textContent = this.#goldPerTurn.toString();
+		this.#element = q(`#${color}`);
+		q(".pieces").textContent = this.#pieceCount.toString();
+		q(".max-pieces").textContent = this.#maxPieces.toString();
+		q(".gold").textContent = this.#gold.toString();
+		q(".gold-per-turn").textContent = this.#goldPerTurn.toString();
 	}
 
 	canBuyPiece() {
@@ -41,33 +42,33 @@ export class Player {
 
 	handleEndTurn() {
 		this.#gold += this.#goldPerTurn;
-		this.#q(".gold").textContent = this.#gold.toString();
+		q(".gold").textContent = this.#gold.toString();
 		this.#element.classList.remove("active");
 	}
 
 	handleBuildingCapture(type: Building) {
 		this.#maxPieces += type === "barracks" ? 3 : 1;
-		this.#q(".max-pieces").textContent = this.#maxPieces.toString();
+		q(".max-pieces").textContent = this.#maxPieces.toString();
 		this.#goldPerTurn += type === "mine" ? 1.5 : 0.5;
-		this.#q(".gold-per-turn").textContent = this.#goldPerTurn.toString();
+		q(".gold-per-turn").textContent = this.#goldPerTurn.toString();
 	}
 
 	handleBuildingLoss(type: Building) {
 		this.#maxPieces -= type === "barracks" ? 3 : 1;
-		this.#q(".max-pieces").textContent = this.#maxPieces.toString();
+		q(".max-pieces").textContent = this.#maxPieces.toString();
 		this.#goldPerTurn -= type === "mine" ? 1.5 : 0.5;
-		this.#q(".gold-per-turn").textContent = this.#goldPerTurn.toString();
+		q(".gold-per-turn").textContent = this.#goldPerTurn.toString();
 	}
 
 	handleBuildingUpgrade(type: Building) {
 		this.#gold -= 3;
-		this.#q(".gold").textContent = this.#gold.toString();
+		q(".gold").textContent = this.#gold.toString();
 		if (type === "barracks") {
 			this.#maxPieces += 2;
-			this.#q(".max-pieces").textContent = this.#maxPieces.toString();
+			q(".max-pieces").textContent = this.#maxPieces.toString();
 		} else if (type === "mine") {
 			this.#goldPerTurn += 0.5;
-			this.#q(".gold-per-turn").textContent = this.#goldPerTurn.toString();
+			q(".gold-per-turn").textContent = this.#goldPerTurn.toString();
 		} else if (type === "factory") {
 		} else if (type === "castle") {
 			throw new Error("Upgrading to building of this type is not implemented");
@@ -76,22 +77,18 @@ export class Player {
 
 	handlePieceLoss() {
 		this.#pieceCount--;
-		this.#q(".pieces").textContent = this.#pieceCount.toString();
+		q(".pieces").textContent = this.#pieceCount.toString();
 	}
 
 	handlePieceBuy(piece: Piece) {
 		this.#gold -= piece.cost;
-		this.#q(".gold").textContent = this.#gold.toString();
+		q(".gold").textContent = this.#gold.toString();
 		this.#pieceCount++;
-		this.#q(".pieces").textContent = this.#pieceCount.toString();
+		q(".pieces").textContent = this.#pieceCount.toString();
 		this.#boughtPieces.add(piece.name);
 	}
 
 	activate() {
 		this.#element.classList.add("active");
-	}
-
-	#q(selector: string) {
-		return this.#element.querySelector(selector)!;
 	}
 }

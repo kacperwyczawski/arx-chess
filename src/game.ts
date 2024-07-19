@@ -95,14 +95,16 @@ export class Game {
 		this.#selectedCell?.toggleSelected();
 		this.#selectedCell = null;
 
-		this.#board.cells
-			.filter(
-				(cell) =>
-					cell.building && cell.piece?.color === this.#currentPlayer.color,
-			)
-			.forEach((cell) => cell.handleCapture());
+		for (const cell of this.#board.cells.filter(
+			(cell) =>
+				cell.building && cell.piece?.color === this.#currentPlayer.color,
+		)) {
+			cell.handleCapture();
+		}
 
-		this.#board.cells.forEach((cell) => cell.makeAvailable());
+		for (const cell of this.#board.cells) {
+			cell.makeAvailable();
+		}
 	}
 
 	get #currentPlayer() {

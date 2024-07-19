@@ -22,7 +22,7 @@ export class Board {
 			.forEach((row, y) => {
 				const HTMLRow = HTMLBody.insertRow();
 				this.#cells[y] = [];
-				row.split("").forEach((symbol) => {
+				for (const symbol of row.split("")) {
 					const cell = new Cell(HTMLRow.insertCell());
 					cell.onClick = () => {
 						onCellClick(cell);
@@ -46,7 +46,7 @@ export class Board {
 					} else {
 						throw new Error("unrecognized symbol");
 					}
-				});
+				}
 			});
 		HTMLTable.style.setProperty(
 			"--cells-horizontaly",

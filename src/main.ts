@@ -1,7 +1,8 @@
 import Panzoom from "@panzoom/panzoom";
 import { Game } from "./game.ts";
+import { q } from "./utils.ts";
 
-const board = document.getElementById("board") as HTMLTableElement;
+const board = q("#board") as HTMLTableElement;
 new Game(board);
 Panzoom(board, {
 	disableZoom: true,
