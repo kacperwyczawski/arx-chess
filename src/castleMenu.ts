@@ -37,7 +37,9 @@ export class castleMenu {
 	) {
 		this.#HTMLDialog.showModal();
 		this.#HTMLList.innerHTML = "";
-		this.#HTMLTopList.querySelectorAll("li").forEach((li) => li.remove());
+		for (const li of this.#HTMLTopList.querySelectorAll("li")) {
+			li.remove();
+		}
 
 		const color = player.color;
 
