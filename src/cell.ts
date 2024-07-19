@@ -1,4 +1,4 @@
-import { Piece } from "./pieces/piece";
+import type { Piece } from "./pieces/piece";
 
 export class Cell {
 	#building: Building | null = null;
@@ -7,9 +7,9 @@ export class Cell {
 	#HTMLCell: HTMLTableCellElement;
 	#available = true;
 
-	onClick: () => void = () => { };
+	onClick: () => void = () => {};
 
-	onMenu: () => void = () => { };
+	onMenu: () => void = () => {};
 
 	get piece() {
 		return this.#piece;
@@ -23,9 +23,7 @@ export class Cell {
 		return this.#owner;
 	}
 
-	constructor(
-		HTMLCell: HTMLTableCellElement
-	) {
+	constructor(HTMLCell: HTMLTableCellElement) {
 		this.#HTMLCell = HTMLCell;
 		this.#HTMLCell.classList.add("cell");
 		this.#HTMLCell.addEventListener("click", () => {
@@ -59,7 +57,10 @@ export class Cell {
 		if (!this.#piece) {
 			throw new Error("Cannot capture empty cell");
 		}
-		this.#HTMLCell.style.setProperty("--outline", `var(--player-${this.#piece.color})`);
+		this.#HTMLCell.style.setProperty(
+			"--outline",
+			`var(--player-${this.#piece.color})`,
+		);
 		this.#owner = this.#piece.color;
 	}
 

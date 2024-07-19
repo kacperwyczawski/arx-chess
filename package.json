@@ -1,19 +1,20 @@
 {
-  "name": "industrial-chess",
-  "version": "0.0.0",
-  "devDependencies": {
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0"
-  },
-  "private": true,
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "type": "module",
-  "dependencies": {
-    "@fontsource/ibm-plex-mono": "^5.0.13",
-    "@panzoom/panzoom": "^4.5.1"
-  }
+	"name": "industrial-chess",
+	"version": "0.0.0",
+	"devDependencies": {
+		"typescript": "^5.2.2",
+		"vite": "^5.2.0"
+	},
+	"private": true,
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"check": "biome check --write --unsafe .; git commit -am 'chore: apply biome unsafe checks'"
+	},
+	"type": "module",
+	"dependencies": {
+		"@fontsource/ibm-plex-mono": "^5.0.13",
+		"@panzoom/panzoom": "^4.5.1"
+	}
 }

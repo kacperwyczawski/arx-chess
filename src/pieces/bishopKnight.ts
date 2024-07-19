@@ -1,31 +1,27 @@
 import { Bishop } from "./bishop";
 import { Knight } from "./knight";
-import { Piece } from "./piece";
-
+import type { Piece } from "./piece";
 
 export class BishopKnight implements Piece {
-    #color;
+	#color;
 
-    get cost() {
-        return 3 + 3;
-    }
+	get cost() {
+		return 3 + 3;
+	}
 
-    get color() {
-        return this.#color;
-    }
+	get color() {
+		return this.#color;
+	}
 
-    get name() {
-        return "bishopknight";
-    }
+	get name() {
+		return "bishopknight";
+	}
 
-    get requirements() {
-        return new Set<Piece>([
-            new Bishop(this.#color),
-            new Knight(this.#color),
-        ]);
-    }
+	get requirements() {
+		return new Set<Piece>([new Bishop(this.#color), new Knight(this.#color)]);
+	}
 
-    constructor(color: PlayerColor) {
-        this.#color = color;
-    }
+	constructor(color: PlayerColor) {
+		this.#color = color;
+	}
 }

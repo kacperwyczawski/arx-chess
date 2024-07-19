@@ -1,6 +1,1 @@
-type Building =
-  | "factory"
-  | "barracks"
-  | "mine"
-  | "castle"
-  | "wall"
+type Building = "factory" | "barracks" | "mine" | "castle" | "wall";
