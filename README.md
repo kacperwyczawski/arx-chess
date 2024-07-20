@@ -1,3 +1,3 @@
 # Industrial Chess
 
-> Chess-based in-browser strategy game with fairy pieces
+> Simple chess-based strategy game with fairy pieces and resource management
