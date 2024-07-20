@@ -57,7 +57,8 @@ menu {
   }
 
   & a {
-    background-color: var(--square-light);
+    border: .3rem solid var(--square-light);
+    background-color: transparent;
     color: var(--dark);
     padding: 1rem 2rem;
     max-width: 16rem;
@@ -65,6 +66,10 @@ menu {
     display: block;
     text-align: center;
     text-decoration: none;
+
+    &.filled {
+      background-color: var(--square-light);
+    }
 
     &:hover {
       text-decoration: underline;
