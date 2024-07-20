@@ -1,3 +1,3 @@
 # Industrial Chess
 
-> If Battle of Polytopia and Chess had a baby
+> Chess-based in-browser strategy game with fairy pieces
