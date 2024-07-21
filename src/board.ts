@@ -1,5 +1,6 @@
 import { Cell } from "./cell";
 import { Pawn } from "./pieces/pawn";
+import maps from "./maps.txt?raw";
 
 export class Board {
 	#cells: Cell[][] = [];
@@ -10,16 +11,22 @@ export class Board {
 
 	constructor(
 		HTMLTable: HTMLTableElement,
-		template: string,
+		mapName: string,
 		onCellClick: (clickedCell: Cell) => void,
 		onCastleClick: (clickedCell: Cell) => void,
 	) {
+		const map = maps
+			.split("\n\n")
+			.find((s) => s.startsWith(mapName))
+			?.replace(/^.*\n/, "")
+			?.split("\n")
+
+		if (!map) {
+			throw new Error("there is no map with this name");
+		}
+	
 		const HTMLBody = HTMLTable.createTBody();
-		template
-			.replace(/ /g, "")
-			.split("\n")
-			.filter((row) => row.length > 0)
-			.forEach((row, y) => {
+		map.forEach((row, y) => {
 				const HTMLRow = HTMLBody.insertRow();
 				this.#cells[y] = [];
 				for (const symbol of row.split("")) {
@@ -32,7 +39,7 @@ export class Board {
 					};
 					this.#cells[y].push(cell);
 
-					if (symbol === "-") {
+					if (symbol === ".") {
 					} else if (symbol === "1") {
 						cell.placePiece(new Pawn("white"), true);
 						cell.setBuilding("castle");

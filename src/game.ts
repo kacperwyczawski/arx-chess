@@ -13,17 +13,7 @@ export class Game {
 	constructor(HTMLTable: HTMLTableElement) {
 		this.#board = new Board(
 			HTMLTable,
-			`
-        ---------
-        -1--c--c-
-        ----w----
-        ---w-----
-        -cw-c-wc-
-        -----w---
-        ----w----
-        -c--c--2-
-        ---------
-      `,
+			"canyon",
 			(clickedCell) => {
 				// place piece
 				if (this.#selectedCell?.piece) {
