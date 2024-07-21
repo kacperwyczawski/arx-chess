@@ -50,14 +50,16 @@ export class Player {
 		this.#maxPieces += type === "barracks" ? 3 : 1;
 		q(`#${this.#color} .max-pieces`).textContent = this.#maxPieces.toString();
 		this.#goldPerTurn += type === "mine" ? 1.5 : 0.5;
-		q(`#${this.#color} .gold-per-turn`).textContent = this.#goldPerTurn.toString();
+		q(`#${this.#color} .gold-per-turn`).textContent =
+			this.#goldPerTurn.toString();
 	}
 
 	handleBuildingLoss(type: Building) {
 		this.#maxPieces -= type === "barracks" ? 3 : 1;
 		q(`#${this.#color} .max-pieces`).textContent = this.#maxPieces.toString();
 		this.#goldPerTurn -= type === "mine" ? 1.5 : 0.5;
-		q(`#${this.#color} .gold-per-turn`).textContent = this.#goldPerTurn.toString();
+		q(`#${this.#color} .gold-per-turn`).textContent =
+			this.#goldPerTurn.toString();
 	}
 
 	handleBuildingUpgrade(type: Building) {
@@ -68,7 +70,8 @@ export class Player {
 			q(`#${this.#color} .max-pieces`).textContent = this.#maxPieces.toString();
 		} else if (type === "mine") {
 			this.#goldPerTurn += 0.5;
-			q(`#${this.#color} .gold-per-turn`).textContent = this.#goldPerTurn.toString();
+			q(`#${this.#color} .gold-per-turn`).textContent =
+				this.#goldPerTurn.toString();
 		} else if (type === "factory") {
 		} else if (type === "castle") {
 			throw new Error("Upgrading to building of this type is not implemented");
