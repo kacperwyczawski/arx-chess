@@ -13,7 +13,7 @@ export class PawnKnight implements Piece {
 	}
 
 	get name() {
-		return "pawnknight";
+		return "pawn-knight";
 	}
 
 	get requirements() {

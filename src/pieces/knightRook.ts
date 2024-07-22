@@ -14,7 +14,7 @@ export class KnightRook implements Piece {
 	}
 
 	get name() {
-		return "knightrook";
+		return "knight-rook";
 	}
 
 	get requirements() {

@@ -14,7 +14,7 @@ export class BishopKnight implements Piece {
 	}
 
 	get name() {
-		return "bishopknight";
+		return "bishop-knight";
 	}
 
 	get requirements() {

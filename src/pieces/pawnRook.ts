@@ -13,7 +13,7 @@ export class PawnRook implements Piece {
 	}
 
 	get name() {
-		return "pawnrook";
+		return "pawn-rook";
 	}
 
 	get requirements() {

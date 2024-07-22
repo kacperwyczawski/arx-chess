@@ -13,7 +13,7 @@ export class PawnBishop implements Piece {
 	}
 
 	get name() {
-		return "pawnbishop";
+		return "pawn-bishop";
 	}
 
 	get requirements() {

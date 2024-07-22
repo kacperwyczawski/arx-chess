@@ -1,17 +1,6 @@
-import { Amazon } from "./pieces/amazon";
-import { Bishop } from "./pieces/bishop";
-import { BishopKnight } from "./pieces/bishopKnight";
-import { BishopRook } from "./pieces/bishopRook";
-import { Knight } from "./pieces/knight";
-import { KnightRook } from "./pieces/knightRook";
-import { Pawn } from "./pieces/pawn";
-import { PawnBishop } from "./pieces/pawnBishop";
-import { PawnKnight } from "./pieces/pawnKnight";
-import { PawnRook } from "./pieces/pawnRook";
-import type { Piece } from "./pieces/piece";
-import { Rook } from "./pieces/rook";
+import { Piece } from "./pieces/piece";
 import type { Player } from "./player";
-import { q } from "./utils";
+import { getAllPieces as getAllPieces, q } from "./utils";
 
 export class castleMenu {
 	#HTMLDialog: HTMLDialogElement;
@@ -41,21 +30,7 @@ export class castleMenu {
 			li.remove();
 		}
 
-		const color = player.color;
-
-		const pieces: Piece[] = [
-			new Pawn(color),
-			new PawnBishop(color),
-			new PawnKnight(color),
-			new PawnRook(color),
-			new Rook(color),
-			new Knight(color),
-			new KnightRook(color),
-			new Bishop(color),
-			new BishopKnight(color),
-			new BishopRook(color),
-			new Amazon(color),
-		].filter((p) => player.hasUnlocked(p));
+		const pieces = getAllPieces(player.color).filter((p) => player.hasUnlocked(p));
 
 		for (const piece of pieces) {
 			const li = document.createElement("li");

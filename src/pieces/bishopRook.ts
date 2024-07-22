@@ -14,7 +14,7 @@ export class BishopRook implements Piece {
 	}
 
 	get name() {
-		return "bishoprook";
+		return "bishop-rook";
 	}
 
 	get requirements() {
