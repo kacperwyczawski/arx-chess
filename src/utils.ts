@@ -20,16 +20,16 @@ export function q(selector: string) {
 
 export function getAllPieces(color: PlayerColor) {
 	return [
-			new Pawn(color),
-			new PawnBishop(color),
-			new PawnKnight(color),
-			new PawnRook(color),
-			new Rook(color),
-			new Knight(color),
-			new KnightRook(color),
-			new Bishop(color),
-			new BishopKnight(color),
-			new BishopRook(color),
-			new Amazon(color),
+		new Pawn(color),
+		new PawnBishop(color),
+		new PawnKnight(color),
+		new PawnRook(color),
+		new Rook(color),
+		new Knight(color),
+		new KnightRook(color),
+		new Bishop(color),
+		new BishopKnight(color),
+		new BishopRook(color),
+		new Amazon(color),
 	];
 }

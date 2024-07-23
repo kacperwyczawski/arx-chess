@@ -1,6 +1,6 @@
-import { Piece } from "./pieces/piece";
+import type { Piece } from "./pieces/piece";
 import type { Player } from "./player";
-import { getAllPieces as getAllPieces, q } from "./utils";
+import { getAllPieces, q } from "./utils";
 
 export class castleMenu {
 	#HTMLDialog: HTMLDialogElement;
@@ -30,7 +30,9 @@ export class castleMenu {
 			li.remove();
 		}
 
-		const pieces = getAllPieces(player.color).filter((p) => player.hasUnlocked(p));
+		const pieces = getAllPieces(player.color).filter((p) =>
+			player.hasUnlocked(p),
+		);
 
 		for (const piece of pieces) {
 			const li = document.createElement("li");
