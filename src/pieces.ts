@@ -1,4 +1,4 @@
-import { getAllPieces, q } from "./utils";
+import { getAllPieces } from "./utils";
 
 const body = document.body;
 for (const piece of getAllPieces("white")) {
@@ -8,7 +8,7 @@ for (const piece of getAllPieces("white")) {
 
 	const h1 = document.createElement("h1");
 	h1.id = piece.name;
-	let content;
+	let content: string;
 	if (piece.name === "bishop-rook") {
 		content = "Bishop + Rook (Queen)";
 	} else if (piece.name === "amazon") {
