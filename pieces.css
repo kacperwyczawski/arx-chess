@@ -1,0 +1,30 @@
+body {
+  padding: 1rem;
+}
+
+h1:target {
+  text-decoration: underline;
+}
+
+h1 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+
+  &:target {
+    text-decoration: underline;
+  }
+}
+
+ul {
+  margin-top: 0;
+  padding: 0;
+  margin-left: 48px;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+
+  & li {
+    cursor: pointer;
+  }
+}

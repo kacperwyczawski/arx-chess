@@ -8,30 +8,36 @@ for (const piece of getAllPieces("white")) {
 
 	const h1 = document.createElement("h1");
 	h1.id = piece.name;
-	let content: string;
+	const span = document.createElement("span")
+	const img = document.createElement("img")
+	img.src = `${piece.name}-white.png`
+	img.alt = piece.name
 	if (piece.name === "bishop-rook") {
-		content = "Bishop + Rook (Queen)";
+		span.textContent = "Bishop + Rook (Queen)";
 	} else if (piece.name === "amazon") {
-		content = "Amazon (Bishop + Knight + Rook)";
+		span.textContent = "Amazon (Bishop + Knight + Rook)";
 	} else {
-		content = piece.name
+		span.textContent = piece.name
 			.split("-")
 			.map((s) => s.charAt(0).toUpperCase() + s.slice(1))
 			.join(" + ");
 	}
-	h1.textContent = content;
+	h1.appendChild(img)
+	h1.appendChild(span)
 	body.appendChild(h1);
 
 	const ul = document.createElement("ul");
+	ul.textContent = "requires:"
 	for (const requirement of piece.requirements) {
 		const li = document.createElement("li");
 		const a = document.createElement("a");
 		a.href = `#${requirement.name}`;
-		a.textContent = requirement.name;
+		const img = document.createElement("img");
+		img.src = `${requirement.name}-white.png`
+		img.alt = requirement.name
+		a.appendChild(img)
 		li.appendChild(a);
 		ul.appendChild(li);
 	}
 	body.appendChild(ul);
 }
-
-// TODO: images
