@@ -8,7 +8,6 @@ export default defineConfig({
 				1: resolve(__dirname, "index.html"),
 				2: resolve(__dirname, "play.html"),
 				3: resolve(__dirname, "pieces.html"),
-				4: resolve(__dirname, "tutorial.html"),
 			},
 		},
 	},

@@ -56,7 +56,11 @@ export class castleMenu {
 
 		for (const building of ["mine", "factory", "barracks"] as Building[]) {
 			const li = document.createElement("li");
-			li.textContent = `${building.substring(0, 4)}.`;
+			li.textContent = building === "mine"
+				? "mine"
+				: building === "factory"
+					? "fctry"
+					: "brcks"
 			const canAfford = this.#discount(3, isFactory) <= gold;
 			if (canAfford) {
 				li.onclick = () => {

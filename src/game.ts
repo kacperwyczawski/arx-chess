@@ -2,6 +2,7 @@ import { Board } from "./board";
 import { castleMenu } from "./castleMenu";
 import type { Cell } from "./cell";
 import { Player } from "./player";
+import Tutorial from "./tutorial";
 
 export class Game {
 	#selectedCell: Cell | null = null;
@@ -9,8 +10,11 @@ export class Game {
 	#currentPlayerIndex = 0;
 	#castleMenu = new castleMenu();
 	#board;
+	#isTutorial;
+	#tutorial = new Tutorial();
 
-	constructor(HTMLTable: HTMLTableElement) {
+	constructor(HTMLTable: HTMLTableElement, tutorial: boolean) {
+		this.#isTutorial = tutorial
 		this.#board = new Board(
 			HTMLTable,
 			"canyon",
@@ -74,6 +78,10 @@ export class Game {
 				);
 			},
 		);
+
+		if(this.#isTutorial) {
+			this.#tutorial.activate(this.#players[0])
+		}
 	}
 
 	#endTurn() {
