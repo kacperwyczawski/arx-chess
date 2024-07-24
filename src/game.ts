@@ -14,7 +14,7 @@ export class Game {
 	#tutorial = new Tutorial();
 
 	constructor(HTMLTable: HTMLTableElement, tutorial: boolean) {
-		this.#isTutorial = tutorial
+		this.#isTutorial = tutorial;
 		this.#board = new Board(
 			HTMLTable,
 			"canyon",
@@ -79,8 +79,8 @@ export class Game {
 			},
 		);
 
-		if(this.#isTutorial) {
-			this.#tutorial.activate(this.#players[0])
+		if (this.#isTutorial) {
+			this.#tutorial.activate(this.#players[0]);
 		}
 	}
 

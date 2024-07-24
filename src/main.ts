@@ -3,7 +3,7 @@ import { Game } from "./game.ts";
 import { q } from "./utils.ts";
 
 const board = q("#board") as HTMLTableElement;
-new Game(board, new URLSearchParams(location.search).has("tutorial"))
+new Game(board, new URLSearchParams(location.search).has("tutorial"));
 Panzoom(board, {
 	disableZoom: true,
 	startX: window.innerWidth / 2 - board.clientWidth / 2,
