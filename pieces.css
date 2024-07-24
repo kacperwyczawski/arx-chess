@@ -17,9 +17,8 @@ h1 {
 }
 
 ul {
-  margin-top: 0;
   padding: 0;
-  margin-left: 48px;
+  margin: 0 0 0 48px;
   list-style-type: none;
   display: flex;
   align-items: center;
@@ -27,4 +26,8 @@ ul {
   & li {
     cursor: pointer;
   }
+}
+
+p {
+  margin: 0 0 0 48px;
 }

@@ -40,4 +40,8 @@ for (const piece of getAllPieces("white")) {
 		ul.appendChild(li);
 	}
 	body.appendChild(ul);
+
+	const p = document.createElement("p")
+	p.textContent = `cost: ${piece.cost}`
+	body.appendChild(p)
 }
