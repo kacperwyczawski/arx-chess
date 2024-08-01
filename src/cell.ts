@@ -25,7 +25,7 @@ export class Cell {
 	}
 
 	get isHighlighted() {
-		return this.#isHighlighted
+		return this.#isHighlighted;
 	}
 
 	constructor(HTMLCell: HTMLTableCellElement) {
@@ -45,7 +45,10 @@ export class Cell {
 
 	placePiece(piece: Piece, startingPiece = false) {
 		this.#piece = piece;
-		this.#HTMLCell.style.setProperty("--background-image-url", `url('${piece.name}-${piece.color}.png')`);
+		this.#HTMLCell.style.setProperty(
+			"--background-image-url",
+			`url('${piece.name}-${piece.color}.png')`,
+		);
 		this.#HTMLCell.classList.add("piece-to-move");
 
 		if (startingPiece) {
@@ -86,12 +89,12 @@ export class Cell {
 
 	highlight() {
 		this.#isHighlighted = true;
-		this.#HTMLCell.classList.add("highlighted")
+		this.#HTMLCell.classList.add("highlighted");
 	}
 
 	unhighlight() {
 		this.#isHighlighted = false;
-		this.#HTMLCell.classList.remove("highlighted")
+		this.#HTMLCell.classList.remove("highlighted");
 	}
 
 	setBuilding(building: Building) {

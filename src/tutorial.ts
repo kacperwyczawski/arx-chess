@@ -69,14 +69,16 @@ export default class Tutorial {
 							m(
 								"By the way you might notice more available pieces. You unlocked them buy buying a pawn. You can see all pieces on separate page, accessible from the main menu",
 							);
-							for (const element of document.querySelectorAll("#castle-menu-top-list > *:not(:first-child)")) {
+							for (const element of document.querySelectorAll(
+								"#castle-menu-top-list > *:not(:first-child)",
+							)) {
 								element.addEventListener("click", () => {
 									m("Great! Now you can enjoy bonuses from your upgrade.");
 									m(
 										"And that's all in this tutorial, now you can start new game from the main menu",
 										true,
 									);
-								})
+								});
 							}
 						}
 					},

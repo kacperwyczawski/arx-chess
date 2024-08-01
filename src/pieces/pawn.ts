@@ -1,4 +1,4 @@
-import { Cell } from "../cell";
+import type { Cell } from "../cell";
 import type { Piece } from "./piece";
 
 export class Pawn implements Piece {
@@ -24,25 +24,25 @@ export class Pawn implements Piece {
 		this.#color = color;
 	}
 
-  highlightMoves(cells: Cell[][], x: number, y: number): void {
-  	let a = [
-  		cells[y - 1]?.[x - 1],
-  		cells[y - 1]?.[x],
-  		cells[y - 1]?.[x + 1],
-  		cells[y]?.[x + 1],
-  		cells[y]?.[x - 1],
-  		cells[y + 1]?.[x + 1],
-  		cells[y + 1]?.[x],
-  		cells[y + 1]?.[x - 1],
-  	]
+	highlightMoves(cells: Cell[][], x: number, y: number): void {
+		let a = [
+			cells[y - 1]?.[x - 1],
+			cells[y - 1]?.[x],
+			cells[y - 1]?.[x + 1],
+			cells[y]?.[x + 1],
+			cells[y]?.[x - 1],
+			cells[y + 1]?.[x + 1],
+			cells[y + 1]?.[x],
+			cells[y + 1]?.[x - 1],
+		];
 
-  	a = a
-  		.filter(c => c !== undefined)
-  		.filter(c => c.piece?.color !== this.#color)
-  		.filter(c => c.building !== "wall")
+		a = a
+			.filter((c) => c !== undefined)
+			.filter((c) => c.piece?.color !== this.#color)
+			.filter((c) => c.building !== "wall");
 
-  	for (const c of a) {
-  		c.highlight()
-  	}
-  }
+		for (const c of a) {
+			c.highlight();
+		}
+	}
 }

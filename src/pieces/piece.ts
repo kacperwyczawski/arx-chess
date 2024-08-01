@@ -1,4 +1,4 @@
-import { Cell } from "../cell";
+import type { Cell } from "../cell";
 
 export interface Piece {
 	get color(): PlayerColor;

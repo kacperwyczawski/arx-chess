@@ -85,16 +85,16 @@ export class Game {
 		}
 	}
 
-  #deselectAndUnhighlightCells() {
-  	if (this.#selectedCell === null) {
-  		return;
-  	}
-    this.#selectedCell.toggleSelected();
-    this.#selectedCell = null;
+	#deselectAndUnhighlightCells() {
+		if (this.#selectedCell === null) {
+			return;
+		}
+		this.#selectedCell.toggleSelected();
+		this.#selectedCell = null;
 		for (const cell of this.#board.cellsFlat) {
 			cell.unhighlight();
 		}
-  }
+	}
 
 	#endTurn() {
 		this.#currentPlayer.handleEndTurn();

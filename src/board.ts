@@ -57,7 +57,7 @@ export class Board {
 				} else {
 					throw new Error("unrecognized symbol");
 				}
-			})
+			});
 		});
 		HTMLTable.style.setProperty(
 			"--cells-horizontaly",
