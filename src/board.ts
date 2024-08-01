@@ -5,14 +5,18 @@ import { Pawn } from "./pieces/pawn";
 export class Board {
 	#cells: Cell[][] = [];
 
-	get cells() {
+	get cellsFlat() {
 		return this.#cells.flat();
+	}
+
+	get cells() {
+		return this.#cells;
 	}
 
 	constructor(
 		HTMLTable: HTMLTableElement,
 		mapName: string,
-		onCellClick: (clickedCell: Cell) => void,
+		onCellClick: (clickedCell: Cell, x: number, y: number) => void,
 		onCastleClick: (clickedCell: Cell) => void,
 	) {
 		const map = maps
@@ -29,10 +33,10 @@ export class Board {
 		map.forEach((row, y) => {
 			const HTMLRow = HTMLBody.insertRow();
 			this.#cells[y] = [];
-			for (const symbol of row.split("")) {
+			row.split("").forEach((symbol, x) => {
 				const cell = new Cell(HTMLRow.insertCell());
 				cell.onClick = () => {
-					onCellClick(cell);
+					onCellClick(cell, x, y);
 				};
 				cell.onMenu = () => {
 					onCastleClick(cell);
@@ -53,7 +57,7 @@ export class Board {
 				} else {
 					throw new Error("unrecognized symbol");
 				}
-			}
+			})
 		});
 		HTMLTable.style.setProperty(
 			"--cells-horizontaly",

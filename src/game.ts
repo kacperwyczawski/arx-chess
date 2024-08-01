@@ -18,10 +18,11 @@ export class Game {
 		this.#board = new Board(
 			HTMLTable,
 			"canyon",
-			(clickedCell) => {
+			(clickedCell, x, y) => {
 				// place piece
 				if (this.#selectedCell?.piece) {
-					if (clickedCell.piece?.color === this.#currentPlayer.color) {
+					if (!clickedCell.isHighlighted) {
+						this.#deselectAndUnhighlightCells();
 						return;
 					}
 					if (clickedCell.piece) {
@@ -35,8 +36,7 @@ export class Game {
 					}
 					clickedCell.placePiece(this.#selectedCell.piece);
 					this.#selectedCell.removePiece();
-					this.#selectedCell.toggleSelected();
-					this.#selectedCell = null;
+					this.#deselectAndUnhighlightCells();
 					this.#endTurn();
 					return;
 				}
@@ -48,6 +48,7 @@ export class Game {
 				) {
 					this.#selectedCell = clickedCell;
 					clickedCell.toggleSelected();
+					clickedCell.piece.highlightMoves(this.#board.cells, x, y);
 					return;
 				}
 			},
@@ -84,6 +85,17 @@ export class Game {
 		}
 	}
 
+  #deselectAndUnhighlightCells() {
+  	if (this.#selectedCell === null) {
+  		return;
+  	}
+    this.#selectedCell.toggleSelected();
+    this.#selectedCell = null;
+		for (const cell of this.#board.cellsFlat) {
+			cell.unhighlight();
+		}
+  }
+
 	#endTurn() {
 		this.#currentPlayer.handleEndTurn();
 
@@ -93,14 +105,15 @@ export class Game {
 		this.#selectedCell?.toggleSelected();
 		this.#selectedCell = null;
 
-		for (const cell of this.#board.cells.filter(
+		for (const cell of this.#board.cellsFlat.filter(
 			(cell) =>
 				cell.building && cell.piece?.color === this.#currentPlayer.color,
 		)) {
 			cell.handleCapture();
 		}
 
-		for (const cell of this.#board.cells) {
+		for (const cell of this.#board.cellsFlat) {
+			// TODO: this is useless, since there is only 1 action per turn
 			cell.makeAvailable();
 		}
 	}
