@@ -10,7 +10,7 @@
   --dark: #a98467;
   --player-white: white;
   --player-black: black;
-  --todo1: #6c584c;
+  --move-highlight: #6c584c;
   --todo2: #adc178;
   --todo-gray: #dfd3bf;
 }
@@ -117,6 +117,25 @@ menu {
   height: 3rem;
   background-color: var(--square-dark);
   background-position: center;
+  background-repeat: no-repeat;
+
+  &.piece-to-move {
+    background-image:
+      /* --background-image-url is injected using JavaScript */
+      var(--background-image-url);
+  }
+
+  &.highlighted.piece-to-move {
+    background-image:
+      /* --background-image-url is injected using JavaScript */
+      var(--background-image-url),
+      radial-gradient(circle at center, red 0, transparent 1.3rem);
+  }
+
+  &.highlighted:not(.piece-to-move) {
+    background-image:
+      radial-gradient(circle at center, var(--move-highlight) 0, var(--move-highlight) .3rem, transparent .3rem);
+  }
 
   &.selected {
     filter: brightness(1.2);
@@ -139,8 +158,8 @@ menu {
     background: var(--dark);
     width: 2.4rem;
     height: 2.4rem;
-    margin: auto;
     display: block;
+    margin: auto;
   }
 
   &.piece-to-move {
