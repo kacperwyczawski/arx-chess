@@ -47,7 +47,7 @@ export class Cell {
 		this.#piece = piece;
 		this.#HTMLCell.style.setProperty(
 			"--background-image-url",
-			`url('${piece.name}-${piece.color}.png')`,
+			`url('/${piece.name}-${piece.color}.png')`,
 		);
 		this.#HTMLCell.classList.add("piece-to-move");
 

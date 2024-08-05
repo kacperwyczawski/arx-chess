@@ -37,7 +37,7 @@ export class castleMenu {
 		for (const piece of pieces) {
 			const li = document.createElement("li");
 			li.classList.add("cell");
-			li.style.backgroundImage = `url('${piece.name}-${piece.color}.png')`;
+			li.style.backgroundImage = `url('/${piece.name}-${piece.color}.png')`;
 			const canAfford = this.#discount(piece.cost, isFactory) <= gold;
 			if (canAfford && !isOccupied) {
 				li.onclick = () => {
