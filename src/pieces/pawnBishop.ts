@@ -1,4 +1,6 @@
+import { Cell } from "../cell";
 import { Bishop } from "./bishop";
+import { Pawn } from "./pawn";
 import type { Piece } from "./piece";
 
 export class PawnBishop implements Piece {
@@ -22,5 +24,10 @@ export class PawnBishop implements Piece {
 
 	constructor(color: PlayerColor) {
 		this.#color = color;
+	}
+
+	highlightMoves(cells: Cell[][], x: number, y: number): void {
+		new Pawn(this.#color).highlightMoves(cells, x, y)
+		new Bishop(this.#color).highlightMoves(cells, x, y)
 	}
 }

@@ -1,7 +1,11 @@
+import { Cell } from "../cell";
+import { Bishop } from "./bishop";
 import { BishopKnight } from "./bishopKnight";
 import { BishopRook } from "./bishopRook";
+import { Knight } from "./knight";
 import { KnightRook } from "./knightRook";
 import type { Piece } from "./piece";
+import { Rook } from "./rook";
 
 export class Amazon implements Piece {
 	#color;
@@ -28,5 +32,11 @@ export class Amazon implements Piece {
 
 	constructor(color: PlayerColor) {
 		this.#color = color;
+	}
+
+	highlightMoves(cells: Cell[][], x: number, y: number): void {
+		new Knight(this.#color).highlightMoves(cells, x, y)
+		new Rook(this.#color).highlightMoves(cells, x, y)
+		new Bishop(this.#color).highlightMoves(cells, x, y)
 	}
 }
