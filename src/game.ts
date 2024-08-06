@@ -3,6 +3,7 @@ import { castleMenu } from "./castleMenu";
 import type { Cell } from "./cell";
 import { Player } from "./player";
 import Tutorial from "./tutorial";
+import { q } from "./utils";
 
 export class Game {
 	#selectedCell: Cell | null = null;
@@ -12,8 +13,10 @@ export class Game {
 	#board;
 	#isTutorial;
 	#tutorial = new Tutorial();
+	#HTMLGameOverDialog;
 
 	constructor(HTMLTable: HTMLTableElement, tutorial: boolean) {
+		this.#HTMLGameOverDialog = q("#game-over") as HTMLDialogElement;
 		this.#isTutorial = tutorial;
 		this.#board = new Board(
 			HTMLTable,
@@ -104,6 +107,16 @@ export class Game {
 
 		this.#selectedCell?.toggleSelected();
 		this.#selectedCell = null;
+
+		if (!this.#board.cellsFlat.some((cell) => cell.owner === "black")) {
+			this.#HTMLGameOverDialog.showModal()
+			this.#HTMLGameOverDialog.children[0].textContent = "Game over! White is the winner."
+		}
+
+		if (!this.#board.cellsFlat.some((cell) => cell.owner === "white")) {
+			this.#HTMLGameOverDialog.showModal()
+			this.#HTMLGameOverDialog.children[0].textContent = "Game over! Black is the winner."
+		}
 
 		for (const cell of this.#board.cellsFlat.filter(
 			(cell) =>

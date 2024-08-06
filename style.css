@@ -11,7 +11,7 @@
   --player-white: white;
   --player-black: black;
   --move-highlight: #6c584c;
-  --todo2: #adc178;
+  --todo: #adc178;
   --todo-gray: #dfd3bf;
 }
 
@@ -190,11 +190,12 @@ tr:nth-child(even) td:nth-child(odd) {
   background-color: var(--square-light);
 }
 
-#castle-menu {
+dialog {
   max-width: 30rem;
   padding: .6rem;
   border: none;
   background-color: var(--square-light);
+  color: var(--dark);
 
   &:focus {
     outline: none;
@@ -203,7 +204,9 @@ tr:nth-child(even) td:nth-child(odd) {
   &::backdrop {
     background-color: rgba(0, 0, 0, .3);
   }
+}
 
+#castle-menu {
   & ol {
     margin: 0;
     padding: 0;
@@ -219,6 +222,7 @@ tr:nth-child(even) td:nth-child(odd) {
       width: 3rem;
       padding: .2rem 0;
       background: var(--square-dark);
+      color: var(--dark);
       font-size: .8rem;
       font-family: 'IBM Plex Mono', monospace;
       text-align: center;
@@ -256,6 +260,30 @@ tr:nth-child(even) td:nth-child(odd) {
       cursor: pointer;
       display: flex;
       align-items: center;
+    }
+  }
+}
+
+#game-over {
+  text-align: center;
+  color: var(--dark);
+
+  & p {
+    margin-top: 0;
+  }
+
+  & a {
+    background: var(--square-dark);
+    padding: .2rem .5rem;
+    text-decoration: none;
+    color: var(--dark);
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      outline: none;
     }
   }
 }

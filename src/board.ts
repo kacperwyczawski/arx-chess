@@ -2,6 +2,9 @@ import { Cell } from "./cell";
 import maps from "./maps.txt?raw";
 import { Pawn } from "./pieces/pawn";
 
+// TODO: forfeit button
+// TODO: end turn button (just skip turn and get money)
+
 export class Board {
 	#cells: Cell[][] = [];
 
