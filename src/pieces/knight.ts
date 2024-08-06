@@ -1,4 +1,4 @@
-import { Cell } from "../cell";
+import type { Cell } from "../cell";
 import { Pawn } from "./pawn";
 import type { Piece } from "./piece";
 

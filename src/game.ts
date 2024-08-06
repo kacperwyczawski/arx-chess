@@ -109,13 +109,15 @@ export class Game {
 		this.#selectedCell = null;
 
 		if (!this.#board.cellsFlat.some((cell) => cell.owner === "black")) {
-			this.#HTMLGameOverDialog.showModal()
-			this.#HTMLGameOverDialog.children[0].textContent = "Game over! White is the winner."
+			this.#HTMLGameOverDialog.showModal();
+			this.#HTMLGameOverDialog.children[0].textContent =
+				"Game over! White is the winner.";
 		}
 
 		if (!this.#board.cellsFlat.some((cell) => cell.owner === "white")) {
-			this.#HTMLGameOverDialog.showModal()
-			this.#HTMLGameOverDialog.children[0].textContent = "Game over! Black is the winner."
+			this.#HTMLGameOverDialog.showModal();
+			this.#HTMLGameOverDialog.children[0].textContent =
+				"Game over! Black is the winner.";
 		}
 
 		for (const cell of this.#board.cellsFlat.filter(
