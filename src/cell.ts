@@ -5,7 +5,6 @@ export class Cell {
 	#owner: PlayerColor | null = null;
 	#piece: Piece | null = null;
 	#HTMLCell: HTMLTableCellElement;
-	#available = true;
 	#isHighlighted = false;
 
 	onClick: () => void = () => {};
@@ -32,9 +31,6 @@ export class Cell {
 		this.#HTMLCell = HTMLCell;
 		this.#HTMLCell.classList.add("cell");
 		this.#HTMLCell.addEventListener("click", () => {
-			if (!this.#available) {
-				return;
-			}
 			this.onClick();
 		});
 		this.#HTMLCell.addEventListener("contextmenu", (event) => {
@@ -56,11 +52,6 @@ export class Cell {
 		}
 	}
 
-	makeNotAvailable() {
-		this.#HTMLCell.classList.add("not-available");
-		this.#available = false;
-	}
-
 	handleCapture() {
 		if (!this.#piece) {
 			throw new Error("Cannot capture empty cell");
@@ -70,11 +61,6 @@ export class Cell {
 			`var(--player-${this.#piece.color})`,
 		);
 		this.#owner = this.#piece.color;
-	}
-
-	makeAvailable() {
-		this.#HTMLCell.classList.remove("not-available");
-		this.#available = true;
 	}
 
 	removePiece() {

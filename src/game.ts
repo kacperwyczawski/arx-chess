@@ -67,7 +67,6 @@ export class Game {
 						}
 						this.#currentPlayer.handlePieceBuy(piece);
 						clickedCell.placePiece(piece);
-						clickedCell.makeNotAvailable();
 						this.#endTurn();
 					},
 					(building) => {
@@ -125,11 +124,6 @@ export class Game {
 				cell.building && cell.piece?.color === this.#currentPlayer.color,
 		)) {
 			cell.handleCapture();
-		}
-
-		for (const cell of this.#board.cellsFlat) {
-			// TODO: this is useless, since there is only 1 action per turn
-			cell.makeAvailable();
 		}
 	}
 
