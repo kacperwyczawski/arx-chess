@@ -206,6 +206,42 @@ dialog {
   }
 }
 
+button,
+a.button {
+  border-radius: 0;
+  border: none;
+  font-weight: bold;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+
+  background-color: var(--square-dark);
+  padding: .2rem .5rem;
+  text-decoration: none;
+  color: var(--dark);
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+#player-buttons {
+  padding: .6rem;
+  position: absolute;
+  top: 2.6rem;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: .6rem;
+
+  & button {
+    background-color: var(--square-light);
+  }
+}
+
 #castle-menu {
   & ol {
     margin: 0;
@@ -224,7 +260,6 @@ dialog {
       background: var(--square-dark);
       color: var(--dark);
       font-size: .8rem;
-      font-family: 'IBM Plex Mono', monospace;
       text-align: center;
 
       &:hover {
@@ -233,16 +268,6 @@ dialog {
 
       &.not-available {
         filter: grayscale(1);
-      }
-    }
-
-    & button {
-      border-radius: 0;
-      border: none;
-      font-weight: bold;
-
-      &:focus {
-        outline: none;
       }
     }
   }
@@ -270,20 +295,5 @@ dialog {
 
   & p {
     margin-top: 0;
-  }
-
-  & a {
-    background: var(--square-dark);
-    padding: .2rem .5rem;
-    text-decoration: none;
-    color: var(--dark);
-
-    &:hover {
-      text-decoration: underline;
-    }
-
-    &:focus {
-      outline: none;
-    }
   }
 }

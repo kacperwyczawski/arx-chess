@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Industrial Chess</title>
   <script type="module" src="/src/main.ts"></script>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="play.css" />
   <link rel="icon" href="bishop-knight-white.png">
 </head>
 
@@ -22,6 +22,14 @@
     Pieces: <span class="pieces">0</span>/<span class="max-pieces">0</span>
     Gold: <span class="gold">0</span>/+<span class="gold-per-turn">0</span>
   </div>
+  <div id="player-buttons">
+    <button id="skip-turn">
+      Skip turn
+    </button>
+    <button id="forfeit">
+      Forfeit
+    </button>
+  </div>
   <dialog id="castle-menu">
     <ol id="castle-menu-top-list">
       <button id="castle-menu-button">close</button>
@@ -32,7 +40,7 @@
   <dialog id="game-over">
     <p>
     </p>
-    <a href="/">Return to main menu</a>
+    <a href="/" class="button">Return to main menu</a>
   </dialog>
 </body>
 

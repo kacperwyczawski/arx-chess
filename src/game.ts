@@ -23,9 +23,18 @@ export class Game {
 			"canyon",
 		); // TODO: static func
 
+		q("#skip-turn").addEventListener("click", () => {
+			this.#endTurn();
+		})
+
+		q("#forfeit").addEventListener("click", () => {
+			this.#HTMLGameOverDialog.showModal();
+			this.#HTMLGameOverDialog.children[0].textContent =
+				`Game over! ${this.#nextPlayer.color.charAt(0).toLocaleUpperCase() + this.#nextPlayer.color.slice(1)} is the winner.`;
+		})
+
 		window.addEventListener("cellclick", ((e: CustomEvent) => {
 			const clickedCell = e.detail.cell
-			// place piece
 			if (this.#selectedCell?.piece) {
 				if (!clickedCell.isHighlighted) {
 					this.#deselectAndUnhighlightCells();
@@ -42,11 +51,9 @@ export class Game {
 				}
 				clickedCell.placePiece(this.#selectedCell.piece);
 				this.#selectedCell.removePiece();
-				this.#deselectAndUnhighlightCells();
 				this.#endTurn();
 				return;
 			}
-			// grab piece
 			if (
 				clickedCell.piece &&
 				clickedCell.piece.color === this.#currentPlayer.color
@@ -107,8 +114,7 @@ export class Game {
 		this.#currentPlayerIndex = (this.#currentPlayerIndex + 1) % 2;
 		this.#currentPlayer.activate();
 
-		this.#selectedCell?.toggleSelected();
-		this.#selectedCell = null;
+		this.#deselectAndUnhighlightCells();
 
 		if (!this.#board.cellsFlat.some((cell) => cell.owner === "black")) {
 			this.#HTMLGameOverDialog.showModal();
