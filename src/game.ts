@@ -116,6 +116,13 @@ export class Game {
 
 		this.#deselectAndUnhighlightCells();
 
+		for (const cell of this.#board.cellsFlat.filter(
+			(cell) =>
+				cell.building && cell.piece?.color === this.#currentPlayer.color,
+		)) {
+			cell.handleCapture();
+		}
+
 		if (!this.#board.cellsFlat.some((cell) => cell.owner === "black")) {
 			this.#HTMLGameOverDialog.showModal();
 			this.#HTMLGameOverDialog.children[0].textContent =
@@ -126,13 +133,6 @@ export class Game {
 			this.#HTMLGameOverDialog.showModal();
 			this.#HTMLGameOverDialog.children[0].textContent =
 				"Game over! Black is the winner.";
-		}
-
-		for (const cell of this.#board.cellsFlat.filter(
-			(cell) =>
-				cell.building && cell.piece?.color === this.#currentPlayer.color,
-		)) {
-			cell.handleCapture();
 		}
 	}
 
