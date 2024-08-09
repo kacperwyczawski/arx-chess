@@ -231,7 +231,6 @@ a.button {
 #player-buttons {
   padding: .6rem;
   position: absolute;
-  top: 2.6rem;
   display: flex;
   width: 100%;
   justify-content: center;
@@ -239,6 +238,16 @@ a.button {
 
   & button {
     background-color: var(--square-light);
+  }
+
+  /* TODO: animate when entering */
+
+  &.white {
+    top: 2.6rem;
+  }
+
+  &.black {
+    bottom: 2.6rem;
   }
 }
 

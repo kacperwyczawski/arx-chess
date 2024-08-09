@@ -14,9 +14,11 @@ export class Game {
 	#isTutorial;
 	#tutorial = new Tutorial();
 	#HTMLGameOverDialog;
+	#HTMLPlayerButtons;
 
 	constructor(HTMLTable: HTMLTableElement, tutorial: boolean) {
 		this.#HTMLGameOverDialog = q("#game-over") as HTMLDialogElement;
+		this.#HTMLPlayerButtons = q("#player-buttons");
 		this.#isTutorial = tutorial;
 		this.#board = new Board(
 			HTMLTable,
@@ -113,6 +115,10 @@ export class Game {
 
 		this.#currentPlayerIndex = (this.#currentPlayerIndex + 1) % 2;
 		this.#currentPlayer.activate();
+
+		for (const player of this.#players) {
+			this.#HTMLPlayerButtons.classList.toggle(player.color)
+		}
 
 		this.#deselectAndUnhighlightCells();
 
