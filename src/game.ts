@@ -21,66 +21,69 @@ export class Game {
 		this.#board = new Board(
 			HTMLTable,
 			"canyon",
-			(clickedCell, x, y) => {
-				// place piece
-				if (this.#selectedCell?.piece) {
-					if (!clickedCell.isHighlighted) {
-						this.#deselectAndUnhighlightCells();
+		); // TODO: static func
+
+		window.addEventListener("cellclick", ((e: CustomEvent) => {
+			const clickedCell = e.detail.cell
+			// place piece
+			if (this.#selectedCell?.piece) {
+				if (!clickedCell.isHighlighted) {
+					this.#deselectAndUnhighlightCells();
+					return;
+				}
+				if (clickedCell.piece) {
+					this.#nextPlayer.handlePieceLoss();
+				}
+				if (clickedCell.building) {
+					this.#currentPlayer.handleBuildingCapture(clickedCell.building);
+					if (clickedCell.owner === this.#nextPlayer.color) {
+						this.#nextPlayer.handleBuildingLoss(clickedCell.building);
+					}
+				}
+				clickedCell.placePiece(this.#selectedCell.piece);
+				this.#selectedCell.removePiece();
+				this.#deselectAndUnhighlightCells();
+				this.#endTurn();
+				return;
+			}
+			// grab piece
+			if (
+				clickedCell.piece &&
+				clickedCell.piece.color === this.#currentPlayer.color
+			) {
+				this.#selectedCell = clickedCell;
+				clickedCell.toggleSelected();
+				clickedCell.piece.highlightMoves(this.#board.cells, clickedCell.x, clickedCell.y);
+				return;
+			}
+		}) as EventListener)
+
+		window.addEventListener("cellmenu", ((e: CustomEvent) => {
+			const clickedCell = e.detail.cell
+			if (clickedCell.owner !== this.#currentPlayer.color) {
+				return;
+			}
+			this.#castleMenu.open(
+				(piece) => {
+					if (!this.#currentPlayer.canBuyPiece()) {
+						alert("You can't buy any more pieces.");
 						return;
 					}
-					if (clickedCell.piece) {
-						this.#nextPlayer.handlePieceLoss();
-					}
-					if (clickedCell.building) {
-						this.#currentPlayer.handleBuildingCapture(clickedCell.building);
-						if (clickedCell.owner === this.#nextPlayer.color) {
-							this.#nextPlayer.handleBuildingLoss(clickedCell.building);
-						}
-					}
-					clickedCell.placePiece(this.#selectedCell.piece);
-					this.#selectedCell.removePiece();
-					this.#deselectAndUnhighlightCells();
+					this.#currentPlayer.handlePieceBuy(piece);
+					clickedCell.placePiece(piece);
 					this.#endTurn();
-					return;
-				}
-
-				// grab piece
-				if (
-					clickedCell.piece &&
-					clickedCell.piece.color === this.#currentPlayer.color
-				) {
-					this.#selectedCell = clickedCell;
-					clickedCell.toggleSelected();
-					clickedCell.piece.highlightMoves(this.#board.cells, x, y);
-					return;
-				}
-			},
-			(clickedCell) => {
-				if (clickedCell.owner !== this.#currentPlayer.color) {
-					return;
-				}
-				this.#castleMenu.open(
-					(piece) => {
-						if (!this.#currentPlayer.canBuyPiece()) {
-							alert("You can't buy any more pieces.");
-							return;
-						}
-						this.#currentPlayer.handlePieceBuy(piece);
-						clickedCell.placePiece(piece);
-						this.#endTurn();
-					},
-					(building) => {
-						clickedCell.setBuilding(building);
-						this.#currentPlayer.handleBuildingUpgrade(building);
-						this.#endTurn();
-					},
-					this.#currentPlayer,
-					this.#currentPlayer.gold,
-					clickedCell.building === "factory",
-					clickedCell.piece !== null,
-				);
-			},
-		);
+				},
+				(building) => {
+					clickedCell.setBuilding(building);
+					this.#currentPlayer.handleBuildingUpgrade(building);
+					this.#endTurn();
+				},
+				this.#currentPlayer,
+				this.#currentPlayer.gold,
+				clickedCell.building === "factory",
+				clickedCell.piece !== null,
+			);
+		}) as EventListener)
 
 		if (this.#isTutorial) {
 			this.#tutorial.activate(this.#players[0]);

@@ -19,8 +19,6 @@ export class Board {
 	constructor(
 		HTMLTable: HTMLTableElement,
 		mapName: string,
-		onCellClick: (clickedCell: Cell, x: number, y: number) => void,
-		onCastleClick: (clickedCell: Cell) => void,
 	) {
 		const map = maps
 			.split("\n\n")
@@ -37,13 +35,7 @@ export class Board {
 			const HTMLRow = HTMLBody.insertRow();
 			this.#cells[y] = [];
 			row.split("").forEach((symbol, x) => {
-				const cell = new Cell(HTMLRow.insertCell());
-				cell.onClick = () => {
-					onCellClick(cell, x, y);
-				};
-				cell.onMenu = () => {
-					onCastleClick(cell);
-				};
+				const cell = new Cell(HTMLRow.insertCell(), x, y);
 				this.#cells[y].push(cell);
 
 				if (symbol === ".") {

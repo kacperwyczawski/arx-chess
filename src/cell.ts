@@ -6,10 +6,8 @@ export class Cell {
 	#piece: Piece | null = null;
 	#HTMLCell: HTMLTableCellElement;
 	#isHighlighted = false;
-
-	onClick: () => void = () => {};
-
-	onMenu: () => void = () => {};
+	#x: number;
+	#y: number;
 
 	get piece() {
 		return this.#piece;
@@ -27,15 +25,25 @@ export class Cell {
 		return this.#isHighlighted;
 	}
 
-	constructor(HTMLCell: HTMLTableCellElement) {
+	get x() {
+		return this.#x;
+	}
+
+	get y() {
+		return this.#y;
+	}
+
+	constructor(HTMLCell: HTMLTableCellElement, x: number, y: number) {
 		this.#HTMLCell = HTMLCell;
+		this.#x = x;
+		this.#y = y;
 		this.#HTMLCell.classList.add("cell");
 		this.#HTMLCell.addEventListener("click", () => {
-			this.onClick();
+			window.dispatchEvent(new CustomEvent("cellclick", { detail: { cell: this } }))
 		});
 		this.#HTMLCell.addEventListener("contextmenu", (event) => {
 			event.preventDefault();
-			this.onMenu();
+			window.dispatchEvent(new CustomEvent("cellmenu", { detail: { cell: this } }))
 		});
 	}
 
