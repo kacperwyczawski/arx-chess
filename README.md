@@ -1,3 +1,3 @@
 # Industrial Chess
 
-> Simple chess-based strategy game with fairy pieces and resource management
+> Chess-based strategy game with fairy pieces and resource management
