@@ -39,7 +39,7 @@ export class castleMenu {
 			li.classList.add("cell");
 			li.style.backgroundImage = `url('/${piece.name}-${piece.color}.png')`;
 			const canAfford = this.#discount(piece.cost, isFactory) <= gold;
-			if (canAfford && !isOccupied) {
+			if (canAfford && !isOccupied && player.canBuyPiece()) {
 				li.onclick = () => {
 					onBuyPiece(piece);
 					this.#HTMLDialog.close();

@@ -74,10 +74,6 @@ export class Game {
 			}
 			this.#castleMenu.open(
 				(piece) => {
-					if (!this.#currentPlayer.canBuyPiece()) {
-						alert("You can't buy any more pieces.");
-						return;
-					}
 					this.#currentPlayer.handlePieceBuy(piece);
 					clickedCell.placePiece(piece);
 					this.#endTurn();
