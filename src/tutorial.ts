@@ -13,7 +13,7 @@ export default class Tutorial {
 			}, 100);
 		}
 
-		m("Welcome to Industrial Chess tutorial!");
+		m("Welcome to Arx Chess tutorial!");
 		m(
 			"Your primary objective is to capture all enemy castles. But for now just move your pawn to the right. In order to do that, click on it.",
 		);
