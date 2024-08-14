@@ -45,7 +45,8 @@ menu {
 
   & li {
     width: 100%;
-    max-width: 16rem;
+    max-width: 24rem;
+    text-align: justify;
 
     &:first-child {
       display: flex;
@@ -61,7 +62,7 @@ menu {
     background-color: transparent;
     color: var(--dark);
     padding: 1rem 2rem;
-    max-width: 16rem;
+    max-width: 24rem;
     width: 100%;
     display: block;
     text-align: center;
@@ -74,6 +75,24 @@ menu {
     &:hover {
       text-decoration: underline;
     }
+  }
+}
+
+span.touch {
+  display: none;
+}
+
+span.no-touch {
+  display: inline;
+}
+
+@media not (hover: hover) {
+  span.touch {
+    display: inline;
+  }
+
+  span.no-touch {
+    display: none;
   }
 }
 
