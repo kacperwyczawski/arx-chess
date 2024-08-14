@@ -4,7 +4,7 @@ import { q } from "./utils";
 export class Player {
 	#element;
 	#pieceCount = 1;
-	#maxPieces = 2;
+	#maxPieces = 1;
 	#gold = 1;
 	#goldPerTurn = 1;
 	#color;
@@ -48,10 +48,10 @@ export class Player {
 
 	handleBuildingCapture(type: Building) {
 		if (type === "barracks") {
-			this.#maxPieces += 2
+			this.#maxPieces += 1
 			q(`#${this.#color} .max-pieces`).textContent = this.#maxPieces.toString();
 		} else if (type === "mine") {
-			this.#goldPerTurn += 2;
+			this.#goldPerTurn += 1;
 			q(`#${this.#color} .gold-per-turn`).textContent =
 				this.#goldPerTurn.toString();
 		}
@@ -59,10 +59,10 @@ export class Player {
 
 	handleBuildingLoss(type: Building) {
 		if (type === "barracks") {
-			this.#maxPieces -= 2
+			this.#maxPieces -= 1
 			q(`#${this.#color} .max-pieces`).textContent = this.#maxPieces.toString();
 		} else if (type === "mine") {
-			this.#goldPerTurn -= 2;
+			this.#goldPerTurn -= 1;
 			q(`#${this.#color} .gold-per-turn`).textContent =
 				this.#goldPerTurn.toString();
 		}
