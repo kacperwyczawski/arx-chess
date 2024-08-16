@@ -1,6 +1,6 @@
 import type { Piece } from "./pieces/piece";
 
-export class Cell {
+export class OldCell {
 	#building: Building | null = null;
 	#owner: PlayerColor | null = null;
 	#piece: Piece | null = null;

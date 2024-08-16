@@ -1,5 +1,5 @@
 import type { Piece } from "./pieces/piece";
-import type { Player } from "./player";
+import type { OldPlayer } from "./player";
 import { getAllPieces, q } from "./utils";
 
 export class castleMenu {
@@ -19,7 +19,7 @@ export class castleMenu {
 	open(
 		onBuyPiece: (piece: Piece) => void,
 		onBuyBuilding: (building: Building) => void,
-		player: Player,
+		player: OldPlayer,
 		gold: number,
 		isFactory: boolean,
 		isOccupied: boolean,

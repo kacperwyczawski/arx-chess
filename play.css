@@ -178,6 +178,7 @@ menu {
     width: .8rem;
     text-align: center;
     display: block;
+    text-transform: uppercase;
   }
 }
 

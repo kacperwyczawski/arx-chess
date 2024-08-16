@@ -1,4 +1,4 @@
-import type { Cell } from "../cell";
+import type { OldCell } from "../cell";
 import { Pawn } from "./pawn";
 import type { Piece } from "./piece";
 
@@ -25,7 +25,7 @@ export class Bishop implements Piece {
 		this.#color = color;
 	}
 
-	highlightMoves(cells: Cell[][], x: number, y: number): void {
+	highlightMoves(cells: OldCell[][], x: number, y: number): void {
 		for (let yi = y - 1, xi = x - 1; yi >= 0 && xi >= 0; yi--, xi--) {
 			const cell = cells[yi][xi];
 			if (cell.building === "wall" || cell.piece?.color === this.#color) {

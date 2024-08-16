@@ -1,8 +1,8 @@
-import type { Player } from "./player";
+import type { OldPlayer } from "./player";
 import { q } from "./utils";
 
 export default class Tutorial {
-	activate(whitePlayer: Player) {
+	activate(whitePlayer: OldPlayer) {
 		function m(text: string, mainMenu = false) {
 			setTimeout(() => {
 				alert(text);

@@ -1,4 +1,4 @@
-import type { Cell } from "../cell";
+import type { OldCell } from "../cell";
 import { Bishop } from "./bishop";
 import { Knight } from "./knight";
 import type { Piece } from "./piece";
@@ -26,7 +26,7 @@ export class Rook implements Piece {
 		this.#color = color;
 	}
 
-	highlightMoves(cells: Cell[][], x: number, y: number): void {
+	getAvailableMoves(board: Board, point: Point): Point[] {
 		for (let yi = y - 1; yi >= 0; yi--) {
 			const cell = cells[yi][x];
 			if (cell.building === "wall" || cell.piece?.color === this.#color) {

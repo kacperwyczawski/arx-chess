@@ -1,7 +1,7 @@
 import type { Piece } from "./pieces/piece";
 import { q } from "./utils";
 
-export class Player {
+export class OldPlayer {
 	#element;
 	#pieceCount = 1;
 	#maxPieces = 2;

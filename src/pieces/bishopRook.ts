@@ -1,4 +1,4 @@
-import type { Cell } from "../cell";
+import type { OldCell } from "../cell";
 import { Bishop } from "./bishop";
 import type { Piece } from "./piece";
 import { Rook } from "./rook";
@@ -26,7 +26,7 @@ export class BishopRook implements Piece {
 		this.#color = color;
 	}
 
-	highlightMoves(cells: Cell[][], x: number, y: number): void {
+	highlightMoves(cells: OldCell[][], x: number, y: number): void {
 		new Rook(this.#color).highlightMoves(cells, x, y);
 		new Bishop(this.#color).highlightMoves(cells, x, y);
 	}
