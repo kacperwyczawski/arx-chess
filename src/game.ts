@@ -1,13 +1,13 @@
-import { Board } from "./board";
+import { OldBoard } from "./board";
 import { castleMenu } from "./castleMenu";
-import type { Cell } from "./cell";
-import { Player } from "./player";
+import type { OldCell } from "./cell";
+import { OldPlayer } from "./player";
 import Tutorial from "./tutorial";
 import { q } from "./utils";
 
-export class Game {
-	#selectedCell: Cell | null = null;
-	#players = [new Player("white"), new Player("black")];
+export class OldGame {
+	#selectedCell: OldCell | null = null;
+	#players = [new OldPlayer("white"), new OldPlayer("black")];
 	#currentPlayerIndex = 0;
 	#castleMenu = new castleMenu();
 	#board;
@@ -20,7 +20,7 @@ export class Game {
 		this.#HTMLGameOverDialog = q("#game-over") as HTMLDialogElement;
 		this.#HTMLPlayerButtons = q("#player-buttons");
 		this.#isTutorial = tutorial;
-		this.#board = new Board(
+		this.#board = new OldBoard(
 			HTMLTable,
 			"canyon",
 		); // TODO: static func

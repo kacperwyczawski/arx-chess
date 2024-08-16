@@ -10,13 +10,6 @@ import { PawnKnight } from "./pieces/pawnKnight";
 import { PawnRook } from "./pieces/pawnRook";
 import { Rook } from "./pieces/rook";
 
-export function q(selector: string) {
-	const element = document.querySelector(selector);
-	if (!element) {
-		throw new Error(`It's a bug! No element matching '${selector}' found`);
-	}
-	return element;
-}
 
 export function getAllPieces(color: PlayerColor) {
 	return [

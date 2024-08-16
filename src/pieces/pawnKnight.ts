@@ -1,4 +1,4 @@
-import type { Cell } from "../cell";
+import type { OldCell } from "../cell";
 import { Knight } from "./knight";
 import { Pawn } from "./pawn";
 import type { Piece } from "./piece";
@@ -26,7 +26,7 @@ export class PawnKnight implements Piece {
 		this.#color = color;
 	}
 
-	highlightMoves(cells: Cell[][], x: number, y: number): void {
+	highlightMoves(cells: OldCell[][], x: number, y: number): void {
 		new Pawn(this.#color).highlightMoves(cells, x, y);
 		new Knight(this.#color).highlightMoves(cells, x, y);
 	}

@@ -1,9 +1,9 @@
-import { Cell } from "./cell";
+import { OldCell } from "./cell";
 import maps from "./maps.txt?raw";
 import { Pawn } from "./pieces/pawn";
 
-export class Board {
-	#cells: Cell[][] = [];
+export class OldBoard {
+	#cells: OldCell[][] = [];
 
 	get cellsFlat() {
 		return this.#cells.flat();
@@ -32,7 +32,7 @@ export class Board {
 			const HTMLRow = HTMLBody.insertRow();
 			this.#cells[y] = [];
 			row.split("").forEach((symbol, x) => {
-				const cell = new Cell(HTMLRow.insertCell(), x, y);
+				const cell = new OldCell(HTMLRow.insertCell(), x, y);
 				this.#cells[y].push(cell);
 
 				if (symbol === ".") {
