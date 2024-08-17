@@ -1,21 +1,20 @@
+import { Piece } from "../pieces/piece";
+import { getAllPieces } from "../utils";
 import Board from "./board"
 import { Player } from "./player";
 import { Point } from "./point";
 
 export default class Game {
   #board
-	#players = [new Player("white"), new Player("black")];
-	#currentPlayerIndex = 0
-	#winner: PlayerColor | null = null
-	#selectedPoint: Point | null = null
+  #players = [new Player("white"), new Player("black")];
+  #currentPlayerIndex = 0
+  #selectedPoint: Point | null = null
 
-	get currentPlayer() {
-	  return this.#players[this.#currentPlayerIndex]
-	}
+  afterEndTurn: (winner: PlayerColor | null) => void = () => {}
 
-	get winner() {
-	  return this.#winner
-	}
+  get currentPlayer() {
+    return this.#players[this.#currentPlayerIndex]
+  }
 
   get board() {
     return this.#board
@@ -27,7 +26,7 @@ export default class Game {
     }
     return this.board.cellAt(this.#selectedPoint)
   }
-  
+
   constructor(
     mapName: string
   ) {
@@ -42,6 +41,15 @@ export default class Game {
     return piece.getAvailableMoves(this.board, point)
   }
 
+  getPiecesToBuy(point: Point): { piece: Piece, available: boolean, calculatedPrice: number }[] {
+    const unlocked = getAllPieces(this.currentPlayer.color)
+      .filter(p => this.currentPlayer.hasUnlocked(p))
+    if (this.board.cellAt(point).piece || !this.currentPlayer.canBuyPiece()) {
+      return unlocked.map(p => ({ piece: p, available: false, calculatedPrice: this.#calculatePrice(point, p.cost) }))
+    }
+    return unlocked.map(p => ({ piece: p, available: this.#calculatePrice(point, p.cost) <= this.currentPlayer.gold, calculatedPrice: this.#calculatePrice(point, p.cost) }))
+  }
+
   select(point: Point) {
     this.#selectedPoint = point
   }
@@ -54,31 +62,73 @@ export default class Game {
     if (!this.#selectedPoint) {
       throw new Error
     }
-    
+
     this.board.cellAt(point).piece = this.board.cellAt(this.#selectedPoint).piece
     this.board.cellAt(this.#selectedPoint).piece = null
+    // TODO: handle capture of building
+    // TODO: method on player that accepts building and changes stats accordingly
+
+    this.#endTurn()
   }
 
-  endTurn() {
-		this.currentPlayer.gold += this.currentPlayer.goldPerTurn
+  skipTurn() {
+    this.#endTurn()
+  }
 
-		// PLAYER CHANGE
-		this.#currentPlayerIndex = (this.#currentPlayerIndex + 1) % 2;
+  buyPiece(point: Point, piece: Piece) {
+    this.currentPlayer.gold -= this.#calculatePrice(point, piece.cost)
+    this.currentPlayer.boughtPieces.add(piece.name)
+    this.currentPlayer.pieceCount++;
+    this.board.cellAt(point).piece = piece
+    this.#endTurn()
+  }
 
-		this.#selectedPoint = null
-		for (const cell of this.#board.allCells.filter(
-			(cell) =>
-				cell.building && cell.piece?.color === this.currentPlayer.color,
-		)) {
-			cell.owner = this.currentPlayer
-		}
+  buyUpgrade(point: Point, upgrade: string) {
+    if (upgrade !== "barracks" && upgrade !== "factory" && upgrade !== "mine") {
+      throw new Error()
+    }
+    if (upgrade === "barracks") {
+      this.currentPlayer.maxPieces += 1;
+    } else if (upgrade === "factory") {
+    } else if (upgrade === "mine") {
+      this.currentPlayer.goldPerTurn += 1;
+    } else {
+      throw new Error()
+    }
+    this.currentPlayer.gold -= 3
+    this.board.cellAt(point).building = upgrade
+    this.#endTurn()
+  }
 
-		if (!this.#board.allCells.some((cell) => cell.owner?.color === "black")) {
-		  this.#winner = "white"
-		}
+  #endTurn() {
+    this.currentPlayer.gold += this.currentPlayer.goldPerTurn
 
-		if (!this.#board.allCells.some((cell) => cell.owner?.color === "white")) {
-		  this.#winner = "black"
-		}
+    // PLAYER CHANGE
+    this.#currentPlayerIndex = (this.#currentPlayerIndex + 1) % 2;
+
+    this.#selectedPoint = null
+    for (const cell of this.#board.allCells.filter(
+      (cell) =>
+        cell.building && cell.piece?.color === this.currentPlayer.color,
+    )) {
+      cell.owner = this.currentPlayer
+    }
+
+    let winner: PlayerColor | null = null
+    
+    if (!this.#board.allCells.some((cell) => cell.owner?.color === "black")) {
+      winner = "white"
+    }
+
+    if (!this.#board.allCells.some((cell) => cell.owner?.color === "white")) {
+      winner = "black"
+    }
+
+    this.afterEndTurn(winner)
+  }
+
+  #calculatePrice(point: Point, price: number) {
+    const isFactory = this.board.cellAt(point).building === "factory"
+    return (isFactory ? Math.round(price * 0.7) : price)
   }
 }

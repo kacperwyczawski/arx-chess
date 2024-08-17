@@ -28,6 +28,10 @@ body {
   height: 100%;
 }
 
+p {
+  margin: .6rem 0;
+}
+
 menu {
   list-style-type: none;
   display: flex;
@@ -220,12 +224,16 @@ a.button {
   text-decoration: none;
   color: var(--dark);
 
-  &:hover {
+  &:hover:not(:disabled) {
     text-decoration: underline;
   }
 
   &:focus {
     outline: none;
+  }
+
+  &:disabled {
+    filter: grayscale(1);
   }
 }
 
@@ -253,40 +261,26 @@ a.button {
 }
 
 #castle-menu {
-  & ol {
+  width: calc(3rem * 6 + .6rem * 7);
+
+  & ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
+    margin-top: .6rem;
   }
 
-  & #castle-menu-top-list {
+  & #castle-menu-upgrades {
     display: flex;
-    padding-bottom: .6rem;
+    flex-direction: column;
     gap: .6rem;
 
-    & * {
-      width: 3rem;
-      padding: .2rem 0;
-      background: var(--square-dark);
-      color: var(--dark);
-      font-size: .8rem;
-      text-align: center;
-
-      &:hover {
-        text-decoration: underline;
-      }
-
-      &.not-available {
-        filter: grayscale(1);
-      }
+    & button {
+      width: 6rem;
     }
   }
 
-
-  & #castle-menu-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  & #castle-menu-pieces {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: .6rem;

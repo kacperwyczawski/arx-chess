@@ -31,11 +31,43 @@
     </button>
   </div>
   <dialog id="castle-menu">
-    <ol id="castle-menu-top-list">
-      <button id="castle-menu-button">close</button>
-    </ol>
-    <ol id="castle-menu-list">
-    </ol>
+    <form method="dialog">
+      <button>close</button>
+    </form>
+    <p>
+      Pieces:
+    </p>
+    <ul id="castle-menu-pieces">
+    </ul>
+    <p>
+      Upgrades (3 gold, exclusive):
+    </p>
+    <ul id="castle-menu-upgrades">
+      <li>
+        <button>
+          Factory
+        </button>
+        <span>
+          Cheaper pieces
+        </span>
+      </li>
+      <li>
+        <button>
+          Barracks
+        </button>
+        <span>
+          Greater piece capacity
+        </span>
+      </li>
+      <li>
+        <button>
+          Mine
+        </button>
+        <span>
+          More gold per turn
+        </span>
+      </li>
+    </ul>
   </dialog>
   <dialog id="game-over">
     <p>

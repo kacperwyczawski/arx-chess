@@ -8,10 +8,11 @@ import { Pawn } from "./pieces/pawn";
 import { PawnBishop } from "./pieces/pawnBishop";
 import { PawnKnight } from "./pieces/pawnKnight";
 import { PawnRook } from "./pieces/pawnRook";
+import { Piece } from "./pieces/piece";
 import { Rook } from "./pieces/rook";
 
 
-export function getAllPieces(color: PlayerColor) {
+export function getAllPieces(color: PlayerColor): Piece[] {
 	return [
 		new Pawn(color),
 		new PawnBishop(color),

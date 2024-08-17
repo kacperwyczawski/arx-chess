@@ -29,4 +29,8 @@ export class Player {
 		}
 		return true;
 	}
+
+	canBuyUpgrade() {
+		return this.gold <= 3
+	}
 }
