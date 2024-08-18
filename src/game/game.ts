@@ -16,6 +16,12 @@ export default class Game {
     return this.#players[this.#currentPlayerIndex]
   }
 
+  get previousPlayer() {
+    return this.#currentPlayerIndex > 0
+      ? this.#players[this.#currentPlayerIndex - 1]
+      : this.#players[this.#players.length - 1]
+  }
+
   get board() {
     return this.#board
   }
@@ -65,8 +71,6 @@ export default class Game {
 
     this.board.cellAt(point).piece = this.board.cellAt(this.#selectedPoint).piece
     this.board.cellAt(this.#selectedPoint).piece = null
-    // TODO: handle capture of building
-    // TODO: method on player that accepts building and changes stats accordingly
 
     this.#endTurn()
   }
@@ -87,20 +91,14 @@ export default class Game {
     if (upgrade !== "barracks" && upgrade !== "factory" && upgrade !== "mine") {
       throw new Error()
     }
-    if (upgrade === "barracks") {
-      this.currentPlayer.maxPieces += 1;
-    } else if (upgrade === "factory") {
-    } else if (upgrade === "mine") {
-      this.currentPlayer.goldPerTurn += 1;
-    } else {
-      throw new Error()
-    }
+    this.currentPlayer.handleBuildingAcquisitionOrLoss(upgrade, "acquisition")
     this.currentPlayer.gold -= 3
     this.board.cellAt(point).building = upgrade
     this.#endTurn()
   }
 
   #endTurn() {
+    console.log(this.previousPlayer)
     this.currentPlayer.gold += this.currentPlayer.goldPerTurn
 
     // PLAYER CHANGE
@@ -112,6 +110,8 @@ export default class Game {
         cell.building && cell.piece?.color === this.currentPlayer.color,
     )) {
       cell.owner = this.currentPlayer
+      this.currentPlayer.handleBuildingAcquisitionOrLoss(cell.building!, "acquisition")
+      this.previousPlayer.handleBuildingAcquisitionOrLoss(cell.building!, "loss")
     }
 
     let winner: PlayerColor | null = null

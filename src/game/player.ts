@@ -33,4 +33,16 @@ export class Player {
 	canBuyUpgrade() {
 		return this.gold <= 3
 	}
+
+	handleBuildingAcquisitionOrLoss(building: Building, action: "acquisition" | "loss") {
+		const x = action === "loss" ? -1 : 1
+    if (building === "factory" || "castle") {
+    } else if (building === "barracks") {
+      this.maxPieces += x;
+    } else if (building === "mine") {
+      this.goldPerTurn += x;
+    } else {
+      throw new Error()
+    }
+	}
 }
