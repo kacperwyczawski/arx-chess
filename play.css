@@ -282,7 +282,7 @@ a.button {
 
   & #castle-menu-pieces {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 3rem);
     gap: .6rem;
 
     & li {
