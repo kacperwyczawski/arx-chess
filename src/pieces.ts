@@ -1,4 +1,4 @@
-import { getAllPieces } from "./utils";
+import getAllPieces from "./game/getAllPieces";
 
 const body = document.body;
 for (const piece of getAllPieces("white")) {
