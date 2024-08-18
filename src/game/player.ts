@@ -1,4 +1,4 @@
-import { Piece } from "../pieces/piece";
+import type { Piece } from "../pieces/piece";
 
 export class Player {
 	pieces = 1;
@@ -7,7 +7,6 @@ export class Player {
 	goldPerTurn = 1;
 	#color;
 	boughtPieces = new Set<string>();
-
 
 	get color() {
 		return this.#color;
@@ -31,18 +30,21 @@ export class Player {
 	}
 
 	canBuyUpgrade() {
-		return this.gold >= 3
+		return this.gold >= 3;
 	}
 
-	handleBuildingAcquisitionOrLoss(building: Building, action: "acquisition" | "loss") {
-		const x = action === "loss" ? -1 : 1
-    if (building === "factory" || building === "castle") {
-    } else if (building === "barracks") {
-      this.maxPieces += x;
-    } else if (building === "mine") {
-      this.goldPerTurn += x;
-    } else {
-      throw new Error()
-    }
+	handleBuildingAcquisitionOrLoss(
+		building: Building,
+		action: "acquisition" | "loss",
+	) {
+		const x = action === "loss" ? -1 : 1;
+		if (building === "factory" || building === "castle") {
+		} else if (building === "barracks") {
+			this.maxPieces += x;
+		} else if (building === "mine") {
+			this.goldPerTurn += x;
+		} else {
+			throw new Error();
+		}
 	}
 }

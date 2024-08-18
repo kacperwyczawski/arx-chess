@@ -8,7 +8,7 @@ import { Pawn } from "../pieces/pawn";
 import { PawnBishop } from "../pieces/pawnBishop";
 import { PawnKnight } from "../pieces/pawnKnight";
 import { PawnRook } from "../pieces/pawnRook";
-import { Piece } from "../pieces/piece";
+import type { Piece } from "../pieces/piece";
 import { Rook } from "../pieces/rook";
 
 export default function getAllPieces(color: PlayerColor): Piece[] {

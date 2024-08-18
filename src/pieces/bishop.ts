@@ -1,6 +1,6 @@
 import type { OldCell } from "../cell";
-import Board from "../game/board";
-import { Point } from "../game/point";
+import type Board from "../game/board";
+import type { Point } from "../game/point";
 import { Pawn } from "./pawn";
 import type { Piece } from "./piece";
 
@@ -27,14 +27,17 @@ export class Bishop implements Piece {
 		this.#color = color;
 	}
 
-
 	getAvailableMoves(board: Board, { x, y }: Point): Point[] {
 		const points: Point[] = [];
 
 		// Top-left diagonal (Northwest)
 		for (let xi = x - 1, yi = y - 1; xi >= 0 && yi >= 0; xi--, yi--) {
 			const cell = board.cellAt({ x: xi, y: yi });
-			if (!cell || cell.building === "wall" || cell.piece?.color === this.#color) {
+			if (
+				!cell ||
+				cell.building === "wall" ||
+				cell.piece?.color === this.#color
+			) {
 				break;
 			}
 			points.push({ x: xi, y: yi });
@@ -46,7 +49,11 @@ export class Bishop implements Piece {
 		// Bottom-left diagonal (Southwest)
 		for (let xi = x - 1, yi = y + 1; xi >= 0 && yi < board.size; xi--, yi++) {
 			const cell = board.cellAt({ x: xi, y: yi });
-			if (!cell || cell.building === "wall" || cell.piece?.color === this.#color) {
+			if (
+				!cell ||
+				cell.building === "wall" ||
+				cell.piece?.color === this.#color
+			) {
 				break;
 			}
 			points.push({ x: xi, y: yi });
@@ -56,9 +63,17 @@ export class Bishop implements Piece {
 		}
 
 		// Bottom-right diagonal (Southeast)
-		for (let xi = x + 1, yi = y + 1; xi < board.size && yi < board.size; xi++, yi++) {
+		for (
+			let xi = x + 1, yi = y + 1;
+			xi < board.size && yi < board.size;
+			xi++, yi++
+		) {
 			const cell = board.cellAt({ x: xi, y: yi });
-			if (!cell || cell.building === "wall" || cell.piece?.color === this.#color) {
+			if (
+				!cell ||
+				cell.building === "wall" ||
+				cell.piece?.color === this.#color
+			) {
 				break;
 			}
 			points.push({ x: xi, y: yi });
@@ -70,7 +85,11 @@ export class Bishop implements Piece {
 		// Top-right diagonal (Northeast)
 		for (let xi = x + 1, yi = y - 1; xi < board.size && yi >= 0; xi++, yi--) {
 			const cell = board.cellAt({ x: xi, y: yi });
-			if (!cell || cell.building === "wall" || cell.piece?.color === this.#color) {
+			if (
+				!cell ||
+				cell.building === "wall" ||
+				cell.piece?.color === this.#color
+			) {
 				break;
 			}
 			points.push({ x: xi, y: yi });
