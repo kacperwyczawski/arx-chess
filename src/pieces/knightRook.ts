@@ -1,4 +1,3 @@
-import type { OldCell } from "../cell";
 import type Board from "../game/board";
 import type { Point } from "../game/point";
 import { Knight } from "./knight";
