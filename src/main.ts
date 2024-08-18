@@ -7,8 +7,8 @@ let firstRender = true;
 const game = new Game("canyon")
 game.afterEndTurn = (winner) => {
 	if (winner) {
-		alert(winner)
-		// TODO: use dialog
+		gameOverDialog.showModal();
+		gameOverDialog.children[0].textContent = `Game over! ${winner[0].toLocaleUpperCase() + winner.substring(1)} is the winner.`;
 	}
 	renderGame()
 }
@@ -39,6 +39,7 @@ for (let x = 0; x < game.board.size; x++) {
 const castleMenu = q("#castle-menu") as HTMLDialogElement;
 const castleMenuPieces = q("#castle-menu-pieces") as HTMLUListElement;
 const castleMenuUpgrades = q("#castle-menu-upgrades") as HTMLUListElement;
+const gameOverDialog = q("game-over") as HTMLDialogElement
 
 q("#skip-turn").onclick = () => game.skipTurn();
 q("#forfeit").onclick = () => game.forfeit();
