@@ -1,6 +1,6 @@
 import type { OldCell } from "../cell";
-import Board from "../game/board";
-import { Point } from "../game/point";
+import type Board from "../game/board";
+import type { Point } from "../game/point";
 import { Bishop } from "./bishop";
 import type { Piece } from "./piece";
 import { Rook } from "./rook";
@@ -28,10 +28,10 @@ export class BishopRook implements Piece {
 		this.#color = color;
 	}
 
-getAvailableMoves(board: Board, point: Point): Point[] {
-    return [
-        ...new Rook(this.#color).getAvailableMoves(board, point),
-        ...new Bishop(this.#color).getAvailableMoves(board, point)
-    ];
-}	
+	getAvailableMoves(board: Board, point: Point): Point[] {
+		return [
+			...new Rook(this.#color).getAvailableMoves(board, point),
+			...new Bishop(this.#color).getAvailableMoves(board, point),
+		];
+	}
 }

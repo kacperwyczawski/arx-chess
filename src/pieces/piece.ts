@@ -1,5 +1,5 @@
-import Board from "../game/board";
-import { Point } from "../game/point";
+import type Board from "../game/board";
+import type { Point } from "../game/point";
 
 export interface Piece {
 	get color(): PlayerColor;
