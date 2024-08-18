@@ -1,4 +1,6 @@
 import type { OldCell } from "../cell";
+import Board from "../game/board";
+import { Point } from "../game/point";
 import { Bishop } from "./bishop";
 import { BishopKnight } from "./bishopKnight";
 import { BishopRook } from "./bishopRook";
@@ -33,10 +35,12 @@ export class Amazon implements Piece {
 	constructor(color: PlayerColor) {
 		this.#color = color;
 	}
+getAvailableMoves(board: Board, point: Point): Point[] {
+    return [
+        ...new Rook(this.#color).getAvailableMoves(board, point),
+        ...new Bishop(this.#color).getAvailableMoves(board, point),
+        ...new Knight(this.#color).getAvailableMoves(board, point)
+    ];
+}
 
-	highlightMoves(cells: OldCell[][], x: number, y: number): void {
-		new Knight(this.#color).highlightMoves(cells, x, y);
-		new Rook(this.#color).highlightMoves(cells, x, y);
-		new Bishop(this.#color).highlightMoves(cells, x, y);
-	}
 }

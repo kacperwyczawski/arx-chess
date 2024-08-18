@@ -1,4 +1,6 @@
 import type { OldCell } from "../cell";
+import Board from "../game/board";
+import { Point } from "../game/point";
 import { Pawn } from "./pawn";
 import type { Piece } from "./piece";
 import { Rook } from "./rook";
@@ -26,8 +28,24 @@ export class PawnRook implements Piece {
 		this.#color = color;
 	}
 
-	highlightMoves(cells: OldCell[][], x: number, y: number): void {
-		new Pawn(this.#color).highlightMoves(cells, x, y);
-		new Rook(this.#color).highlightMoves(cells, x, y);
+	getAvailableMoves(board: Board, point: Point) {
+		// Get available moves from the Rook
+		const rookMoves = new Rook(this.#color).getAvailableMoves(board, point);
+
+		// Get available moves from the Pawn
+		const pawnMoves = new Pawn(this.#color).getAvailableMoves(board, point);
+
+		// Filter out pawn moves that overlap with rook moves
+		const filteredPawnMoves = pawnMoves.filter(pawnMove =>
+			!rookMoves.some(rookMove => rookMove.x === pawnMove.x && rookMove.y === pawnMove.y)
+		);
+
+		// Combine the filtered pawn moves with rook moves
+		return [
+			...filteredPawnMoves,
+			...rookMoves
+		];
 	}
 }
+
+

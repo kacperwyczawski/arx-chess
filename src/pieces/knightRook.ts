@@ -1,4 +1,6 @@
 import type { OldCell } from "../cell";
+import Board from "../game/board";
+import { Point } from "../game/point";
 import { Knight } from "./knight";
 import type { Piece } from "./piece";
 import { Rook } from "./rook";
@@ -26,8 +28,11 @@ export class KnightRook implements Piece {
 		this.#color = color;
 	}
 
-	highlightMoves(cells: OldCell[][], x: number, y: number): void {
-		new Knight(this.#color).highlightMoves(cells, x, y);
-		new Rook(this.#color).highlightMoves(cells, x, y);
-	}
+	getAvailableMoves(board: Board, point: Point): Point[] {
+    return [
+        ...new Knight(this.#color).getAvailableMoves(board, point),
+        ...new Rook(this.#color).getAvailableMoves(board, point)
+    ];
+}
+
 }
