@@ -1,5 +1,5 @@
 import { Piece } from "../pieces/piece";
-import { getAllPieces } from "../utils";
+import getAllPieces from "./getAllPieces";
 import Board from "./board"
 import { Player } from "./player";
 import { Point } from "./point";
