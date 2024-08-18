@@ -1,6 +1,9 @@
 import Panzoom from "@panzoom/panzoom";
 import Game from "./game/game.ts";
 
+// TODO: warn when piece limit is hit
+
+let firstRender = true;
 const game = new Game("canyon")
 game.afterEndTurn = (winner) => {
 	if (winner) {
@@ -37,6 +40,13 @@ const castleMenu = q("#castle-menu") as HTMLDialogElement;
 const castleMenuPieces = q("#castle-menu-pieces") as HTMLUListElement;
 const castleMenuUpgrades = q("#castle-menu-upgrades") as HTMLUListElement;
 
+q("#skip-turn").onclick = () => game.skipTurn();
+q("#forfeit").onclick = () => game.forfeit();
+q(`#${game.currentPlayer.color} .pieces`).textContent = game.currentPlayer.pieces.toString();
+q(`#${game.currentPlayer.color} .gold`).textContent = game.currentPlayer.gold.toString();
+q(`#${game.currentPlayer.color} .gold-per-turn`).textContent = game.currentPlayer.goldPerTurn.toString();
+q(`#${game.currentPlayer.color} .max-pieces`).textContent = game.currentPlayer.maxPieces.toString();
+
 renderGame()
 
 Panzoom(table, {
@@ -50,7 +60,7 @@ function q(selector: string) {
 	if (!element) {
 		throw new Error(`It's a bug! No element matching '${selector}' found`);
 	}
-	return element;
+	return element as HTMLElement
 }
 
 function allTableCells() {
@@ -58,6 +68,19 @@ function allTableCells() {
 }
 
 function renderGame() {
+	q(`#${game.previousPlayer.color} .pieces`).textContent = game.previousPlayer.pieces.toString();
+	q(`#${game.previousPlayer.color} .gold`).textContent = game.previousPlayer.gold.toString();
+	q(`#${game.previousPlayer.color} .gold-per-turn`).textContent = game.previousPlayer.goldPerTurn.toString();
+	q(`#${game.previousPlayer.color} .max-pieces`).textContent = game.previousPlayer.maxPieces.toString();
+
+	if(!firstRender) {
+		q("#player-buttons").classList.toggle("white")
+		q("#white").classList.toggle("active")
+
+		q("#player-buttons").classList.toggle("black")
+		q("#black").classList.toggle("active")
+	}
+
 	for (let x = 0; x < game.board.size; x++) {
 		for (let y = 0; y < game.board.size; y++) {
 			const point = { x, y };
@@ -102,9 +125,10 @@ function renderGame() {
 							castleMenuPieces.appendChild(li);
 						}
 						for (const button of castleMenuUpgrades.querySelectorAll("button")) {
-							if (game.currentPlayer.canBuyUpgrade()) {
+							if (!game.currentPlayer.canBuyUpgrade()) {
 								button.disabled = true;
 							} else {
+								button.disabled = false;
 								button.onclick = () => {
 									game.buyUpgrade(point, button.innerText.toLocaleLowerCase())
 									castleMenu.close();
@@ -145,4 +169,6 @@ function renderGame() {
 			}
 		}
 	}
+
+	firstRender = false
 }
