@@ -1,4 +1,6 @@
 import type { OldCell } from "../cell";
+import Board from "../game/board";
+import { Point } from "../game/point";
 import { Pawn } from "./pawn";
 import type { Piece } from "./piece";
 
@@ -25,25 +27,20 @@ export class Knight implements Piece {
 		this.#color = color;
 	}
 
-	highlightMoves(cells: OldCell[][], x: number, y: number): void {
-		let a = [
-			cells[y - 2]?.[x - 1],
-			cells[y - 2]?.[x + 1],
-			cells[y + 2]?.[x - 1],
-			cells[y + 2]?.[x + 1],
-			cells[y - 1]?.[x - 2],
-			cells[y + 1]?.[x - 2],
-			cells[y - 1]?.[x + 2],
-			cells[y + 1]?.[x + 2],
+	getAvailableMoves(board: Board, { x, y }: Point): Point[] {
+		const potentialMoves = [
+			{ x: x - 2, y: y - 1 }, { x: x - 1, y: y - 2 },
+			{ x: x + 1, y: y - 2 }, { x: x + 2, y: y - 1 },
+			{ x: x + 2, y: y + 1 }, { x: x + 1, y: y + 2 },
+			{ x: x - 1, y: y + 2 }, { x: x - 2, y: y + 1 }
 		];
 
-		a = a
-			.filter((c) => c !== undefined)
-			.filter((c) => c.piece?.color !== this.#color)
-			.filter((c) => c.building !== "wall");
+const		points = potentialMoves
+			.filter(p => board.cellAt(p) !== undefined)
+			.filter(p => board.cellAt(p).piece?.color !== this.#color)
+			.filter(p => board.cellAt(p).building !== "wall");
 
-		for (const c of a) {
-			c.highlight();
-		}
+		return points;
 	}
+
 }
