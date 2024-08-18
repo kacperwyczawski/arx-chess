@@ -79,10 +79,14 @@ export default class Game {
     this.#endTurn()
   }
 
+  forfeit() {
+    this.afterEndTurn(this.previousPlayer.color)
+  }
+
   buyPiece(point: Point, piece: Piece) {
     this.currentPlayer.gold -= this.#calculatePrice(point, piece.cost)
     this.currentPlayer.boughtPieces.add(piece.name)
-    this.currentPlayer.pieceCount++;
+    this.currentPlayer.pieces++;
     this.board.cellAt(point).piece = piece
     this.#endTurn()
   }
@@ -98,7 +102,6 @@ export default class Game {
   }
 
   #endTurn() {
-    console.log(this.previousPlayer)
     this.currentPlayer.gold += this.currentPlayer.goldPerTurn
 
     // PLAYER CHANGE
@@ -107,7 +110,7 @@ export default class Game {
     this.#selectedPoint = null
     for (const cell of this.#board.allCells.filter(
       (cell) =>
-        cell.building && cell.piece?.color === this.currentPlayer.color,
+        cell.building && cell.piece?.color === this.currentPlayer.color && cell.owner !== this.currentPlayer
     )) {
       cell.owner = this.currentPlayer
       this.currentPlayer.handleBuildingAcquisitionOrLoss(cell.building!, "acquisition")
