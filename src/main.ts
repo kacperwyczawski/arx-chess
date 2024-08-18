@@ -39,7 +39,7 @@ for (let x = 0; x < game.board.size; x++) {
 const castleMenu = q("#castle-menu") as HTMLDialogElement;
 const castleMenuPieces = q("#castle-menu-pieces") as HTMLUListElement;
 const castleMenuUpgrades = q("#castle-menu-upgrades") as HTMLUListElement;
-const gameOverDialog = q("game-over") as HTMLDialogElement
+const gameOverDialog = q("#game-over") as HTMLDialogElement
 
 q("#skip-turn").onclick = () => game.skipTurn();
 q("#forfeit").onclick = () => game.forfeit();
