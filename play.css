@@ -256,6 +256,30 @@ a.button {
   }
 }
 
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 #player-buttons {
   padding: .6rem;
   position: absolute;
@@ -268,14 +292,14 @@ a.button {
     background-color: var(--square-light);
   }
 
-  /* TODO: animate when entering */
-
   &.white {
     top: 2.6rem;
+    animation: slide-up .5s ease-out;
   }
 
   &.black {
     bottom: 2.6rem;
+    animation: slide-down .5s ease-out;
   }
 }
 
