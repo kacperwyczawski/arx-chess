@@ -100,6 +100,20 @@ span.no-touch {
   }
 }
 
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 #white,
 #black {
   position: absolute;
@@ -115,6 +129,11 @@ span.no-touch {
 
   &.active .name {
     text-decoration: underline;
+    animation: blink .2s;
+  }
+
+  & span {
+    display: inline-block;
   }
 }
 

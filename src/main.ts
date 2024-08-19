@@ -69,15 +69,24 @@ function allTableCells() {
 	return [...table.rows].flatMap((row) => [...row.cells]);
 }
 
+function updateValue(element: HTMLElement, newValue: string) {
+	if (newValue !== element.textContent) {
+		element.textContent = newValue
+		element.animate([
+			{ opacity: 1 },
+			{ opacity: 0 },
+			{ opacity: 1 }
+		], {
+			duration: 200,
+		});
+	}
+}
+
 function renderGame() {
-	q(`#${game.previousPlayer.color} .pieces`).textContent =
-		game.previousPlayer.pieces.toString();
-	q(`#${game.previousPlayer.color} .gold`).textContent =
-		game.previousPlayer.gold.toString();
-	q(`#${game.previousPlayer.color} .gold-per-turn`).textContent =
-		game.previousPlayer.goldPerTurn.toString();
-	q(`#${game.previousPlayer.color} .max-pieces`).textContent =
-		game.previousPlayer.maxPieces.toString();
+		updateValue(q(`#${game.previousPlayer.color} .pieces`), game.previousPlayer.pieces.toString());
+    updateValue(q(`#${game.previousPlayer.color} .gold`), game.previousPlayer.gold.toString());
+    updateValue(q(`#${game.previousPlayer.color} .gold-per-turn`), game.previousPlayer.goldPerTurn.toString());
+    updateValue(q(`#${game.previousPlayer.color} .max-pieces`), game.previousPlayer.maxPieces.toString());
 
 	if (!firstRender) {
 		q("#player-buttons").classList.toggle("white");
