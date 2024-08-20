@@ -26,11 +26,8 @@ export default class Game {
 		return this.#board;
 	}
 
-	get selectedCell() {
-		if (!this.#selectedPoint) {
-			return null;
-		}
-		return this.board.cellAt(this.#selectedPoint);
+	get hasSelectedPoint() {
+		return this.#selectedPoint !== null
 	}
 
 	constructor(mapName: string) {

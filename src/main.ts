@@ -167,7 +167,7 @@ function renderGame() {
 				);
 			}
 			tableCell.onclick = () => {
-				if (cell.piece?.color === game.currentPlayer.color) {
+				if (cell.piece?.color === game.currentPlayer.color && !game.hasSelectedPoint) {
 					tableCell.classList.add("selected");
 					game.select(point);
 					for (const destination of game.getAvailableMoves(point)) {
@@ -179,6 +179,7 @@ function renderGame() {
 				} else {
 					for (const c of allTableCells()) {
 						c.classList.remove("selected", "highlighted");
+						game.unselect()
 					}
 				}
 			};
