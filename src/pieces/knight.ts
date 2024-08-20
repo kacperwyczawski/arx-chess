@@ -27,7 +27,7 @@ export class Knight implements Piece {
 	}
 
 	getAvailableMoves(board: Board, { x, y }: Point): Point[] {
-		const potentialMoves = [
+		const potentialMoves: Point[] = [
 			{ x: x - 2, y: y - 1 },
 			{ x: x - 1, y: y - 2 },
 			{ x: x + 1, y: y - 2 },
