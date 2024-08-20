@@ -75,6 +75,10 @@ export default class Game {
 			throw new Error();
 		}
 
+		if (this.board.cellAt(point).piece) {
+			this.previousPlayer.pieces--;
+		}
+		
 		this.board.cellAt(point).piece = this.board.cellAt(
 			this.#selectedPoint,
 		).piece;

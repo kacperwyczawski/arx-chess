@@ -83,6 +83,7 @@ function updateValue(element: HTMLElement, newValue: string) {
 }
 
 function renderGame() {
+		updateValue(q(`#${game.currentPlayer.color} .pieces`), game.currentPlayer.pieces.toString());
 		updateValue(q(`#${game.previousPlayer.color} .pieces`), game.previousPlayer.pieces.toString());
     updateValue(q(`#${game.previousPlayer.color} .gold`), game.previousPlayer.gold.toString());
     updateValue(q(`#${game.previousPlayer.color} .gold-per-turn`), game.previousPlayer.goldPerTurn.toString());
