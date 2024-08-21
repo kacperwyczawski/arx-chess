@@ -27,12 +27,7 @@ for (let y = 0; y < game.board.height; y++) {
 		const cell = game.board.cellAt({ x, y });
 		tableCell.classList.add("cell");
 		if (cell.building === "castle") {
-			tableCell.classList.add("building");
-			const div = document.createElement("div");
-			div.title = "Castle";
-			div.classList.add("cell-annotation");
-			div.textContent = "c";
-			tableCell.appendChild(div);
+			tableCell.classList.add("castle");
 		}
 	}
 }
@@ -108,9 +103,7 @@ function renderGame() {
 			tableCell.oncontextmenu = null;
 			if (cell.building === "wall") {
 				tableCell.classList.add("wall");
-			} else if (cell.building) {
-				tableCell.children[0].textContent = cell.building[0];
-				(tableCell.children[0] as HTMLElement).title = cell.building;
+			} else if (cell.building === "castle") {
 				if (cell.owner === game.currentPlayer) {
 					tableCell.oncontextmenu = (event) => {
 						event.preventDefault();

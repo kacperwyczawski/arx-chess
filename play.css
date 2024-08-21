@@ -183,16 +183,11 @@ span.no-touch {
     filter: brightness(1.2);
   }
 
-  &.building {
+  &.castle {
     border: .3rem dashed var(--dark);
 
     /* --outline is injected using JavaScript */
     outline: .3rem solid var(--outline);
-
-    & .cell-annotation {
-      background-color: var(--dark);
-      color: var(--square-light);
-    }
   }
 
   &.wall::after {
