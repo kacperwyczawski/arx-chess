@@ -21,8 +21,12 @@ export default class Board {
 		return this.#cells.flat();
 	}
 
-	get size() {
+	get height() {
 		return this.#cells.length;
+	}
+
+	get width() {
+		return this.#cells[0].length;
 	}
 
 	constructor(mapName: string, players: Player[]) {

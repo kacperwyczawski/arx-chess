@@ -46,7 +46,7 @@ export class Rook implements Piece {
 		}
 
 		// Downward movement (South)
-		for (let yi = y + 1; yi < board.size; yi++) {
+		for (let yi = y + 1; yi < board.height; yi++) {
 			const cell = board.cellAt({ x, y: yi });
 			if (
 				!cell ||
@@ -78,7 +78,7 @@ export class Rook implements Piece {
 		}
 
 		// Rightward movement (East)
-		for (let xi = x + 1; xi < board.size; xi++) {
+		for (let xi = x + 1; xi < board.width; xi++) {
 			const cell = board.cellAt({ x: xi, y });
 			if (
 				!cell ||

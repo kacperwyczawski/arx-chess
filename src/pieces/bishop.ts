@@ -46,7 +46,7 @@ export class Bishop implements Piece {
 		}
 
 		// Bottom-left diagonal (Southwest)
-		for (let xi = x - 1, yi = y + 1; xi >= 0 && yi < board.size; xi--, yi++) {
+		for (let xi = x - 1, yi = y + 1; xi >= 0 && yi < board.height; xi--, yi++) {
 			const cell = board.cellAt({ x: xi, y: yi });
 			if (
 				!cell ||
@@ -64,7 +64,7 @@ export class Bishop implements Piece {
 		// Bottom-right diagonal (Southeast)
 		for (
 			let xi = x + 1, yi = y + 1;
-			xi < board.size && yi < board.size;
+			xi < board.width && yi < board.height;
 			xi++, yi++
 		) {
 			const cell = board.cellAt({ x: xi, y: yi });
@@ -82,7 +82,7 @@ export class Bishop implements Piece {
 		}
 
 		// Top-right diagonal (Northeast)
-		for (let xi = x + 1, yi = y - 1; xi < board.size && yi >= 0; xi++, yi--) {
+		for (let xi = x + 1, yi = y - 1; xi < board.width && yi >= 0; xi++, yi--) {
 			const cell = board.cellAt({ x: xi, y: yi });
 			if (
 				!cell ||

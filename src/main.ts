@@ -4,7 +4,7 @@ import Game from "./game/game.ts";
 // TODO: warn when piece limit is hit
 
 let firstRender = true;
-const game = new Game("canyon");
+const game = new Game("triumvirate");
 game.afterEndTurn = (winner) => {
 	if (winner) {
 		gameOverDialog.showModal();
@@ -14,11 +14,11 @@ game.afterEndTurn = (winner) => {
 };
 const table = q("#board") as HTMLTableElement;
 // new OldGame(board, new URLSearchParams(location.search).has("tutorial"));
-table.style.setProperty("--cells-horizontaly", game.board.size.toString());
+table.style.setProperty("--cells-horizontaly", game.board.width.toString());
 const tableBody = table.createTBody();
-for (let x = 0; x < game.board.size; x++) {
+for (let y = 0; y < game.board.height; y++) {
 	const tableRow = tableBody.insertRow();
-	for (let y = 0; y < game.board.size; y++) {
+	for (let x = 0; x < game.board.width; x++) {
 		const tableCell = tableRow.insertCell();
 		const cell = game.board.cellAt({ x, y });
 		tableCell.classList.add("cell");
@@ -97,8 +97,8 @@ function renderGame() {
 		q("#black").classList.toggle("active");
 	}
 
-	for (let x = 0; x < game.board.size; x++) {
-		for (let y = 0; y < game.board.size; y++) {
+	for (let x = 0; x < game.board.width; x++) {
+		for (let y = 0; y < game.board.height; y++) {
 			const point = { x, y };
 			const cell = game.board.cellAt(point);
 			const tableCell = table.rows[y].cells[x];
