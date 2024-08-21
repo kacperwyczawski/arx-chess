@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arx Chess</title>
+  <link rel="stylesheet" href="play.css" />
+  <!-- TODO: own stylesheet -->
+  <link rel="icon" href="bishop-knight-white.png">
+  <script type="module">
+    const maps = import.meta.glob(
+      "./src/maps/*.txt",
+      {
+        query: "?raw",
+        eager: true,
+      },
+    );
+
+    const menu = document.getElementById("menu")
+    let html = "<li><h1>Select map</h1></li>"
+    for (const mapPath in maps) {
+      const map = mapPath.slice(11, -4)
+      const mapCapitalized = mapPath[11].toUpperCase() + mapPath.slice(12, -4)
+      html += `<li><a href="/play?map=${map}" class="filled">${mapCapitalized}</a></li>`
+    }
+    html += "<li><a href='/'>Back to main menu</a></li>"
+    menu.innerHTML = html
+  </script>
+</head>
+
+<body>
+  <menu id="menu">
+  </menu>
+</body>

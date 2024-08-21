@@ -4,7 +4,11 @@ import Game from "./game/game.ts";
 // TODO: warn when piece limit is hit
 
 let firstRender = true;
-const game = new Game("triumvirate");
+const map = new URLSearchParams(document.location.search).get("map")
+if (!map) {
+	throw new Error
+}
+const game = new Game(map);
 game.afterEndTurn = (winner) => {
 	if (winner) {
 		gameOverDialog.showModal();
