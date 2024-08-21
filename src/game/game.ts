@@ -44,7 +44,7 @@ export default class Game {
 
 	getPiecesToBuy(
 		point: Point,
-	): { piece: Piece; available: boolean; calculatedPrice: number }[] {
+	): { piece: Piece; available: boolean }[] {
 		const unlocked = getAllPieces(this.currentPlayer.color).filter((p) =>
 			this.currentPlayer.hasUnlocked(p),
 		);
@@ -52,13 +52,11 @@ export default class Game {
 			return unlocked.map((p) => ({
 				piece: p,
 				available: false,
-				calculatedPrice: this.#calculatePrice(point, p.cost),
 			}));
 		}
 		return unlocked.map((p) => ({
 			piece: p,
-			available: this.#calculatePrice(point, p.cost) <= this.currentPlayer.gold,
-			calculatedPrice: this.#calculatePrice(point, p.cost),
+			available: p.cost <= this.currentPlayer.gold,
 		}));
 	}
 
@@ -96,25 +94,15 @@ export default class Game {
 	}
 
 	buyPiece(point: Point, piece: Piece) {
-		this.currentPlayer.gold -= this.#calculatePrice(point, piece.cost);
+		this.currentPlayer.gold -= piece.cost;
 		this.currentPlayer.boughtPieces.add(piece.name);
 		this.currentPlayer.pieces++;
 		this.board.cellAt(point).piece = piece;
 		this.#endTurn();
 	}
 
-	buyUpgrade(point: Point, upgrade: string) {
-		if (upgrade !== "barracks" && upgrade !== "factory" && upgrade !== "mine") {
-			throw new Error();
-		}
-		this.currentPlayer.handleBuildingAcquisitionOrLoss(upgrade, "acquisition");
-		this.currentPlayer.gold -= 3;
-		this.board.cellAt(point).building = upgrade;
-		this.#endTurn();
-	}
-
 	#endTurn() {
-		this.currentPlayer.gold += this.currentPlayer.goldPerTurn;
+		this.currentPlayer.gold++;
 
 		// PLAYER CHANGE
 		this.#currentPlayerIndex = (this.#currentPlayerIndex + 1) % 2;
@@ -127,14 +115,8 @@ export default class Game {
 				cell.owner !== this.currentPlayer,
 		)) {
 			cell.owner = this.currentPlayer;
-			this.currentPlayer.handleBuildingAcquisitionOrLoss(
-				cell.building!,
-				"acquisition",
-			);
-			this.previousPlayer.handleBuildingAcquisitionOrLoss(
-				cell.building!,
-				"loss",
-			);
+			this.currentPlayer.maxPieces++;
+			this.previousPlayer.maxPieces--;
 		}
 
 		let winner: PlayerColor | null = null;
@@ -148,10 +130,5 @@ export default class Game {
 		}
 
 		this.afterEndTurn(winner);
-	}
-
-	#calculatePrice(point: Point, price: number) {
-		const isFactory = this.board.cellAt(point).building === "factory";
-		return isFactory ? Math.round(price * 0.7) : price;
 	}
 }

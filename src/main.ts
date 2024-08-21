@@ -39,7 +39,6 @@ for (let y = 0; y < game.board.height; y++) {
 
 const castleMenu = q("#castle-menu") as HTMLDialogElement;
 const castleMenuPieces = q("#castle-menu-pieces") as HTMLUListElement;
-const castleMenuUpgrades = q("#castle-menu-upgrades") as HTMLUListElement;
 const gameOverDialog = q("#game-over") as HTMLDialogElement;
 
 q("#skip-turn").onclick = () => game.skipTurn();
@@ -48,8 +47,6 @@ q(`#${game.currentPlayer.color} .pieces`).textContent =
 	game.currentPlayer.pieces.toString();
 q(`#${game.currentPlayer.color} .gold`).textContent =
 	game.currentPlayer.gold.toString();
-q(`#${game.currentPlayer.color} .gold-per-turn`).textContent =
-	game.currentPlayer.goldPerTurn.toString();
 q(`#${game.currentPlayer.color} .max-pieces`).textContent =
 	game.currentPlayer.maxPieces.toString();
 
@@ -90,7 +87,6 @@ function renderGame() {
 		updateValue(q(`#${game.currentPlayer.color} .pieces`), game.currentPlayer.pieces.toString());
 		updateValue(q(`#${game.previousPlayer.color} .pieces`), game.previousPlayer.pieces.toString());
     updateValue(q(`#${game.previousPlayer.color} .gold`), game.previousPlayer.gold.toString());
-    updateValue(q(`#${game.previousPlayer.color} .gold-per-turn`), game.previousPlayer.goldPerTurn.toString());
     updateValue(q(`#${game.previousPlayer.color} .max-pieces`), game.previousPlayer.maxPieces.toString());
 
 	if (!firstRender) {
@@ -123,7 +119,6 @@ function renderGame() {
 						for (const {
 							piece,
 							available,
-							calculatedPrice,
 						} of game.getPiecesToBuy(point)) {
 							const li = document.createElement("li");
 							li.classList.add("cell");
@@ -138,22 +133,9 @@ function renderGame() {
 							}
 							const div = document.createElement("div");
 							div.classList.add("cell-annotation");
-							div.textContent = calculatedPrice.toString();
+							div.textContent = piece.cost.toString();
 							li.appendChild(div);
 							castleMenuPieces.appendChild(li);
-						}
-						for (const button of castleMenuUpgrades.querySelectorAll(
-							"button",
-						)) {
-							if (!game.currentPlayer.canBuyUpgrade()) {
-								button.disabled = true;
-							} else {
-								button.disabled = false;
-								button.onclick = () => {
-									game.buyUpgrade(point, button.innerText.toLocaleLowerCase());
-									castleMenu.close();
-								};
-							}
 						}
 					};
 				}

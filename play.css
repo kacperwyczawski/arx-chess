@@ -332,16 +332,6 @@ a.button {
     margin-top: .6rem;
   }
 
-  & #castle-menu-upgrades {
-    display: flex;
-    flex-direction: column;
-    gap: .6rem;
-
-    & button {
-      width: 6rem;
-    }
-  }
-
   & #castle-menu-pieces {
     display: grid;
     grid-template-columns: repeat(6, 3rem);
