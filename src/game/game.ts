@@ -114,9 +114,11 @@ export default class Game {
 				cell.piece?.color === this.currentPlayer.color &&
 				cell.owner !== this.currentPlayer,
 		)) {
+			if (cell.owner === this.previousPlayer) {
+				this.previousPlayer.maxPieces--;
+			}
 			cell.owner = this.currentPlayer;
 			this.currentPlayer.maxPieces++;
-			this.previousPlayer.maxPieces--;
 		}
 
 		let winner: PlayerColor | null = null;
