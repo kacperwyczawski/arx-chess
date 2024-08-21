@@ -25,10 +25,7 @@ export class Pawn implements Piece {
 		this.#color = color;
 	}
 
-	getAvailableMoves(board: Board, point: Point): Point[] {
-		const x = point.x;
-		const y = point.y;
-
+	getAvailableMoves(board: Board, { x, y }: Point): Point[] {
 		let points = [
 			{ x: x - 1, y: y - 1 },
 			{ x: x, y: y - 1 },
@@ -41,7 +38,7 @@ export class Pawn implements Piece {
 		];
 
 		points = points
-			.filter((p) => board.cellAt(p) !== undefined)
+			.filter((p) => p.x >= 0 && p.x < board.width && p.y >= 0 && p.y < board.height)
 			.filter((p) => board.cellAt(p).piece?.color !== this.#color)
 			.filter((p) => board.cellAt(p).building !== "wall");
 

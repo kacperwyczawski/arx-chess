@@ -39,7 +39,7 @@ export class Knight implements Piece {
 		];
 
 		const points = potentialMoves
-			.filter((p) => board.cellAt(p) !== undefined)
+			.filter((p) => p.x >= 0 && p.x < board.width && p.y >= 0 && p.y < board.height)
 			.filter((p) => board.cellAt(p).piece?.color !== this.#color)
 			.filter((p) => board.cellAt(p).building !== "wall");
 
