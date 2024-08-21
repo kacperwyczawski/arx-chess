@@ -80,9 +80,9 @@ function updateValue(element: HTMLElement, newValue: string) {
 
 function renderGame() {
 		updateValue(q(`#${game.currentPlayer.color} .pieces`), game.currentPlayer.pieces.toString());
+    updateValue(q(`#${game.currentPlayer.color} .max-pieces`), game.currentPlayer.maxPieces.toString());
 		updateValue(q(`#${game.previousPlayer.color} .pieces`), game.previousPlayer.pieces.toString());
     updateValue(q(`#${game.previousPlayer.color} .gold`), game.previousPlayer.gold.toString());
-    updateValue(q(`#${game.previousPlayer.color} .max-pieces`), game.previousPlayer.maxPieces.toString());
 
 	if (!firstRender) {
 		q("#player-buttons").classList.toggle("white");
