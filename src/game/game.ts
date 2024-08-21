@@ -27,7 +27,7 @@ export default class Game {
 	}
 
 	get hasSelectedPoint() {
-		return this.#selectedPoint !== null
+		return this.#selectedPoint !== null;
 	}
 
 	constructor(mapName: string) {
@@ -42,9 +42,7 @@ export default class Game {
 		return piece.getAvailableMoves(this.board, point);
 	}
 
-	getPiecesToBuy(
-		point: Point,
-	): { piece: Piece; available: boolean }[] {
+	getPiecesToBuy(point: Point): { piece: Piece; available: boolean }[] {
 		const unlocked = getAllPieces(this.currentPlayer.color).filter((p) =>
 			this.currentPlayer.hasUnlocked(p),
 		);
@@ -76,7 +74,7 @@ export default class Game {
 		if (this.board.cellAt(point).piece) {
 			this.previousPlayer.pieces--;
 		}
-		
+
 		this.board.cellAt(point).piece = this.board.cellAt(
 			this.#selectedPoint,
 		).piece;

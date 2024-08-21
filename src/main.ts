@@ -4,9 +4,9 @@ import Game from "./game/game.ts";
 // TODO: warn when piece limit is hit
 
 let firstRender = true;
-const map = new URLSearchParams(document.location.search).get("map")
+const map = new URLSearchParams(document.location.search).get("map");
 if (!map) {
-	throw new Error
+	throw new Error();
 }
 const game = new Game(map);
 game.afterEndTurn = (winner) => {
@@ -67,22 +67,30 @@ function allTableCells() {
 
 function updateValue(element: HTMLElement, newValue: string) {
 	if (newValue !== element.textContent) {
-		element.textContent = newValue
-		element.animate([
-			{ opacity: 1 },
-			{ opacity: 0 },
-			{ opacity: 1 }
-		], {
+		element.textContent = newValue;
+		element.animate([{ opacity: 1 }, { opacity: 0 }, { opacity: 1 }], {
 			duration: 200,
 		});
 	}
 }
 
 function renderGame() {
-		updateValue(q(`#${game.currentPlayer.color} .pieces`), game.currentPlayer.pieces.toString());
-    updateValue(q(`#${game.currentPlayer.color} .max-pieces`), game.currentPlayer.maxPieces.toString());
-		updateValue(q(`#${game.previousPlayer.color} .pieces`), game.previousPlayer.pieces.toString());
-    updateValue(q(`#${game.previousPlayer.color} .gold`), game.previousPlayer.gold.toString());
+	updateValue(
+		q(`#${game.currentPlayer.color} .pieces`),
+		game.currentPlayer.pieces.toString(),
+	);
+	updateValue(
+		q(`#${game.currentPlayer.color} .max-pieces`),
+		game.currentPlayer.maxPieces.toString(),
+	);
+	updateValue(
+		q(`#${game.previousPlayer.color} .pieces`),
+		game.previousPlayer.pieces.toString(),
+	);
+	updateValue(
+		q(`#${game.previousPlayer.color} .gold`),
+		game.previousPlayer.gold.toString(),
+	);
 
 	if (!firstRender) {
 		q("#player-buttons").classList.toggle("white");
@@ -109,10 +117,7 @@ function renderGame() {
 						event.preventDefault();
 						castleMenu.showModal();
 						castleMenuPieces.innerHTML = "";
-						for (const {
-							piece,
-							available,
-						} of game.getPiecesToBuy(point)) {
+						for (const { piece, available } of game.getPiecesToBuy(point)) {
 							const li = document.createElement("li");
 							li.classList.add("cell");
 							li.style.backgroundImage = `url('/${piece.name}-${piece.color}.png')`;
@@ -147,7 +152,10 @@ function renderGame() {
 				);
 			}
 			tableCell.onclick = () => {
-				if (cell.piece?.color === game.currentPlayer.color && !game.hasSelectedPoint) {
+				if (
+					cell.piece?.color === game.currentPlayer.color &&
+					!game.hasSelectedPoint
+				) {
 					tableCell.classList.add("selected");
 					game.select(point);
 					for (const destination of game.getAvailableMoves(point)) {
@@ -159,7 +167,7 @@ function renderGame() {
 				} else {
 					for (const c of allTableCells()) {
 						c.classList.remove("selected", "highlighted");
-						game.unselect()
+						game.unselect();
 					}
 				}
 			};
