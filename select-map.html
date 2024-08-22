@@ -22,7 +22,7 @@
     for (const mapPath in maps) {
       const map = mapPath.slice(11, -4)
       const mapCapitalized = mapPath[11].toUpperCase() + mapPath.slice(12, -4)
-      html += `<li><a href="/play?map=${map}" class="filled">${mapCapitalized}</a></li>`
+      html += `<li><a href="/play.html?map=${map}" class="filled">${mapCapitalized}</a></li>`
     }
     html += "<li><a href='/'>Back to main menu</a></li>"
     menu.innerHTML = html
