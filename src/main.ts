@@ -51,6 +51,8 @@ Panzoom(table, {
 	disableZoom: true,
 	startX: window.innerWidth / 2 - table.clientWidth / 2,
 	startY: window.innerHeight / 2 - table.clientHeight / 2,
+	cursor: "default",
+	roundPixels: true,
 });
 
 function q(selector: string) {
