@@ -42,19 +42,19 @@ export default class Game {
 		return piece.getAvailableMoves(this.board, point);
 	}
 
-	getPiecesToBuy(point: Point): { piece: Piece; available: boolean }[] {
+	getPiecesToBuy(): { piece: Piece; isAvailable: boolean }[] {
 		const unlocked = getAllPieces(this.currentPlayer.color).filter((p) =>
 			this.currentPlayer.hasUnlocked(p),
 		);
-		if (this.board.cellAt(point).piece || !this.currentPlayer.canBuyPiece()) {
+		if (!this.currentPlayer.canBuyPiece()) {
 			return unlocked.map((p) => ({
 				piece: p,
-				available: false,
+				isAvailable: false,
 			}));
 		}
 		return unlocked.map((p) => ({
 			piece: p,
-			available: p.cost <= this.currentPlayer.gold,
+			isAvailable: p.cost <= this.currentPlayer.gold,
 		}));
 	}
 

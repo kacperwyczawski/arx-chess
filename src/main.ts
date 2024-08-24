@@ -108,35 +108,8 @@ function renderGame() {
 			tableCell.classList.remove("selected", "highlighted", "piece-to-move");
 			tableCell.style.setProperty("--outline", "");
 			tableCell.style.setProperty("--background-image-url", "");
-			tableCell.oncontextmenu = null;
 			if (cell.building === "wall") {
 				tableCell.classList.add("wall");
-			} else if (cell.building === "castle") {
-				if (cell.owner === game.currentPlayer) {
-					tableCell.oncontextmenu = (event) => {
-						event.preventDefault();
-						castleMenu.showModal();
-						castleMenuPieces.innerHTML = "";
-						for (const { piece, available } of game.getPiecesToBuy(point)) {
-							const li = document.createElement("li");
-							li.classList.add("cell");
-							li.style.backgroundImage = `url('/${piece.name}-${piece.color}.png')`;
-							if (available) {
-								li.onclick = () => {
-									game.buyPiece(point, piece);
-									castleMenu.close();
-								};
-							} else {
-								li.classList.add("not-available");
-							}
-							const div = document.createElement("div");
-							div.classList.add("cell-annotation");
-							div.textContent = piece.cost.toString();
-							li.appendChild(div);
-							castleMenuPieces.appendChild(li);
-						}
-					};
-				}
 			}
 			if (cell.piece) {
 				tableCell.style.setProperty(
@@ -153,9 +126,14 @@ function renderGame() {
 			}
 			tableCell.onclick = () => {
 				if (
-					cell.piece?.color === game.currentPlayer.color &&
-					!game.hasSelectedPoint
+					cell.piece?.color === game.currentPlayer.color
 				) {
+					if (game.hasSelectedPoint) {
+						for (const c of allTableCells()) {
+							c.classList.remove("selected", "highlighted");
+							game.unselect();
+						}
+					}
 					tableCell.classList.add("selected");
 					game.select(point);
 					for (const destination of game.getAvailableMoves(point)) {
@@ -164,6 +142,28 @@ function renderGame() {
 					}
 				} else if (tableCell.classList.contains("highlighted")) {
 					game.moveTo(point);
+				}
+				else if (cell.building === "castle" && cell.owner === game.currentPlayer) {
+					castleMenu.showModal();
+					castleMenuPieces.innerHTML = "";
+					for (const { piece, isAvailable } of game.getPiecesToBuy()) {
+						const li = document.createElement("li");
+						li.classList.add("cell");
+						li.style.backgroundImage = `url('/${piece.name}-${piece.color}.png')`;
+						if (isAvailable) {
+							li.onclick = () => {
+								game.buyPiece(point, piece);
+								castleMenu.close();
+							};
+						} else {
+							li.classList.add("not-available");
+						}
+						const div = document.createElement("div");
+						div.classList.add("cell-annotation");
+						div.textContent = piece.cost.toString();
+						li.appendChild(div);
+						castleMenuPieces.appendChild(li);
+					}
 				} else {
 					for (const c of allTableCells()) {
 						c.classList.remove("selected", "highlighted");
