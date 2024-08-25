@@ -1,6 +1,5 @@
 import type { Piece } from "../pieces/piece";
 import Board from "./board";
-import getAllPieces from "./getAllPieces";
 import { Player } from "./player";
 import type { Point } from "./point";
 
