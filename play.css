@@ -311,7 +311,7 @@ a.button {
     margin-top: .6rem;
   }
 
-  & #castle-menu-pieces {
+  & #pieces {
     display: grid;
     grid-template-columns: repeat(6, 3rem);
     gap: .6rem;
@@ -320,6 +320,18 @@ a.button {
       cursor: pointer;
       display: flex;
       align-items: center;
+    }
+  }
+
+  & #locked-pieces {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+
+    & li {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
     }
   }
 }

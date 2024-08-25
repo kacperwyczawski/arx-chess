@@ -1,5 +1,7 @@
 import getAllPieces from "./game/getAllPieces";
 
+// TODO: inline this
+
 const body = document.body;
 for (const piece of getAllPieces("white")) {
 	if (piece.name === "pawn") {

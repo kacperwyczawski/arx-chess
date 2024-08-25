@@ -1,5 +1,6 @@
 import Panzoom from "@panzoom/panzoom";
 import Game from "./game/game.ts";
+import { Point } from "./game/point.ts";
 
 // TODO: warn when piece limit is hit
 
@@ -33,7 +34,8 @@ for (let y = 0; y < game.board.height; y++) {
 }
 
 const castleMenu = q("#castle-menu") as HTMLDialogElement;
-const castleMenuPieces = q("#castle-menu-pieces") as HTMLUListElement;
+const castleMenuPieces = q("#pieces") as HTMLUListElement;
+const castleMenuLockedPieces = q("#locked-pieces") as HTMLUListElement;
 const gameOverDialog = q("#game-over") as HTMLDialogElement;
 
 q("#skip-turn").onclick = () => game.skipTurn();
@@ -146,26 +148,7 @@ function renderGame() {
 					game.moveTo(point);
 				}
 				else if (cell.building === "castle" && cell.owner === game.currentPlayer) {
-					castleMenu.showModal();
-					castleMenuPieces.innerHTML = "";
-					for (const { piece, isAvailable } of game.getPiecesToBuy()) {
-						const li = document.createElement("li");
-						li.classList.add("cell");
-						li.style.backgroundImage = `url('/${piece.name}-${piece.color}.png')`;
-						if (isAvailable) {
-							li.onclick = () => {
-								game.buyPiece(point, piece);
-								castleMenu.close();
-							};
-						} else {
-							li.classList.add("not-available");
-						}
-						const div = document.createElement("div");
-						div.classList.add("cell-annotation");
-						div.textContent = piece.cost.toString();
-						li.appendChild(div);
-						castleMenuPieces.appendChild(li);
-					}
+					openCastleMenu(point)
 				} else {
 					for (const c of allTableCells()) {
 						c.classList.remove("selected", "highlighted");
@@ -177,4 +160,36 @@ function renderGame() {
 	}
 
 	firstRender = false;
+}
+
+function openCastleMenu(point: Point) {
+	castleMenu.showModal();
+	castleMenuPieces.innerHTML = "";
+	for (const { piece, isAvailable } of game.getPiecesToBuy()) {
+		const li = document.createElement("li");
+		li.classList.add("cell");
+		li.style.backgroundImage = `url('/${piece.name}-${piece.color}.png')`;
+		if (isAvailable) {
+			li.onclick = () => {
+				game.buyPiece(point, piece);
+				castleMenu.close();
+			};
+		} else {
+			li.classList.add("not-available");
+		}
+		const div = document.createElement("div");
+		div.classList.add("cell-annotation");
+		div.textContent = piece.cost.toString();
+		li.appendChild(div);
+		castleMenuPieces.appendChild(li);
+	}
+	let lockedPiecesHTML = ""
+	for (const piece of game.nextAvailablePieces) {
+		let lockedPieceHTML = ""
+		for (const requirement of piece.requirements) {
+			lockedPieceHTML += `<div class="cell${game.currentPlayer.boughtPieces.has(requirement.name) ? "" : " not-available"}" style="background-image: url('/${requirement.name}-${requirement.color}.png')"></div>`
+		}
+		lockedPiecesHTML += `<li><div class="cell not-available" style="background-image: url('/${piece.name}-${piece.color}.png')"></div><span>requires:</span>${lockedPieceHTML}</li>`
+	}
+	castleMenuLockedPieces.innerHTML = lockedPiecesHTML
 }

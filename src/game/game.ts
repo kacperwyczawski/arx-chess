@@ -10,7 +10,7 @@ export default class Game {
 	#currentPlayerIndex = 0;
 	#selectedPoint: Point | null = null;
 
-	afterEndTurn: (winner: PlayerColor | null) => void = () => {};
+	afterEndTurn: (winner: PlayerColor | null) => void = () => { };
 
 	get currentPlayer() {
 		return this.#players[this.#currentPlayerIndex];
@@ -30,6 +30,23 @@ export default class Game {
 		return this.#selectedPoint !== null;
 	}
 
+	get nextAvailablePieces() {
+		let result: Piece[] = []
+		for (const locked of this.currentPlayer.lockedPieces) {
+			// TODO: use new set methods, when available
+			let canBeUnlocked = true;
+			for (const requirement of locked.requirements) {
+				if (!this.currentPlayer.unlockedPieces.map(p => p.name).includes(requirement.name)) {
+					canBeUnlocked = false
+				}
+			}
+			if (canBeUnlocked) {
+				result.push(locked)
+			}
+		}
+		return result
+	}
+
 	constructor(mapName: string) {
 		this.#board = new Board(mapName, this.#players);
 	}
@@ -43,16 +60,13 @@ export default class Game {
 	}
 
 	getPiecesToBuy(): { piece: Piece; isAvailable: boolean }[] {
-		const unlocked = getAllPieces(this.currentPlayer.color).filter((p) =>
-			this.currentPlayer.hasUnlocked(p),
-		);
 		if (!this.currentPlayer.canBuyPiece()) {
-			return unlocked.map((p) => ({
+			return this.currentPlayer.unlockedPieces.map((p) => ({
 				piece: p,
 				isAvailable: false,
 			}));
 		}
-		return unlocked.map((p) => ({
+		return this.currentPlayer.unlockedPieces.map((p) => ({
 			piece: p,
 			isAvailable: p.cost <= this.currentPlayer.gold,
 		}));
