@@ -104,10 +104,17 @@ menu {
   z-index: 1;
   left: 0;
   right: 0;
-  padding: .6rem;
+  display: flex;
 
   & .name {
     font-weight: bold;
+  }
+
+  &>* {
+    &:not(.player-buttons) {
+      padding: .6rem;
+      border-right: 2px solid var(--dark);
+    }
   }
 
   &.active .name {
@@ -122,12 +129,47 @@ menu {
 
 #white {
   top: 0;
-  border-bottom: .3rem solid var(--dark);
+  border-bottom: 2px solid var(--dark);
 }
 
 #black {
   bottom: 0;
-  border-top: .3rem solid var(--dark);
+  border-top: 2px solid var(--dark);
+}
+
+.player-buttons {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+
+  & button {
+    flex-grow: 1;
+    font-size: .8rem;
+    width: 100%;
+    padding: 0 .3rem;
+    background: var(--square-light);
+
+    &:hover {
+      background: var(--dark);
+      color: var(--square-light);
+    }
+
+    &:disabled {
+      display: none;
+    }
+  }
+}
+
+@media (width <=450px) {
+  .player-buttons {
+    flex-grow: 1;
+  }
+}
+
+@media (width > 450px) {
+  .player-buttons {
+    border-right: 2px solid var(--dark);
+  }
 }
 
 #board {
@@ -262,41 +304,6 @@ a.button {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(5rem);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-#player-buttons {
-  padding: .6rem;
-  position: absolute;
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  gap: .6rem;
-
-  & button {
-    background-color: var(--square-light);
-  }
-
-  &.white {
-    top: 2.6rem;
-    animation: slide-up .5s ease-out;
-  }
-
-  &.black {
-    bottom: 2.6rem;
-    animation: slide-down .5s ease-out;
   }
 }
 

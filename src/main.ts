@@ -38,8 +38,10 @@ const castleMenuPieces = q("#pieces") as HTMLUListElement;
 const castleMenuLockedPieces = q("#locked-pieces") as HTMLUListElement;
 const gameOverDialog = q("#game-over") as HTMLDialogElement;
 
-q("#skip-turn").onclick = () => game.skipTurn();
-q("#forfeit").onclick = () => game.forfeit();
+q("#white .skip-turn").onclick = () => game.skipTurn();
+q("#white .forfeit").onclick = () => game.forfeit();
+q("#black .skip-turn").onclick = () => game.skipTurn();
+q("#black .forfeit").onclick = () => game.forfeit();
 q(`#${game.currentPlayer.color} .pieces`).textContent =
 	game.currentPlayer.pieces.toString();
 q(`#${game.currentPlayer.color} .gold`).textContent =
@@ -96,12 +98,12 @@ function renderGame() {
 		game.previousPlayer.gold.toString(),
 	);
 
-	if (!firstRender) {
-		q("#player-buttons").classList.toggle("white");
-		q("#white").classList.toggle("active");
+	for (const button of document.querySelectorAll(`#${game.currentPlayer.color} button`)) {
+		(button as HTMLButtonElement).disabled = false
+	}
 
-		q("#player-buttons").classList.toggle("black");
-		q("#black").classList.toggle("active");
+	for (const button of document.querySelectorAll(`#${game.previousPlayer.color} button`)) {
+		(button as HTMLButtonElement).disabled = true
 	}
 
 	for (let x = 0; x < game.board.width; x++) {
@@ -158,8 +160,6 @@ function renderGame() {
 			};
 		}
 	}
-
-	firstRender = false;
 }
 
 function openCastleMenu(point: Point) {

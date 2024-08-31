@@ -13,22 +13,38 @@
 <body>
   <table id="board"></table>
   <div id="white" class="active">
-    <span class="name">White</span>:
-    Pieces: <span class="pieces">1</span>/<span class="max-pieces">2</span>
-    Gold: <span class="gold">0</span>
+    <div class="name">White</div>
+    <div>
+      Pieces: <span class="pieces">1</span>/<span class="max-pieces">2</span>
+    </div>
+    <div>
+      Gold: <span class="gold">0</span>
+    </div>
+    <div class="player-buttons">
+      <button class="skip-turn" disabled>
+        Skip turn
+      </button>
+      <button class="forfeit" disabled>
+        Forfeit
+      </button>
+    </div>
   </div>
   <div id="black">
-    <span class="name">Black</span>:
-    Pieces: <span class="pieces">1</span>/<span class="max-pieces">2</span>
-    Gold: <span class="gold">0</span>
-  </div>
-  <div id="player-buttons" class="white">
-    <button id="skip-turn">
-      Skip turn
-    </button>
-    <button id="forfeit">
-      Forfeit
-    </button>
+    <div class="name">Black</div>
+    <div>
+      Pieces: <span class="pieces">1</span>/<span class="max-pieces">2</span>
+    </div>
+    <div>
+      Gold: <span class="gold">0</span>
+    </div>
+    <div class="player-buttons">
+      <button class="skip-turn" disabled>
+        Skip turn
+      </button>
+      <button class="forfeit" disabled>
+        Forfeit
+      </button>
+    </div>
   </div>
   <dialog id="castle-menu">
     <form method="dialog">
