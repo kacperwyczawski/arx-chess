@@ -36,16 +36,25 @@ const castleMenuLockedPieces = q("#locked-pieces") as HTMLUListElement;
 const pieceLimitInfo = q("#piece-limit-info") as HTMLSpanElement;
 const gameOverDialog = q("#game-over") as HTMLDialogElement;
 
-q("#white .skip-turn").onclick = () => game.skipTurn();
-q("#white .forfeit").onclick = () => game.forfeit();
-q("#black .skip-turn").onclick = () => game.skipTurn();
-q("#black .forfeit").onclick = () => game.forfeit();
+
 q(`#${game.currentPlayer.color} .pieces`).textContent =
 	game.currentPlayer.pieces.toString();
 q(`#${game.currentPlayer.color} .gold`).textContent =
 	game.currentPlayer.gold.toString();
 q(`#${game.currentPlayer.color} .max-pieces`).textContent =
 	game.currentPlayer.maxPieces.toString();
+
+function forfeit() {
+	if (confirm("Are you sure you want to forfeit?")) {
+		game.forfeit()
+	}
+}
+
+q("#black .forfeit").onclick = () => forfeit();
+q("#white .forfeit").onclick = () => forfeit();
+
+q("#white .skip-turn").onclick = () => game.skipTurn();
+q("#black .skip-turn").onclick = () => game.skipTurn();
 
 renderGame();
 
