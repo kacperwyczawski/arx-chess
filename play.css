@@ -76,6 +76,10 @@ menu {
     &:hover {
       text-decoration: underline;
     }
+
+    &.hollow {
+      background: transparent;
+    }
   }
 }
 
