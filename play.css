@@ -66,18 +66,12 @@ menu {
     }
   }
 
-  & a {
+  & a.button {
     display: block;
     text-align: center;
-
-    &.button {
-      padding: 1rem 2rem;
-      border: .3rem solid var(--square-light);
-    }
-
-    &.filled {
-      background-color: var(--square-light);
-    }
+    background-color: var(--square-light);
+    padding: 1rem 2rem;
+    border: .3rem solid var(--square-light);
 
     &:hover {
       text-decoration: underline;
