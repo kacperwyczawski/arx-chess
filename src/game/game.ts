@@ -59,7 +59,7 @@ export default class Game {
 	}
 
 	getPiecesToBuy(): { piece: Piece; isAvailable: boolean }[] {
-		if (!this.currentPlayer.canBuyPiece()) {
+		if (!this.currentPlayer.hasReachedPieceLimit()) {
 			return this.currentPlayer.unlockedPieces.map((p) => ({
 				piece: p,
 				isAvailable: false,

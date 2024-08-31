@@ -2,8 +2,6 @@ import Panzoom from "@panzoom/panzoom";
 import Game from "./game/game.ts";
 import { Point } from "./game/point.ts";
 
-// TODO: warn when piece limit is hit
-
 const map = new URLSearchParams(document.location.search).get("map");
 if (!map) {
 	throw new Error();
@@ -35,6 +33,7 @@ for (let y = 0; y < game.board.height; y++) {
 const castleMenu = q("#castle-menu") as HTMLDialogElement;
 const castleMenuPieces = q("#pieces") as HTMLUListElement;
 const castleMenuLockedPieces = q("#locked-pieces") as HTMLUListElement;
+const pieceLimitInfo = q("#piece-limit-info") as HTMLSpanElement;
 const gameOverDialog = q("#game-over") as HTMLDialogElement;
 
 q("#white .skip-turn").onclick = () => game.skipTurn();
@@ -164,6 +163,11 @@ function renderGame() {
 function openCastleMenu(point: Point) {
 	castleMenu.showModal();
 	castleMenuPieces.innerHTML = "";
+	if (game.currentPlayer.hasReachedPieceLimit()) {
+		pieceLimitInfo.style.visibility = "hidden"
+	} else {
+		pieceLimitInfo.style.visibility = "visible"
+	}
 	for (const { piece, isAvailable } of game.getPiecesToBuy()) {
 		const li = document.createElement("li");
 		li.classList.add("cell");

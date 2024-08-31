@@ -28,7 +28,7 @@ export class Player {
 		this.#color = color;
 	}
 
-	canBuyPiece() {
+	hasReachedPieceLimit() {
 		return this.pieces < this.maxPieces;
 	}
 
