@@ -96,13 +96,8 @@ function renderGame() {
 		game.previousPlayer.gold.toString(),
 	);
 
-	for (const button of document.querySelectorAll(`#${game.currentPlayer.color} button`)) {
-		(button as HTMLButtonElement).disabled = false
-	}
-
-	for (const button of document.querySelectorAll(`#${game.previousPlayer.color} button`)) {
-		(button as HTMLButtonElement).disabled = true
-	}
+	q(`#${game.currentPlayer.color} .player-buttons`).style.visibility = "visible"
+	q(`#${game.previousPlayer.color} .player-buttons`).style.visibility = "hidden"
 
 	for (let x = 0; x < game.board.width; x++) {
 		for (let y = 0; y < game.board.height; y++) {
