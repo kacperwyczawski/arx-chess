@@ -1,4 +1,7 @@
-@import '@fontsource/ibm-plex-mono';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/600.css';
+@import '@fontsource/jetbrains-mono/700.css';
+@import '@fontsource/jetbrains-mono/800.css';
 
 * {
   box-sizing: border-box;
@@ -20,7 +23,7 @@ html {
 }
 
 body {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   background-color: var(--square-dark);
   color: var(--dark);
   margin: 0;
@@ -44,9 +47,9 @@ menu {
   margin: 1rem;
 
   & h1 {
-    font-weight: bold;
-    letter-spacing: -.1rem;
+    font-weight: 800;
     margin: 0;
+    font-size: 2rem;
   }
 
   & li {
@@ -64,15 +67,13 @@ menu {
   }
 
   & a {
-    border: .3rem solid var(--square-light);
-    background-color: transparent;
-    color: var(--dark);
-    padding: 1rem 2rem;
-    max-width: 24rem;
-    width: 100%;
     display: block;
     text-align: center;
-    text-decoration: none;
+
+    &.button {
+      padding: 1rem 2rem;
+      border: .3rem solid var(--square-light);
+    }
 
     &.filled {
       background-color: var(--square-light);
@@ -232,8 +233,8 @@ button,
 a.button {
   border-radius: 0;
   border: none;
-  font-weight: bold;
-  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 1rem;
 
   background-color: var(--square-dark);

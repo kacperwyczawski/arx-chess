@@ -14,7 +14,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource/ibm-plex-mono": "^5.0.13",
+		"@fontsource/jetbrains-mono": "^5.0.21",
 		"@panzoom/panzoom": "^4.5.1"
 	}
 }
