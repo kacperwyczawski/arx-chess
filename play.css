@@ -153,10 +153,10 @@ menu {
       background: var(--dark);
       color: var(--square-light);
     }
+  }
 
-    &:disabled {
-      display: none;
-    }
+  &:has(button:disabled) {
+    display: none;
   }
 }
 

@@ -4,7 +4,6 @@ import { Point } from "./game/point.ts";
 
 // TODO: warn when piece limit is hit
 
-let firstRender = true;
 const map = new URLSearchParams(document.location.search).get("map");
 if (!map) {
 	throw new Error();
