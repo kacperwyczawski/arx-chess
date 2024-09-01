@@ -37,13 +37,13 @@ export class Pawn implements Piece {
 			{ x: x - 1, y: y + 1 },
 		];
 
-		points = points
+		return points
 			.filter(
 				(p) => p.x >= 0 && p.x < board.width && p.y >= 0 && p.y < board.height,
 			)
 			.filter((p) => board.cellAt(p).piece?.color !== this.#color)
-			.filter((p) => board.cellAt(p).building !== "wall");
-
-		return points;
+			.filter((p) => board.cellAt(p).building !== "wall")
+			.filter((p) => p.x === x || p.y === y || board.cellAt(p).piece !== null)
+			.filter((p) => (p.x !== x && p.y !== y) || board.cellAt(p).piece === null)
 	}
 }
