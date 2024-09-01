@@ -36,7 +36,6 @@ const castleMenuLockedPieces = q("#locked-pieces") as HTMLUListElement;
 const pieceLimitInfo = q("#piece-limit-info") as HTMLSpanElement;
 const gameOverDialog = q("#game-over") as HTMLDialogElement;
 
-
 q(`#${game.currentPlayer.color} .pieces`).textContent =
 	game.currentPlayer.pieces.toString();
 q(`#${game.currentPlayer.color} .gold`).textContent =
@@ -107,6 +106,9 @@ function renderGame() {
 
 	q(`#${game.currentPlayer.color} .player-buttons`).style.visibility = "visible"
 	q(`#${game.previousPlayer.color} .player-buttons`).style.visibility = "hidden"
+
+	q(`#${game.currentPlayer.color}`).classList.add("active")	
+	q(`#${game.previousPlayer.color}`).classList.remove("active")	
 
 	for (let x = 0; x < game.board.width; x++) {
 		for (let y = 0; y < game.board.height; y++) {
