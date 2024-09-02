@@ -148,7 +148,7 @@ function renderGame() {
 						const c = table.rows[destination.y].cells[destination.x];
 						c.classList.add("highlighted");
 					}
-				} else if (cell.piece?.color === game.previousPlayer.color) {
+				} else if (cell.piece?.color === game.previousPlayer.color && !tableCell.classList.contains("highlighted")) {
 					if (game.hasSelectedPoint) {
 						for (const c of allTableCells()) {
 							c.classList.remove("selected", "highlighted", "slightly-highlighted");
