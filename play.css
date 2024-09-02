@@ -205,6 +205,19 @@ menu {
       radial-gradient(circle at center, red 0, transparent 1.3rem);
   }
 
+  &.slightly-highlighted.piece-to-move {
+    background-image:
+      /* --background-image-url is injected using JavaScript */
+      var(--background-image-url),
+      radial-gradient(circle at center, color-mix(in srgb, red 50%, transparent) 0, transparent 1.3rem);
+  }
+
+  &.slightly-highlighted:not(.piece-to-move) {
+    --color: color-mix(in srgb, var(--move-highlight) 50%, transparent);
+    background-image: radial-gradient(circle at center, var(--color) 0, var(--color) .3rem, transparent .3rem);
+
+  }
+
   &.highlighted:not(.piece-to-move) {
     background-image:
       radial-gradient(circle at center, var(--move-highlight) 0, var(--move-highlight) .3rem, transparent .3rem);

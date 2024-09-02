@@ -115,7 +115,7 @@ function renderGame() {
 			const point = { x, y };
 			const cell = game.board.cellAt(point);
 			const tableCell = table.rows[y].cells[x];
-			tableCell.classList.remove("selected", "highlighted", "piece-to-move");
+			tableCell.classList.remove("selected", "highlighted", "slightly-highlighted", "piece-to-move");
 			tableCell.style.setProperty("--outline", "");
 			tableCell.style.setProperty("--background-image-url", "");
 			if (cell.building === "wall") {
@@ -138,17 +138,27 @@ function renderGame() {
 				if (
 					cell.piece?.color === game.currentPlayer.color
 				) {
-					if (game.hasSelectedPoint) {
-						for (const c of allTableCells()) {
-							c.classList.remove("selected", "highlighted");
-							game.unselect();
-						}
+					for (const c of allTableCells()) {
+						c.classList.remove("selected", "highlighted", "slightly-highlighted");
+						game.unselect();
 					}
 					tableCell.classList.add("selected");
 					game.select(point);
 					for (const destination of game.getAvailableMoves(point)) {
 						const c = table.rows[destination.y].cells[destination.x];
 						c.classList.add("highlighted");
+					}
+				} else if (cell.piece?.color === game.previousPlayer.color) {
+					if (game.hasSelectedPoint) {
+						for (const c of allTableCells()) {
+							c.classList.remove("selected", "highlighted", "slightly-highlighted");
+							game.unselect();
+						}
+					}
+					tableCell.classList.add("selected");
+					for (const destination of game.getAvailableMoves(point)) {
+						const c = table.rows[destination.y].cells[destination.x];
+						c.classList.add("slightly-highlighted");
 					}
 				} else if (tableCell.classList.contains("highlighted")) {
 					game.moveTo(point);
@@ -157,7 +167,7 @@ function renderGame() {
 					openCastleMenu(point)
 				} else {
 					for (const c of allTableCells()) {
-						c.classList.remove("selected", "highlighted");
+						c.classList.remove("selected", "highlighted", "slightly-highlighted");
 						game.unselect();
 					}
 				}
