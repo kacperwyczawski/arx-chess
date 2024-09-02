@@ -37,6 +37,13 @@ p {
   margin: .6rem 0;
 }
 
+code {
+  font-family: inherit;
+  font-size: .8rem;
+  word-break: break-all;
+  font-style: italic;
+}
+
 menu {
   list-style-type: none;
   display: flex;
@@ -66,12 +73,14 @@ menu {
     }
   }
 
-  & a.button {
+  & a.button,
+  button {
     display: block;
     text-align: center;
     background-color: var(--square-light);
     padding: 1rem 2rem;
     border: .3rem solid var(--square-light);
+    width: 100%;
 
     &:hover {
       text-decoration: underline;
