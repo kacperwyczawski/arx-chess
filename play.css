@@ -24,6 +24,7 @@ html {
 
 body {
   font-family: 'JetBrains Mono', monospace;
+  image-rendering: pixelated;
   background-color: var(--square-dark);
   color: var(--dark);
   margin: 0;
