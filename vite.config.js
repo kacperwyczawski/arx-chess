@@ -9,6 +9,7 @@ export default defineConfig({
 				2: resolve(__dirname, "play.html"),
 				3: resolve(__dirname, "pieces.html"),
 				4: resolve(__dirname, "select-map.html"),
+				5: resolve(__dirname, "multiplayer.html"),
 			},
 		},
 	},
