@@ -1,5 +1,6 @@
 body {
   padding: 1rem;
+  overflow: auto;
 }
 
 h1:target {
