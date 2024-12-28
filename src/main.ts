@@ -1,6 +1,34 @@
 import Panzoom from "@panzoom/panzoom";
 import Game from "./game/game.ts";
 import { Point } from "./game/point.ts";
+import { createClient, RealtimeChannel } from '@supabase/supabase-js'
+
+const channelName = new URLSearchParams(document.location.search).get("name");
+let channel: RealtimeChannel | null = null;
+if (channelName) {
+	const supabase = createClient(
+		"https://yyflwqoyllmdwtmqmdyk.supabase.co",
+		"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5Zmx3cW95bGxtZHd0bXFtZHlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUzODU0NDcsImV4cCI6MjA1MDk2MTQ0N30.8izAiPOC-8-OdIz-Qr2vBD8QvCRyGrGlYv8QocXCsQI")
+	channel = supabase.channel(channelName);
+	channel
+		.on(
+			"broadcast",
+			{ event: "connected" },
+			() => console.log("opponent connected")
+		)
+		.on(
+			"broadcast",
+			{ event: "test" },
+			(res) => console.log("test", res.payload)
+		)
+		.subscribe();
+	channel
+		.send({
+			type: "broadcast",
+			event: "connected",
+			payload: {}
+		})
+}
 
 const map = new URLSearchParams(document.location.search).get("map");
 if (!map) {
@@ -107,8 +135,8 @@ function renderGame() {
 	q(`#${game.currentPlayer.color} .player-buttons`).style.visibility = "visible"
 	q(`#${game.previousPlayer.color} .player-buttons`).style.visibility = "hidden"
 
-	q(`#${game.currentPlayer.color}`).classList.add("active")	
-	q(`#${game.previousPlayer.color}`).classList.remove("active")	
+	q(`#${game.currentPlayer.color}`).classList.add("active")
+	q(`#${game.previousPlayer.color}`).classList.remove("active")
 
 	for (let x = 0; x < game.board.width; x++) {
 		for (let y = 0; y < game.board.height; y++) {
@@ -135,6 +163,13 @@ function renderGame() {
 				);
 			}
 			tableCell.onclick = () => {
+				// temp
+				channel
+					?.send({
+						type: "broadcast",
+						event: "test",
+						payload: point
+					})
 				if (
 					cell.piece?.color === game.currentPlayer.color
 				) {
