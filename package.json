@@ -2,8 +2,8 @@
 	"name": "arx-chess",
 	"version": "0.0.0",
 	"devDependencies": {
-		"typescript": "^5.5.4",
-		"vite": "^5.3.5"
+		"typescript": "^5.9.2",
+		"vite": "^7.0.6"
 	},
 	"private": true,
 	"scripts": {
@@ -14,8 +14,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource/jetbrains-mono": "^5.0.21",
-		"@panzoom/panzoom": "^4.5.1",
-		"@supabase/supabase-js": "^2.47.10"
+		"@fontsource/jetbrains-mono": "^5.2.6",
+		"@panzoom/panzoom": "^4.6.0",
+		"@supabase/supabase-js": "^2.53.0"
 	}
 }
