@@ -1,35 +1,6 @@
 import Panzoom from "@panzoom/panzoom";
 import Game from "./game/game.ts";
 import { Point } from "./game/point.ts";
-import { createClient, RealtimeChannel } from '@supabase/supabase-js'
-
-const isMultiplayer = new URLSearchParams(document.location.search).get("multiplayer") === "true";
-let channel: RealtimeChannel | null;
-if (isMultiplayer) {
-	const supabase = createClient(
-		"https://yyflwqoyllmdwtmqmdyk.supabase.co",
-		"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5Zmx3cW95bGxtZHd0bXFtZHlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzUzODU0NDcsImV4cCI6MjA1MDk2MTQ0N30.8izAiPOC-8-OdIz-Qr2vBD8QvCRyGrGlYv8QocXCsQI")
-	const lobby = supabase.channel("lobby");
-	// channel = supabase.channel(channelName);
-	// channel
-	// 	.on(
-	// 		"broadcast",
-	// 		{ event: "connected" },
-	// 		() => console.log("opponent connected")
-	// 	)
-	// 	.on(
-	// 		"broadcast",
-	// 		{ event: "test" },
-	// 		(res) => console.log("test", res.payload)
-	// 	)
-	// 	.subscribe();
-	// channel
-	// 	.send({
-	// 		type: "broadcast",
-	// 		event: "connected",
-	// 		payload: {}
-	// 	})
-}
 
 const map = new URLSearchParams(document.location.search).get("map");
 if (!map) {
@@ -163,14 +134,7 @@ function renderGame() {
 					`var(--player-${cell.owner.color})`,
 				);
 			}
-			tableCell.onclick = () => {
-				// temp
-				channel
-					?.send({
-						type: "broadcast",
-						event: "test",
-						payload: point
-					})
+			tableCell.onclick = () => {				
 				if (
 					cell.piece?.color === game.currentPlayer.color
 				) {
