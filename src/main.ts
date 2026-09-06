@@ -1,4 +1,3 @@
-import Panzoom from "@panzoom/panzoom";
 import Game from "./game/game.ts";
 import { Point } from "./game/point.ts";
 
@@ -57,13 +56,19 @@ q("#black .skip-turn").onclick = () => game.skipTurn();
 
 renderGame();
 
-Panzoom(table, {
-	disableZoom: true,
-	startX: window.innerWidth / 2 - table.clientWidth / 2,
-	startY: window.innerHeight / 2 - table.clientHeight / 2,
-	cursor: "default",
-	roundPixels: true,
-});
+const boardContainer = q("#board-container");
+
+function centerBoard() {
+	if (boardContainer.scrollWidth > boardContainer.clientWidth) {
+		boardContainer.scrollLeft =
+			(boardContainer.scrollWidth - boardContainer.clientWidth) / 2;
+	}
+	if (boardContainer.scrollHeight > boardContainer.clientHeight) {
+		boardContainer.scrollTop =
+			(boardContainer.scrollHeight - boardContainer.clientHeight) / 2;
+	}
+}
+requestAnimationFrame(centerBoard);
 
 function q(selector: string) {
 	const element = document.querySelector(selector);
